@@ -1,11 +1,5 @@
-/**
- * FPS counter — §3 Game Loop / FPS counter.
- *
- * Sliding-window average of frame times, cheap and allocation-free per frame.
- */
-
 export interface FpsCounterOptions {
-  /** Averaging window in seconds (default 0.5). */
+
   windowSeconds?: number;
 }
 
@@ -21,7 +15,6 @@ export class FpsCounter {
     this.#windowSeconds = Math.max(options.windowSeconds ?? 0.5, 0.001);
   }
 
-  /** Record a frame with its delta time in seconds. */
   sample(deltaSeconds: number): void {
     this.#lastFrameSeconds = deltaSeconds;
     this.#totalFrames += 1;
@@ -35,17 +28,14 @@ export class FpsCounter {
     }
   }
 
-  /** Smoothed FPS over the current window. */
   get fps(): number {
     return this.#windowFps;
   }
 
-  /** Last frame time in milliseconds. */
   get frameTimeMs(): number {
     return this.#lastFrameSeconds * 1000;
   }
 
-  /** Total sampled frames. */
   get totalFrames(): number {
     return this.#totalFrames;
   }

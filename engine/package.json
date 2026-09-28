@@ -1,7 +1,7 @@
 {
-  "name": "@obsifox/engine",
-  "version": "0.1.0",
-  "description": "ObsiFox Engine — Engine and Application facades wiring core + runtime",
+  "name": "@obx/engine",
+  "version": "0.3.0",
+  "description": "OBX Engine \u2014 Engine and Application facades wiring core, runtime, ecs and subsystems",
   "type": "module",
   "license": "MIT",
   "main": "./dist/index.js",
@@ -12,13 +12,19 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@obsifox/core": "0.1.0",
-    "@obsifox/runtime": "0.1.0",
-    "@obsifox/ecs": "0.2.0"
+    "@obx/core": "0.3.0",
+    "@obx/runtime": "0.3.0",
+    "@obx/ecs": "0.3.0",
+    "@obx/math": "0.3.0",
+    "@obx/input": "0.3.0",
+    "@obx/rendering": "0.3.0",
+    "@obx/scene": "0.3.0"
   }
 }

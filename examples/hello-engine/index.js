@@ -1,23 +1,15 @@
-/**
- * ObsiFox Engine — hello-engine example (§74 Developer Experience seed).
- *
- * Runs the engine headlessly in real time for ~3 seconds with a tiny ECS
- * simulation, printing frame stats and a scheduled timer message.
- *
- *   npm run example:hello
- */
 import {
   Application,
   ConsoleLogSink,
   defineComponent,
   defineSystem,
-} from "@obsifox/engine";
+} from "@obx/engine";
 
 const Position = defineComponent("Demo.Position", { defaults: () => ({ x: 0, y: 0 }) });
 const Velocity = defineComponent("Demo.Velocity", { defaults: () => ({ x: 120, y: 60 }) });
 
 const app = new Application({
-  name: "hello-obsifox",
+  name: "hello-obx",
   config: { targetFps: 60, logLevel: "info" },
 });
 
@@ -25,7 +17,6 @@ app.engine.logger.addSink(new ConsoleLogSink());
 
 const world = app.engine.world;
 
-// Spawn a few moving entities.
 const entities = world.createEntities(3, Position, Velocity);
 world.setName(entities[0], "fox");
 world.setName(entities[1], "runner");
@@ -42,7 +33,6 @@ world.addSystem(defineSystem({
   },
 }));
 
-// A one-shot engine-time timer.
 app.engine.scheduler.schedule(() => {
   console.log("⏱  2 engine-seconds elapsed — timer fired");
 }, 2);
@@ -60,7 +50,7 @@ app.onUpdate(() => {
     void (async () => {
       console.log("final world state:", JSON.stringify(world.serialize().entities, null, 2).slice(0, 400) + " ...");
       await app.quit();
-      console.log("bye from ObsiFox Engine 👋");
+      console.log("bye from OBX Engine 👋");
     })();
   }
 });

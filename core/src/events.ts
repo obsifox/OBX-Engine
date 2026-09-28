@@ -1,18 +1,9 @@
-/**
- * ObsiFox Event System — §2 Core / Event Bus + Signals.
- *
- * - {@link EventBus}: named, global-ish pub/sub with priorities and `once`.
- * - {@link Signal}: a single typed event slot that can be connected to many
- *   handlers (C#/Godot-style). Useful as class members (`onDamage: Signal<[number]>`).
- */
-
-/** Unsubscribe handle returned by subscription methods. */
 export type Unsubscribe = () => void;
 
 export interface SubscribeOptions {
-  /** Run at most once (auto-disconnects after first emit). */
+
   once?: boolean;
-  /** Higher priority runs first (default 0). Ties keep insertion order. */
+
   priority?: number;
 }
 
@@ -23,21 +14,10 @@ interface HandlerEntry<T> {
   seq: number;
 }
 
-/**
- * Typed publish/subscribe bus.
- *
- * ```ts
- * type Events = { "player:died": { id: number }; "level:loaded": string };
- * const bus = new EventBus<Events>();
- * bus.on("player:died", (e) => console.log(e.id));
- * bus.emit("player:died", { id: 7 });
- * ```
- */
 export class EventBus<M extends Record<string, unknown>> {
   #handlers = new Map<keyof M, HandlerEntry<unknown>[]>();
   #seq = 0;
 
-  /** Number of live subscriptions (optionally for one event). */
   listenerCount(event?: keyof M): number {
     if (event !== undefined) {
       return this.#handlers.get(event)?.length ?? 0;
@@ -60,7 +40,7 @@ export class EventBus<M extends Record<string, unknown>> {
       this.#handlers.set(event, list);
     }
     list.push(entry);
-    // Keep sorted: priority desc, then insertion order asc.
+
     list.sort((a, b) => b.priority - a.priority || a.seq - b.seq);
 
     return () => this.off(event, handler);
@@ -78,11 +58,6 @@ export class EventBus<M extends Record<string, unknown>> {
     if (list.length === 0) this.#handlers.delete(event);
   }
 
-  /**
-   * Emit an event synchronously to all subscribers.
-   * Handler errors are isolated: a throwing handler does not stop the others.
-   * Thrown errors are re-thrown as a single aggregate at the end if any occurred.
-   */
   emit<K extends keyof M>(event: K, payload: M[K]): void {
     const list = this.#handlers.get(event);
     if (!list || list.length === 0) return;
@@ -108,7 +83,6 @@ export class EventBus<M extends Record<string, unknown>> {
     }
   }
 
-  /** Remove all handlers (optionally for one event). */
   clear(event?: keyof M): void {
     if (event !== undefined) {
       this.#handlers.delete(event);
@@ -118,15 +92,6 @@ export class EventBus<M extends Record<string, unknown>> {
   }
 }
 
-/**
- * A single reusable event with many listeners.
- *
- * ```ts
- * const onHit = new Signal<[damage: number, critical: boolean]>();
- * onHit.connect((dmg, crit) => applyDamage(dmg, crit));
- * onHit.emit(25, true);
- * ```
- */
 export class Signal<T extends unknown[] = []> {
   #handlers: { handler: (...args: T) => void; once: boolean; seq: number }[] = [];
   #seq = 0;

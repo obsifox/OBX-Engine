@@ -1,0 +1,23 @@
+{
+  "name": "@obx/input",
+  "version": "0.3.0",
+  "description": "OBX Engine input — keyboard, mouse, touch, gamepad, actions and axes",
+  "type": "module",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@obx/core": "0.3.0",
+    "@obx/math": "0.3.0"
+  }
+}

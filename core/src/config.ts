@@ -1,10 +1,3 @@
-/**
- * ObsiFox Configuration System — §2 Core / Configuration.
- *
- * Hierarchical config store with dot-path access, deep merge and change
- * watching. Used for engine settings, project settings and runtime flags.
- */
-
 import { ConfigError, ensure } from "./errors.js";
 import type { Unsubscribe } from "./events.js";
 
@@ -47,16 +40,6 @@ function deepMerge(target: ConfigObject, source: ConfigObject): ConfigObject {
   return target;
 }
 
-/**
- * Hierarchical key/value store with `dot.path` addressing.
- *
- * ```ts
- * const config = new ConfigStore({ window: { width: 1280 } });
- * config.get("window.width"); // 1280
- * config.set("window.height", 720);
- * config.watch("window", (path, value) => console.log(path, value));
- * ```
- */
 export class ConfigStore<T extends object = ConfigObject> {
   #data: ConfigObject;
   #watchers: WatchEntry[] = [];
@@ -65,7 +48,6 @@ export class ConfigStore<T extends object = ConfigObject> {
     this.#data = initial ? (deepMerge({}, initial as ConfigObject)) : {};
   }
 
-  /** Create a store from a JSON string. */
   static fromJSON<T extends ConfigObject = ConfigObject>(json: string): ConfigStore<T> {
     try {
       const parsed = JSON.parse(json) as unknown;
@@ -79,12 +61,10 @@ export class ConfigStore<T extends object = ConfigObject> {
     }
   }
 
-  /** Deep-cloned snapshot of the whole config. */
   toJSON(): T {
     return deepClone(this.#data) as T;
   }
 
-  /** Get a value by dot-path. Returns `defaultValue` when missing. */
   get<P = unknown>(path: string, defaultValue?: P): P {
     ensure(path.length > 0, "Config path must be a non-empty string");
     let node: unknown = this.#data;
@@ -97,12 +77,10 @@ export class ConfigStore<T extends object = ConfigObject> {
     return node as P;
   }
 
-  /** Whether a dot-path exists. */
   has(path: string): boolean {
     return this.get(path, SENTINEL_MISSING) !== SENTINEL_MISSING;
   }
 
-  /** Set a value by dot-path (creates intermediate objects). */
   set(path: string, value: unknown): void {
     ensure(path.length > 0, "Config path must be a non-empty string");
     const keys = path.split(".");
@@ -120,7 +98,6 @@ export class ConfigStore<T extends object = ConfigObject> {
     this.#notify("*", value);
   }
 
-  /** Delete a value by dot-path. Returns true if something was removed. */
   delete(path: string): boolean {
     const keys = path.split(".");
     let node: unknown = this.#data;
@@ -137,7 +114,6 @@ export class ConfigStore<T extends object = ConfigObject> {
     return true;
   }
 
-  /** Deep-merge a partial object into the store (fires watchers per key). */
   merge(partial: DeepPartial<T> | ConfigObject): void {
     deepMerge(this.#data, partial as ConfigObject);
     for (const [key, value] of Object.entries(partial as ConfigObject)) {
@@ -146,7 +122,6 @@ export class ConfigStore<T extends object = ConfigObject> {
     this.#notify("*", deepClone(partial));
   }
 
-  /** Watch a dot-path (or `"*"` for all changes). Returns an unsubscribe fn. */
   watch(path: string, callback: (path: string, value: unknown) => void): Unsubscribe {
     const entry: WatchEntry = { path, callback };
     this.#watchers.push(entry);
@@ -156,7 +131,6 @@ export class ConfigStore<T extends object = ConfigObject> {
     };
   }
 
-  /** Clear all watchers. */
   clearWatchers(): void {
     this.#watchers = [];
   }

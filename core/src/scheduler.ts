@@ -1,11 +1,3 @@
-/**
- * ObsiFox Scheduler — §2 Core / Scheduler, Timer + §3 tick support.
- *
- * A deterministic, engine-time scheduler driven by {@link Scheduler.update}.
- * Timers advance with engine time (so `timeScale` and `pause` are respected
- * automatically when the scheduler is fed from a {@link Clock}).
- */
-
 import { InvalidArgumentError } from "./errors.js";
 
 export type ScheduleCallback = (time: number) => void;
@@ -17,21 +9,20 @@ export interface ScheduleHandle {
 interface ScheduledTask {
   id: number;
   callback: ScheduleCallback;
-  /** Engine time when the task is next due. */
+
   nextTime: number;
-  /** Repeat interval in seconds; 0 = one-shot. */
+
   interval: number;
-  /** Times run (for repeating tasks). */
+
   runCount: number;
   cancelled: boolean;
 }
 
 export interface SchedulerOptions {
-  /** Initial engine time in seconds (default 0). */
+
   time?: number;
 }
 
-/** Deterministic timer scheduler operating on engine time (seconds). */
 export class Scheduler {
   #time: number;
   #nextId = 1;
@@ -42,12 +33,10 @@ export class Scheduler {
     this.#time = options.time ?? 0;
   }
 
-  /** Current scheduler time in seconds. */
   get time(): number {
     return this.#time;
   }
 
-  /** Number of active (non-cancelled) tasks. */
   get pendingCount(): number {
     let count = 0;
     for (const task of this.#tasks.values()) {
@@ -56,12 +45,10 @@ export class Scheduler {
     return count;
   }
 
-  /** Run `callback` once after `delaySeconds` of engine time. */
   schedule(callback: ScheduleCallback, delaySeconds = 0): ScheduleHandle {
     return this.#create(callback, Math.max(delaySeconds, 0), 0);
   }
 
-  /** Run `callback` every `intervalSeconds` of engine time (first after one interval). */
   scheduleRepeating(callback: ScheduleCallback, intervalSeconds: number): ScheduleHandle {
     if (!(intervalSeconds > 0)) {
       throw new InvalidArgumentError("scheduleRepeating requires intervalSeconds > 0", {
@@ -71,7 +58,6 @@ export class Scheduler {
     return this.#create(callback, intervalSeconds, intervalSeconds);
   }
 
-  /** Run `callback` at the start of the next {@link Scheduler.update} call. */
   scheduleNextTick(callback: ScheduleCallback): ScheduleHandle {
     return this.#create(callback, 0, 0);
   }
@@ -83,15 +69,10 @@ export class Scheduler {
     this.#tasks.delete(handle.id);
   }
 
-  /** Cancel all tasks. */
   clear(): void {
     this.#tasks.clear();
   }
 
-  /**
-   * Advance scheduler time to `time` (seconds, absolute) and run every task
-   * that became due. Returns the number of task executions.
-   */
   update(time: number): number {
     if (time < this.#time) {
       throw new InvalidArgumentError("Scheduler time cannot move backwards", {
@@ -101,8 +82,6 @@ export class Scheduler {
     this.#time = time;
     let executions = 0;
 
-    // Repeat until no task is due — tasks may schedule new immediate tasks.
-    // Guard against infinite mutual scheduling with an iteration cap.
     let guard = 0;
     for (;;) {
       if (guard++ > 10_000) {
@@ -131,10 +110,6 @@ export class Scheduler {
     return executions;
   }
 
-  /**
-   * Convenience: advance by a delta relative to current time.
-   * Equivalent to `update(this.time + deltaSeconds)`.
-   */
   advance(deltaSeconds: number): number {
     return this.update(this.#time + Math.max(deltaSeconds, 0));
   }

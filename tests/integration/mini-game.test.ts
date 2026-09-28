@@ -1,7 +1,3 @@
-/**
- * Integration test — a miniature "game" exercising the v0.1+v0.2 stack:
- * Engine + GameLoop (fixed timestep) + ECS systems + events + save/load.
- */
 import { describe, expect, it } from "vitest";
 import {
   Application,
@@ -11,7 +7,7 @@ import {
   defineComponent,
   defineSystem,
   defineWorldResource,
-} from "@obsifox/engine";
+} from "@obx/engine";
 
 const Position = defineComponent<{ x: number; y: number }>("MiniGame.Position", {
   defaults: () => ({ x: 0, y: 0 }),
@@ -38,17 +34,15 @@ describe("mini-game integration (v0.1 + v0.2)", () => {
     const world = app.engine.world;
     world.addResource(Score, { points: 0 });
 
-    // Spawn: a moving player and a stationary wall.
     const player = world.createEntity(
       [Position, { x: 0, y: 0 }],
-      [Velocity, { x: 60, y: 0 }], // 60 units/second
+      [Velocity, { x: 60, y: 0 }],
       Health,
     );
     world.setName(player, "player");
     const wall = world.createEntity([Position, { x: 1000, y: 0 }]);
     world.setName(wall, "wall");
 
-    // Systems: physics runs before scoring (before/after ordering).
     world.addSystem(defineSystem({
       name: "physics",
       execute: ({ delta }) => {
@@ -73,11 +67,10 @@ describe("mini-game integration (v0.1 + v0.2)", () => {
 
     await app.run();
 
-    // Simulate 1 second at 60fps (first frame establishes t0).
     driver.runFrames(60, { startMs: 0, intervalMs: 1000 / 60 });
 
     const pos = world.getComponent(player, Position);
-    // ~0.983s of engine time * 60 units/s.
+
     expect(pos?.x).toBeGreaterThan(58);
     expect(pos?.x).toBeLessThan(60.5);
     expect(world.getResource(Score)?.points).toBeGreaterThan(9.5);
@@ -86,7 +79,6 @@ describe("mini-game integration (v0.1 + v0.2)", () => {
     expect(fixedTicks).toBeLessThanOrEqual(63);
     expect(world.getComponent(wall, Position)?.x).toBe(1000);
 
-    // Save mid-game, run more frames, then restore the snapshot and compare.
     const save = JSON.parse(JSON.stringify(world.serialize())) as ReturnType<World["serialize"]>;
     const savedX = world.getComponent(player, Position)?.x ?? 0;
 

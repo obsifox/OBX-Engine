@@ -7,7 +7,7 @@ import {
   TaskSystem,
   TimeoutLoopDriver,
   detectPlatform,
-} from "@obsifox/runtime";
+} from "@obx/runtime";
 
 describe("GameLoop (§3)", () => {
   it("runs update/render each frame and fixed-update on the accumulator", () => {
@@ -22,12 +22,11 @@ describe("GameLoop (§3)", () => {
     loop.onRender((alpha) => renders.push(alpha));
 
     loop.start();
-    driver.runFrames(3, { startMs: 1000, intervalMs: 10 }); // 10ms frames, 10ms fixed
+    driver.runFrames(3, { startMs: 1000, intervalMs: 10 });
     loop.stop();
 
-    // First frame establishes t0 (delta 0), then two frames with 10ms each.
     expect(updates).toEqual([0, 0.01, 0.01]);
-    // Frame 1: 0 steps; frames 2-3: 1 step each (10ms accumulated per frame).
+
     expect(fixedSteps).toEqual([0.01, 0.01]);
     expect(renders).toHaveLength(3);
     expect(loop.isRunning).toBe(false);
@@ -40,7 +39,7 @@ describe("GameLoop (§3)", () => {
     loop.onFixedUpdate(() => { fixedCount += 1; });
     loop.start();
     driver.step(0);
-    driver.step(35); // 35ms -> 3 fixed steps + 5ms remainder
+    driver.step(35);
     expect(fixedCount).toBe(3);
   });
 
@@ -61,9 +60,8 @@ describe("GameLoop (§3)", () => {
     loop.clock.paused = false;
     driver.step(80);
 
-    // Pre-pause frame (20ms) and post-resume frame (80ms) each produce 2 steps.
     expect(fixedCount).toBe(4);
-    // Paused frames report delta 0.
+
     expect(deltas).toEqual([0, 0.02, 0, 0, 0.02]);
   });
 
@@ -120,9 +118,9 @@ describe("ManualLoopDriver (§3)", () => {
 describe("FrameLimiter (§3)", () => {
   it("gates frames at targetFps", () => {
     let now = 0;
-    const limiter = new FrameLimiter({ targetFps: 50, now: () => now }); // 20ms budget
+    const limiter = new FrameLimiter({ targetFps: 50, now: () => now });
     expect(limiter.shouldRun()).toBe(true);
-    expect(limiter.shouldRun()).toBe(false); // same tick
+    expect(limiter.shouldRun()).toBe(false);
     now = 15;
     expect(limiter.shouldRun()).toBe(false);
     expect(limiter.timeUntilNextMs()).toBe(5);
@@ -141,7 +139,7 @@ describe("FrameLimiter (§3)", () => {
     let now = 0;
     const limiter = new FrameLimiter({ targetFps: 100, now: () => now });
     expect(limiter.shouldRun()).toBe(true);
-    now = 5000; // long stall
+    now = 5000;
     expect(limiter.shouldRun()).toBe(true);
     expect(limiter.shouldRun()).toBe(false);
   });
@@ -204,7 +202,7 @@ describe("Platforms (§64 foundation)", () => {
   });
 
   it("manual platform is deterministic", async () => {
-    const { ManualPlatform } = await import("@obsifox/runtime");
+    const { ManualPlatform } = await import("@obx/runtime");
     const platform = new ManualPlatform();
     platform.advance(5);
     expect(platform.now()).toBe(5);

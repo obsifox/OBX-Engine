@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Application, Engine, LifecycleState, ManualLoopDriver, ManualPlatform, defineComponent } from "@obsifox/engine";
+import { Application, Engine, LifecycleState, ManualLoopDriver, ManualPlatform, defineComponent } from "@obx/engine";
 
 const Position = defineComponent<{ x: number }>("EngineTest.Position", {
   defaults: () => ({ x: 0 }),
@@ -82,9 +82,9 @@ describe("Engine (§2)", () => {
     engine.scheduler.schedule((time) => scheduled.push(time), 0.03);
 
     driver.step(0);
-    driver.step(20); // 20ms engine time
+    driver.step(20);
     expect(scheduled).toHaveLength(0);
-    driver.step(40); // 40ms engine time -> timer due
+    driver.step(40);
     expect(scheduled).toEqual([0.04]);
     expect(frames).toBe(3);
 

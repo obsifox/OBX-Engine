@@ -1,95 +1,103 @@
-# ObsiFox Engine — Architecture Notes
+# OBX Engine — Architecture Notes
 
-> Living document for the implemented stack (v0.1–v0.2). Subsystem docs are
-> added as their roadmap phases land.
+Living document for the implemented stack (v0.1–v0.3). Subsystem docs are
+added as their roadmap phases land.
 
 ## Layering
 
 ```
-        @obsifox/engine          Engine / Application facades (§2, §51)
-              │
-   ┌──────────┼───────────┐
-   │          │           │
-@obsifox/core  @obsifox/runtime  @obsifox/ecs
-   │          │           │
- services   game loop    entities/components/systems
- (§2)       (§3, §64)    (§4, §5, §36)
+                 @obx/engine          Engine / Application facades (§2, §51)
+                        │
+   ┌──────────┬─────────┼──────────┬─────────────┐
+   │          │         │          │             │
+@obx/core  @obx/runtime @obx/ecs  @obx/math   @obx/input
+   │          │         │          │             │
+ services  game loop   ECS      vectors/     keyboard/mouse/
+ (§2)      (§3, §64)  (§4,§5)   matrices     touch/gamepad (§20)
+                        │          │
+                  @obx/scene   @obx/rendering
+                        │          │
+                  transforms   2D renderer (§7, §9)
 ```
 
 Dependency rules:
 
-- `core` depends on nothing (pure foundation).
-- `runtime` and `ecs` depend only on `core` (and never on each other).
-- `engine` composes all three and re-exports their public APIs.
+- `core` and `math` depend on nothing.
+- `runtime`, `ecs`, `input`, `rendering` depend only on `core`/`math`.
+- `scene` depends on `ecs` + `math`.
+- `engine` composes everything and re-exports the public APIs.
 
 ## Core (§2)
 
 | System | Class | Notes |
 |---|---|---|
-| Errors | `EngineError` + subclasses, `assert`/`ensure` | Stable `code` + structured `context` |
-| Logging | `Logger`, `MemoryLogSink`, `ConsoleLogSink` | Scoped children, pluggable sinks, never throws |
-| Events | `EventBus<M>`, `Signal<T>` | Priorities, `once`, error isolation + `AggregateError` |
-| Time | `Clock` | Scaled/unscaled time, pause, delta clamp, fixed-step accumulator |
-| Scheduler | `Scheduler` | Deterministic **engine-time** timers (respect timeScale/pause) |
-| Config | `ConfigStore<T>` | Dot paths, deep merge/clone, path watchers |
-| Memory | `MemoryTracker` | Tag-based tracking + budgets (foundation for §63) |
-| Lifecycle | `Lifecycle` | Strict state machine: created→…→destroyed, `failed` escape hatch |
+| Errors | `EngineError` + subclasses, `assert`/`ensure` | stable `code` + structured `context` |
+| Logging | `Logger`, memory/console sinks | scoped children, pluggable sinks |
+| Events | `EventBus<M>`, `Signal<T>` | priorities, `once`, error isolation |
+| Time | `Clock` | scaled/unscaled time, pause, clamp, fixed-step accumulator |
+| Scheduler | `Scheduler` | deterministic engine-time timers |
+| Config | `ConfigStore<T>` | dot paths, deep merge, path watchers |
+| Memory | `MemoryTracker` | tag-based tracking + budgets |
+| Lifecycle | `Lifecycle` | strict state machine + `failed` escape hatch |
 
 ## Runtime (§3)
 
-- `GameLoop` — fixed timestep accumulator ("Fix Your Timestep" pattern):
-  `fixedUpdate(fixedDelta) × N → update(delta) → render(alpha)`.
-  Alpha is the leftover fraction for render interpolation.
-- `LoopDriver` — heartbeat abstraction. `ManualLoopDriver` (tests, network
-  ticks), `TimeoutLoopDriver` (Node/browser with drift correction).
-- `FrameLimiter` / `FpsCounter` — frame budgeting and windowed FPS stats.
-- `TaskSystem` — bounded async pool (foundation for the §62 job system).
-- `RuntimePlatform` — `Manual` / `Node` / `Browser` adapters, monotonic clock.
+- `GameLoop` — fixed timestep accumulator: `fixedUpdate × N -> update -> render(alpha)`.
+- `LoopDriver` — `ManualLoopDriver` (tests, network ticks) / `TimeoutLoopDriver`.
+- `FrameLimiter`, `FpsCounter`, `TaskSystem`, `RuntimePlatform` adapters.
 
 ## ECS (§4)
 
-### Storage model
+Archetype storage (dense SoA columns), generation-packed entity handles,
+cached all/any/none queries, stable topological system scheduling
+(order/before/after, phases), resources, built-in hierarchy components
+(`core.Parent`/`core.Children`/`core.Name`), JSON serialization with stable
+entity ids and custom (de)serialize hooks.
 
-Archetype-based: entities with the **same component set** share one `Archetype`
-holding one dense column per component type.
+## Math (§6)
 
-- Entity handle = `generation * 2^20 + index` (20-bit index, 12-bit generation).
-  Stale handles are detected after destroy/recreate cycles.
-- Adding/removing a component migrates the entity between archetypes
-  (values copied; swap-remove keeps rows dense).
-- Queries cache matching archetypes; invalidated by an archetype version bump.
+`Vec2`, `Vec3`, `Mat4` (column-major Float64), `Quat`, `AABB`, `Sphere`,
+`Color`, `Transform2D`/`Transform3D` (TRS with combine/apply/inverse,
+shortest-path rotation interpolation).
 
-### Systems
+## Input (§20)
 
-`defineSystem({ name, phase, order, before, after, execute })` — execution
-order per phase is a stable topological sort (Kahn) seeded by `order`.
-Unknown constraint names are ignored (optional plugins); cycles throw.
+`InputManager` with per-device states (keyboard/mouse/touch/gamepads),
+action bindings (keys/mouse buttons/gamepad buttons) and axis bindings
+(keys/gamepad axis with deadzone + scale + invert). `DomInputAdapter` wires
+browser events; all state is injectable for headless use.
 
-### Hierarchy (§5 foundation)
+## Rendering (§7, §9)
 
-Built-in `core.Parent` / `core.Children` / `core.Name` components maintained by
-`setParent` / `setName`. Cycle-safe; destroying a parent orphans children
-unless `destroyEntity(e, { recursive: true })`.
+- `Renderer2D` — sprite/rect submission with CPU camera transforms
+  (world -> screen), pivot/rotation/tint/uv/layer support.
+- `SpriteBatcher` — sorts by (layer, texture) and merges runs into
+  `drawQuads` commands (vertex layout: x,y,u,v,r,g,b,a per vertex).
+- Backends: `RecordingBackend` (tests), `SoftwareBackend`
+  (barycentric rasterizer, nearest sampling, straight-alpha blending,
+  top-left shared-edge rule), `Canvas2DBackend` (browser).
+- `Texture`, `SpriteSheet` (grid uv math), `SpriteAnimator` (fps clips,
+  loop/once), `Camera2D` (pan/zoom/rotate; `viewMatrix` consistent with
+  `worldToScreen`), `encodePng` (dependency-free PNG writer).
 
-### Serialization (§36 foundation)
+## Scene (§5, §6)
 
-`world.serialize()` → JSON-safe snapshot preserving packed entity handles
-(parent links stay valid across `World.fromSerialized`). Components may supply
-custom `serialize`/`deserialize` hooks (e.g. `Set`, `Map`).
+`Transform2D`/`Transform3D` components (class values with serialization
+hooks), `WorldTransform` components holding previous+current state,
+`createTransformSystem2D/3D` propagating parent chains each frame and
+`getInterpolatedTransform2D` for render smoothing.
 
 ## Engine (§2)
 
-`Engine` composes everything: config, logger, events, signals, scheduler,
-lifecycle, memory, tasks, platform, loop and a default ECS `world`
-(auto-ticked each frame when `autoTickWorld` is true).
-
-Lifecycle: `created → initializing → initialized → starting → running ⇄ paused → stopping → stopped → destroying → destroyed` (+ `failed`).
-
-`Application` is the thin developer-facing host (`run()` / `quit()`).
+`Engine` composes all services + a default ECS world (auto-ticked when
+`autoTickWorld` is true). `Application` is the developer host
+(`run()` / `quit()`). Lifecycle:
+`created -> initializing -> initialized -> starting -> running <-> paused -> stopping -> stopped -> destroying -> destroyed`.
 
 ## Testing strategy
 
-- Unit tests per package (`core/tests`, `runtime/tests`, `ecs/tests`, `engine/tests`).
-- Cross-stack integration (`tests/integration/mini-game.test.ts`): fixed
-  timestep + systems + resources + save/load driven through `Application`.
+- Unit tests per package (`*/tests`), 153 tests total.
+- Renderer verified at the pixel level (exact colors, alpha blending, layer
+  order, uv regions, rotation, camera movement) and PNG output validated
+  against a real zlib decoder.
 - Determinism: `ManualLoopDriver` + `ManualPlatform` make frame timing exact.

@@ -1,10 +1,7 @@
-# ObsiFox Engine — Living Roadmap
+# OBX Engine — Living Roadmap
 
-Checklist tracked from the master development roadmap. ✅ = implemented &
-tested in this repo, 🟡 = foundation/partial, ⬜ = planned.
-
-Source of truth for scope: the full roadmap document (see `docs/` history);
-this file tracks **execution status**.
+Execution status of the master development roadmap. ✅ = implemented & tested,
+🟡 = foundation/partial, ⬜ = planned.
 
 ---
 
@@ -29,14 +26,23 @@ this file tracks **execution status**.
 - [x] Entity hierarchy (parent/children, cycle-safe)
 - [x] Entity serialization (save/load round-trip with stable ids)
 
-### ⬜ v0.3 — 2D
-- [ ] Renderer, Sprite, Texture, Camera, Animation, Basic Input
+### ✅ v0.3 — 2D
+- [x] Renderer (abstraction + recording/software/Canvas2D backends)
+- [x] Sprite (sprite draw, tint, pivot, rotation, layers)
+- [x] Texture (pixel buffers, solid/checker, nearest sampling, wrap modes)
+- [x] Camera (Camera2D — pan/zoom/rotation, world<->screen, view matrix)
+- [x] Animation (SpriteSheet grids, named clips, SpriteAnimator)
+- [x] Basic Input (keyboard/mouse/touch/gamepad, actions, axes, DOM adapter)
+- [x] Transform system (§6): vectors, matrices, quaternions, bounds, TRS
+        transforms with hierarchy propagation and interpolation
+- [x] 2D batching (layer/texture sorted, merged draw calls)
+- [x] PNG export + `examples/twod-demo` engine-rendered frame
 
 ### ⬜ v0.4 — 3D
 - [ ] Mesh, Model, Material, Camera, Light, 3D Scene
 
 ### ⬜ v0.5 — Gameplay
-- [ ] Physics, Audio, Animation, Character, UI, Save
+- [ ] Physics, Audio, Animation (3D), Character, UI, Save
 
 ### ⬜ v0.6 — World
 - [ ] Terrain, Navigation, AI, Streaming, World System
@@ -44,7 +50,7 @@ this file tracks **execution status**.
 ### ⬜ v0.7 — Scripting
 - [ ] JavaScript, TypeScript, Native bindings, WASM, ObsiScript foundation
 
-### ⬜ v0.8 — Editor
+### ⬜ v0.8 — Editor (ObsiFox Studio)
 - [ ] Project Manager, Scene Editor, Inspector, Asset Browser, Script Editor, Debugger
 
 ### ⬜ v0.9 — Build
@@ -67,48 +73,50 @@ this file tracks **execution status**.
 
 | § | Section | Status |
 |---|---|---|
-| 0 | Project definition | 🟡 vision + MIT license + semver; full API specs pending |
+| 0 | Project definition | 🟡 vision + MIT + semver; full API specs pending |
 | 1 | Repository architecture | ✅ monorepo, workspaces, TS config, test suite (CI/CD ⬜) |
 | 2 | Core foundation | ✅ complete |
 | 3 | Game loop | ✅ complete |
 | 4 | ECS architecture | ✅ complete |
-| 5 | Scene system | 🟡 entity hierarchy only; scenes/prefabs/streaming ⬜ |
-| 6 | Transform system | ⬜ |
-| 7 | 2D engine | ⬜ |
+| 5 | Scene system | 🟡 entity hierarchy + transform propagation; scenes/prefabs/streaming ⬜ |
+| 6 | Transform system | ✅ complete (2D + 3D math, transforms, interpolation) |
+| 7 | 2D engine | 🟡 sprites, sheets, animation, camera, batching (tilemaps/parallax/particles/lighting ⬜) |
 | 8 | 3D engine | ⬜ |
-| 9 | Rendering architecture | ⬜ |
-| 10–12 | Materials / Lighting / Camera | ⬜ |
-| 13 | Animation | ⬜ |
+| 9 | Rendering architecture | 🟡 renderer API + 3 backends (WebGL/WebGPU/Vulkan/DX ⬜) |
+| 10–12 | Materials / Lighting / Camera | ⬜ (2D camera ✅) |
+| 13 | Animation | 🟡 2D sprite animator |
 | 14–16 | Physics / Vehicles / Characters | ⬜ |
 | 17–18 | Particles / VFX | ⬜ |
-| 19–21 | Audio / Input / UI | ⬜ |
+| 19 | Audio | ⬜ |
+| 20 | Input | ✅ complete for v0.3 scope (virtual controls ⬜) |
+| 21 | UI | ⬜ |
 | 22–25 | World / Open World / Navigation / AI | ⬜ |
 | 26–28 | Inventory / Dialogue / Quest | ⬜ |
 | 29–30 | Networking / Server runtime | ⬜ |
 | 31–33 | Scripting / ObsiScript / Native | ⬜ |
-| 34–35 | Asset pipeline / Resources | ⬜ |
+| 34–35 | Asset pipeline / Resources | 🟡 procedural textures + sprite sheets |
 | 36 | Serialization | 🟡 JSON + entity/component (de)serialization |
 | 37 | Save system | 🟡 snapshot format exists; slots/encryption/cloud ⬜ |
 | 38 | Localization | ⬜ |
 | 39 | Plugin system | ⬜ |
-| 40–42 | Editor / Extensions / Project system | ⬜ |
+| 40–42 | Editor (ObsiFox Studio) / Extensions / Project system | ⬜ |
 | 43 | CLI | ⬜ |
-| 44–46 | Hot reload / Debugging / Profiling | ⬜ (ECS inspect/stats groundwork ✅) |
-| 47–52 | Platform runtimes (Win/Linux/Android/Web/App/Website) | 🟡 platform adapter + loop drivers |
+| 44–46 | Hot reload / Debugging / Profiling | 🟡 ECS inspect/stats |
+| 47–52 | Platform runtimes | 🟡 platform adapter + loop drivers |
 | 53–54 | Build system / Export targets | ⬜ |
 | 55 | Security | 🟡 error codes + plugin permission design pending |
 | 56–57 | Package manager / Marketplace | ⬜ |
-| 58–60 | Documentation / Templates / Testing | 🟡 docs + unit/integration tests ✅ |
+| 58–60 | Documentation / Templates / Testing | 🟡 docs + 153 unit/integration tests ✅ |
 | 61–63 | Performance / Jobs / Memory | 🟡 TaskSystem + MemoryTracker foundations |
-| 64–65 | Platform / renderer abstraction | 🟡 platform interface + driver abstraction |
+| 64–65 | Platform / renderer abstraction | 🟡 platform interface + backend interface |
 | 66–70 | Advanced 3D / World / MP / Editor UX / Workflow | ⬜ |
 
 ---
 
-## Next up (v0.3 — 2D)
+## Next up (v0.4 — 3D)
 
-1. `rendering/` — renderer abstraction (§9) with a WebGL2 backend first
-2. `input/` — keyboard/mouse/touch/gamepad (§20)
-3. `scene/` — scenes, transforms (§5, §6)
-4. 2D renderer: sprites, textures, cameras, batching (§7)
-5. `assets/` — texture importer + resource cache (§34, §35)
+1. `rendering/` — 3D mesh pipeline, depth buffer, perspective cameras
+2. Materials (§10) — standard/PBR material data + shading parameters
+3. Lighting (§11) — directional/point lights, simple shadow mapping
+4. glTF model import (§8, §34)
+5. `examples/threed-demo` — 3D scene rendered by the engine

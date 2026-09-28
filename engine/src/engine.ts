@@ -1,11 +1,3 @@
-/**
- * ObsiFox Engine — §2 Core / Engine class, Application services + §3 Game Loop wiring.
- *
- * `Engine` composes the core services (config, logging, events, signals,
- * scheduler, time, memory, lifecycle) with the runtime loop and a default ECS
- * world, and drives them through init/start/pause/stop/destroy.
- */
-
 import {
   Clock,
   ConfigStore,
@@ -20,7 +12,7 @@ import {
   type DeepPartial,
   type LogLevel,
   type Unsubscribe,
-} from "@obsifox/core";
+} from "@obx/core";
 import {
   GameLoop,
   TaskSystem,
@@ -29,29 +21,28 @@ import {
   type RenderCallback,
   type RuntimePlatform,
   type UpdateCallback,
-} from "@obsifox/runtime";
-import { World } from "@obsifox/ecs";
+} from "@obx/runtime";
+import { World } from "@obx/ecs";
 
-/** Engine-level configuration keys (stored in the {@link ConfigStore}). */
 export interface EngineConfig {
-  /** Engine instance name. */
+
   name: string;
-  /** Target frame rate (0 = uncapped). */
+
   targetFps: number;
-  /** Fixed simulation step in seconds. */
+
   fixedDelta: number;
-  /** Initial time scale. */
+
   timeScale: number;
-  /** Per-frame real-delta clamp in seconds. */
+
   maxDelta: number;
-  /** Minimum log level. */
+
   logLevel: LogLevel;
-  /** Advance the default ECS world every frame from the loop (default true). */
+
   autoTickWorld: boolean;
 }
 
 export const DEFAULT_ENGINE_CONFIG: EngineConfig = {
-  name: "obsifox-engine",
+  name: "obx-engine",
   targetFps: 0,
   fixedDelta: 1 / 60,
   timeScale: 1,
@@ -60,7 +51,6 @@ export const DEFAULT_ENGINE_CONFIG: EngineConfig = {
   autoTickWorld: true,
 };
 
-/** Payloads published on {@link Engine.events}. */
 export interface EngineEvents extends Record<string, unknown> {
   "engine:initialized": { name: string };
   "engine:started": { name: string };
@@ -73,30 +63,18 @@ export interface EngineEvents extends Record<string, unknown> {
 }
 
 export interface EngineOptions {
-  /** Configuration overrides merged over {@link DEFAULT_ENGINE_CONFIG}. */
+
   config?: DeepPartial<EngineConfig>;
-  /** External logger (a fresh one is created otherwise). */
+
   logger?: Logger;
-  /** Host platform adapter (default: auto-detect). */
+
   platform?: RuntimePlatform;
-  /** Loop driver (default: created by the platform). */
+
   driver?: LoopDriver;
-  /** Inject a pre-built ECS world (default: a fresh one). */
+
   world?: World;
 }
 
-/**
- * The engine heart.
- *
- * ```ts
- * const engine = new Engine({ config: { name: "demo", logLevel: "debug" } });
- * await engine.init();
- * engine.start();
- * // ...
- * engine.stop();
- * await engine.destroy();
- * ```
- */
 export class Engine {
   readonly config: ConfigStore<EngineConfig>;
   readonly logger: Logger;
@@ -154,7 +132,6 @@ export class Engine {
       timeScale: this.config.get("timeScale", 1),
     });
 
-    // Keep engine-time scheduler in lockstep with the loop clock.
     this.loop.onUpdate(() => {
       this.scheduler.update(this.clock.time);
       if (this.config.get("autoTickWorld", true)) {
@@ -164,7 +141,6 @@ export class Engine {
     });
   }
 
-  /** Shared frame clock. */
   get clock(): Clock {
     return this.loop.clock;
   }
@@ -173,13 +149,12 @@ export class Engine {
     return this.config.get("name", DEFAULT_ENGINE_CONFIG.name);
   }
 
-  /** Initialize services. Required before {@link start}. */
   async init(): Promise<void> {
     if (this.lifecycle.state !== LifecycleState.CREATED && this.lifecycle.state !== LifecycleState.STOPPED) {
       throw new InvalidStateError(`Cannot init engine in state "${this.lifecycle.state}"`);
     }
     if (this.lifecycle.state === LifecycleState.STOPPED) {
-      // Re-init after stop: go through starting path on start() instead.
+
       return;
     }
 
@@ -187,14 +162,13 @@ export class Engine {
       this.lifecycle.transition(LifecycleState.INITIALIZING);
       this.logger.level = this.config.get("logLevel", this.logger.level);
       this.logger.debug("engine initializing", { name: this.name, platform: this.platform.id });
-      // Subsystems (renderer, physics, ...) register init work here in later phases.
+
       this.lifecycle.transition(LifecycleState.INITIALIZED);
       this.events.emit("engine:initialized", { name: this.name });
       this.signals.initialized.emit();
     });
   }
 
-  /** Start the game loop (initializes lazily when needed). */
   start(): void {
     if (this.lifecycle.state === LifecycleState.CREATED) {
       throw new InvalidStateError("Call engine.init() before engine.start()");
@@ -208,7 +182,6 @@ export class Engine {
     this.signals.started.emit();
   }
 
-  /** Stop the loop. The engine can be started again afterwards. */
   stop(): void {
     if (!this.lifecycle.isActive) return;
     this.lifecycle.transition(LifecycleState.STOPPING);
@@ -219,7 +192,6 @@ export class Engine {
     this.signals.stopped.emit();
   }
 
-  /** Freeze simulation time (the loop keeps rendering). */
   pause(): void {
     if (this.lifecycle.state !== LifecycleState.RUNNING) return;
     this.clock.paused = true;
@@ -228,7 +200,6 @@ export class Engine {
     this.signals.paused.emit();
   }
 
-  /** Resume simulation time after {@link pause}. */
   resume(): void {
     if (this.lifecycle.state !== LifecycleState.PAUSED) return;
     this.clock.paused = false;
@@ -237,7 +208,6 @@ export class Engine {
     this.signals.resumed.emit();
   }
 
-  /** Tear everything down. Idempotent-safe: destroys from any state. */
   async destroy(): Promise<void> {
     if (this.lifecycle.isDestroyed) return;
     if (this.lifecycle.isActive) {
@@ -256,22 +226,18 @@ export class Engine {
     this.lifecycle.transition(LifecycleState.DESTROYED);
   }
 
-  /** Passthrough: subscribe to variable-rate updates. */
   onUpdate(callback: UpdateCallback): Unsubscribe {
     return this.loop.onUpdate(callback);
   }
 
-  /** Passthrough: subscribe to fixed-timestep simulation steps. */
   onFixedUpdate(callback: (fixedDeltaSeconds: number) => void): Unsubscribe {
     return this.loop.onFixedUpdate(callback);
   }
 
-  /** Passthrough: subscribe to render passes (interpolation alpha). */
   onRender(callback: RenderCallback): Unsubscribe {
     return this.loop.onRender(callback);
   }
 
-  /** Report an engine-level error to listeners (and log it). */
   reportError(error: unknown): void {
     this.logger.error("engine error", {
       error: error instanceof Error ? error.message : String(error),

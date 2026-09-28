@@ -1,19 +1,11 @@
-/**
- * Task System — §3 Game Loop / Thread-task abstraction + §62 Job System (foundation).
- *
- * Cooperative async task pool with bounded concurrency. Worker threads and
- * job-stealing schedulers land in §62; this covers "background processing"
- * needs of v0.1 (async loading, IO, build steps).
- */
-
-import { InvalidArgumentError } from "@obsifox/core";
+import { InvalidArgumentError } from "@obx/core";
 
 export type TaskFunction<T> = () => T | Promise<T>;
 
 export interface TaskHandle<T> {
   readonly id: number;
   readonly promise: Promise<T>;
-  /** Cancel if not yet started (running tasks are not interrupted). */
+
   cancel(): void;
 }
 
@@ -26,11 +18,10 @@ interface QueuedTask {
 }
 
 export interface TaskSystemOptions {
-  /** Max concurrently running tasks (default 4). */
+
   concurrency?: number;
 }
 
-/** Bounded async task pool. */
 export class TaskSystem {
   #concurrency: number;
   #queue: QueuedTask[] = [];
@@ -58,7 +49,6 @@ export class TaskSystem {
     return this.#runningCount;
   }
 
-  /** Submit a task for background execution. */
   submit<T>(fn: TaskFunction<T>): TaskHandle<T> {
     const id = this.#nextId++;
     let task!: QueuedTask;
@@ -87,7 +77,6 @@ export class TaskSystem {
     };
   }
 
-  /** Resolves when the queue is empty and nothing is running. */
   async drain(): Promise<void> {
     while (this.#runningCount > 0 || this.pendingCount > 0) {
       await Promise.resolve();

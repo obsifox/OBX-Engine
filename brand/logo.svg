@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="fox" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFB020"/>
+      <stop offset="1" stop-color="#FF6A1A"/>
+    </linearGradient>
+    <linearGradient id="obsidian" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1B2333"/>
+      <stop offset="1" stop-color="#0B0E14"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <polygon points="256,26 455,141 455,371 256,486 57,371 57,141"
+           fill="url(#obsidian)" stroke="url(#fox)" stroke-width="14" stroke-linejoin="round"/>
+
+  <path d="M 148 178 L 116 82 L 210 130 Z" fill="url(#fox)"/>
+  <path d="M 364 178 L 396 82 L 302 130 Z" fill="url(#fox)"/>
+  <path d="M 154 166 L 138 112 L 190 136 Z" fill="#0B0E14"/>
+  <path d="M 358 166 L 374 112 L 322 136 Z" fill="#0B0E14"/>
+
+  <path d="M 256 138 L 364 178 L 388 290 L 316 382 L 256 420 L 196 382 L 124 290 L 148 178 Z"
+        fill="url(#fox)"/>
+
+  <path d="M 178 250 L 242 272 L 234 298 L 170 276 Z" fill="#0B0E14"/>
+  <path d="M 334 250 L 270 272 L 278 298 L 342 276 Z" fill="#0B0E14"/>
+  <path d="M 190 252 L 232 268 L 228 280 L 186 264 Z" fill="#41E0FF" filter="url(#glow)" opacity="0.9"/>
+  <path d="M 322 252 L 280 268 L 284 280 L 326 264 Z" fill="#41E0FF" filter="url(#glow)" opacity="0.9"/>
+
+  <path d="M 256 336 L 286 378 L 226 378 Z" fill="#0B0E14"/>
+  <path d="M 256 336 L 271 357 L 241 357 Z" fill="#41E0FF" filter="url(#glow)" opacity="0.85"/>
+
+  <path d="M 118 402 L 146 438 L 174 402" fill="none" stroke="#41E0FF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+  <path d="M 338 402 L 366 438 L 394 402" fill="none" stroke="#41E0FF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+</svg>

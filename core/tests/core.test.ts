@@ -17,7 +17,7 @@ import {
   ensure,
   msToSeconds,
   secondsToMs,
-} from "@obsifox/core";
+} from "@obx/core";
 
 describe("Error system (§2)", () => {
   it("carries code and context", () => {
@@ -46,7 +46,7 @@ describe("Logger (§2)", () => {
     const child = logger.child("renderer");
 
     logger.info("hello", { n: 1 });
-    logger.trace("hidden"); // below level
+    logger.trace("hidden");
     child.warn("careful");
 
     expect(sink.records).toHaveLength(2);
@@ -162,7 +162,7 @@ describe("Clock (§2 Time)", () => {
     clock.advance(1);
     const { steps } = clock.consumeFixedSteps();
     expect(steps).toBe(2);
-    // Backlog dropped — next frame starts clean.
+
     const next = clock.consumeFixedSteps();
     expect(next.steps).toBe(0);
   });

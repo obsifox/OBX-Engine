@@ -1,34 +1,25 @@
-/**
- * Systems — §4 ECS / Systems, System scheduling.
- *
- * Systems are ordered per phase by `order` (ascending) with `before`/`after`
- * name constraints resolved via topological sort. Unknown constraint names
- * are ignored so optional plugins can defer registration.
- */
-
-import { InvalidArgumentError, ensure } from "@obsifox/core";
+import { InvalidArgumentError, ensure } from "@obx/core";
 import type { World } from "./world.js";
 
-/** The default system phase run by {@link World.update}. */
 export const DEFAULT_PHASE = "update";
 
 export interface SystemContext {
   world: World;
-  /** Frame delta in seconds (fixed delta during fixed phases). */
+
   delta: number;
-  /** Accumulated world time in seconds. */
+
   time: number;
 }
 
 export interface SystemDefinition {
   readonly name: string;
-  /** Execution phase/group (default `"update"`). */
+
   readonly phase: string;
-  /** Lower runs earlier within the phase (default 0). */
+
   readonly order: number;
-  /** Run before these system names. */
+
   readonly before: readonly string[];
-  /** Run after these system names. */
+
   readonly after: readonly string[];
   execute(ctx: SystemContext): void;
 }
@@ -42,7 +33,6 @@ export interface SystemOptions {
   after?: readonly string[];
 }
 
-/** Create a system definition with defaults applied. */
 export function defineSystem(options: SystemOptions): SystemDefinition {
   ensure(options.name.length > 0, "System name must be a non-empty string");
   ensure(typeof options.execute === "function", "System requires an execute() function");
@@ -56,10 +46,6 @@ export function defineSystem(options: SystemOptions): SystemDefinition {
   });
 }
 
-/**
- * Ordered system registry. Rebuilds execution order lazily whenever the set
- * of systems changes.
- */
 export class SystemScheduler {
   #systems = new Map<string, SystemDefinition>();
   #orderCache = new Map<string, SystemDefinition[]>();
@@ -92,12 +78,10 @@ export class SystemScheduler {
     return this.#systems.get(name);
   }
 
-  /** Registered system names (registration order). */
   names(): string[] {
     return [...this.#systems.keys()];
   }
 
-  /** Systems in execution order for a phase. */
   ordered(phase: string = DEFAULT_PHASE): readonly SystemDefinition[] {
     const cached = this.#orderCache.get(phase);
     if (cached) return cached;
@@ -108,7 +92,6 @@ export class SystemScheduler {
     return sorted;
   }
 
-  /** Execute every system in a phase in order. */
   run(world: World, delta: number, time: number, phase: string = DEFAULT_PHASE): void {
     const ctx: SystemContext = { world, delta, time };
     for (const system of this.ordered(phase)) {
@@ -123,7 +106,7 @@ export class SystemScheduler {
 }
 
 function topologicalSort(systems: SystemDefinition[]): SystemDefinition[] {
-  // Stable base order: ascending `order`, then registration order.
+
   const baseOrder = [...systems].sort((a, b) => a.order - b.order);
   const baseIndex = new Map(baseOrder.map((system, index) => [system.name, index]));
   return kahnSort(systems, baseIndex);
@@ -132,7 +115,6 @@ function topologicalSort(systems: SystemDefinition[]): SystemDefinition[] {
 function kahnSort(systems: SystemDefinition[], baseIndex: Map<string, number>): SystemDefinition[] {
   const byName = new Map(systems.map((system) => [system.name, system]));
 
-  // Edge meaning: dependency -> dependent (dependency runs first).
   const outgoing = new Map<string, Set<string>>();
   const indegree = new Map<string, number>();
   for (const system of systems) {
@@ -167,7 +149,7 @@ function kahnSort(systems: SystemDefinition[], baseIndex: Map<string, number>): 
       indegree.set(next, remaining);
       if (remaining === 0) {
         const nextSystem = byName.get(next) as SystemDefinition;
-        // Insert keeping base order.
+
         const insertAt = ready.findIndex((s) => (baseIndex.get(s.name) ?? 0) > (baseIndex.get(next) ?? 0));
         if (insertAt === -1) ready.push(nextSystem);
         else ready.splice(insertAt, 0, nextSystem);

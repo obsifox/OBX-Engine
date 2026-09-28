@@ -1,26 +1,14 @@
-/**
- * Loop drivers — the host-side heartbeat that feeds {@link GameLoop.step}.
- *
- * Drivers are intentionally tiny so the same loop runs under Node, browsers
- * and tests (manual stepping).
- */
-
-import { RuntimeError } from "@obsifox/core";
+import { RuntimeError } from "@obx/core";
 
 export type StepFunction = (timestampMs: number) => void;
 
-/** Host heartbeat abstraction. */
 export interface LoopDriver {
-  /** Begin calling `step` with monotonically increasing timestamps (ms). */
+
   start(step: StepFunction): void;
-  /** Stop the heartbeat. */
+
   stop(): void;
 }
 
-/**
- * Caller-driven driver — perfect for tests, dedicated servers stepping on
- * network ticks, and deterministic simulations.
- */
 export class ManualLoopDriver implements LoopDriver {
   #step: StepFunction | null = null;
   #timestampMs = 0;
@@ -40,7 +28,6 @@ export class ManualLoopDriver implements LoopDriver {
     this.#step = null;
   }
 
-  /** Manually pump one frame at the given timestamp (ms). */
   step(timestampMs: number): void {
     if (!this.#step) {
       throw new RuntimeError("ManualLoopDriver.step called before start()");
@@ -49,7 +36,6 @@ export class ManualLoopDriver implements LoopDriver {
     this.#step(timestampMs);
   }
 
-  /** Pump `count` frames spaced `intervalMs` apart. Returns final timestamp. */
   runFrames(count: number, options: { startMs?: number; intervalMs?: number } = {}): number {
     const intervalMs = options.intervalMs ?? 16;
     let timestampMs = options.startMs ?? this.#timestampMs;
@@ -63,14 +49,13 @@ export class ManualLoopDriver implements LoopDriver {
 }
 
 export interface TimeoutLoopDriverOptions {
-  /** Target frame rate. 0 or undefined = as fast as setTimeout allows. */
+
   targetFps?: number;
-  /** Custom timer functions (defaults to global setTimeout/clearTimeout). */
+
   setTimeout?: (fn: () => void, ms: number) => unknown;
   clearTimeout?: (handle: unknown) => void;
 }
 
-/** `setTimeout`-based driver — works on Node and in browsers. */
 export class TimeoutLoopDriver implements LoopDriver {
   #step: StepFunction | null = null;
   #timerHandle: unknown = null;
@@ -109,7 +94,7 @@ export class TimeoutLoopDriver implements LoopDriver {
       if (!this.#step) return;
       const nowMs = Date.now();
       this.#step(nowMs);
-      // Drift-corrected scheduling keeps the average rate near targetFps.
+
       expectedMs += frameIntervalMs;
       const delay = Math.max(0, expectedMs - Date.now());
       this.#timerHandle = this.#setTimeout(tick, delay);

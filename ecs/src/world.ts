@@ -1,9 +1,4 @@
-/**
- * ECS World — §4 ECS (entity/component/system/query/archetype/resource),
- * §5 Scene (entity hierarchy foundation), entity serialization & debugging.
- */
-
-import { AlreadyExistsError, InvalidArgumentError, NotFoundError } from "@obsifox/core";
+import { AlreadyExistsError, InvalidArgumentError, NotFoundError } from "@obx/core";
 import { Archetype } from "./archetype.js";
 import type { AnyComponentDefinition, ComponentDefinition } from "./component.js";
 import { defineComponent, getComponentDefinition } from "./component.js";
@@ -24,43 +19,31 @@ import {
   type SystemOptions,
 } from "./system.js";
 
-/* ------------------------------------------------------------------ */
-/* Built-in components                                                 */
-/* ------------------------------------------------------------------ */
-
-/** Parent link for entity hierarchy (§5 Scene tree foundation). */
 export const Parent = defineComponent<{ entity: Entity | null }>("core.Parent", {
   defaults: () => ({ entity: null }),
 });
 
-/** Children list for entity hierarchy. */
 export const Children = defineComponent<{ entities: Entity[] }>("core.Children", {
   defaults: () => ({ entities: [] }),
 });
 
-/** Optional debug/display name. */
 export const Name = defineComponent<{ value: string }>("core.Name", {
   defaults: () => ({ value: "" }),
 });
 
-/* ------------------------------------------------------------------ */
-/* Types                                                               */
-/* ------------------------------------------------------------------ */
-
-/** Either a bare definition or `[definition, initialData]`. */
 export type ComponentSpec =
   | AnyComponentDefinition
   | readonly [AnyComponentDefinition, Record<string, unknown>?];
 
 export interface DestroyOptions {
-  /** Also destroy all descendants (default false — children are orphaned). */
+
   recursive?: boolean;
 }
 
 export interface SerializedEntity {
-  /** Packed entity handle (index + generation), preserved across save/load. */
+
   entity: Entity;
-  /** Component data keyed by component name. */
+
   components: Record<string, unknown>;
 }
 
@@ -72,7 +55,7 @@ export interface SerializedWorld {
 }
 
 export interface LoadOptions {
-  /** Skip (true, default) or throw on unknown component names in the data. */
+
   allowUnknownComponents?: boolean;
 }
 
@@ -99,24 +82,6 @@ interface EntityLocation {
   row: number;
 }
 
-/* ------------------------------------------------------------------ */
-/* World                                                               */
-/* ------------------------------------------------------------------ */
-
-/**
- * The ECS container: entities, components (archetype storage), systems,
- * queries, resources and a light entity hierarchy.
- *
- * ```ts
- * const world = new World();
- * const Position = defineComponent<{ x: number; y: number }>("Position", {
- *   defaults: () => ({ x: 0, y: 0 }),
- * });
- * const e = world.createEntity([Position, { x: 1, y: 2 }]);
- * for (const [entity, pos] of world.query(Position)) pos.x += 1;
- * world.update(1 / 60);
- * ```
- */
 export class World implements QueryHost {
   readonly name: string;
 
@@ -140,8 +105,6 @@ export class World implements QueryHost {
     this.name = name;
   }
 
-  /* ------------------------------ QueryHost ---------------------- */
-
   get archetypes(): readonly Archetype[] {
     return this.#archetypeList;
   }
@@ -150,22 +113,14 @@ export class World implements QueryHost {
     return this.#archetypesVersion;
   }
 
-  /* ------------------------------ Entities ----------------------- */
-
-  /** Current entity count. */
   get entityCount(): number {
     return this.#entityCount;
   }
 
-  /** Accumulated world time in seconds (advanced by {@link update}). */
   get time(): number {
     return this.#time;
   }
 
-  /**
-   * Create a new entity, optionally with initial components:
-   * `world.createEntity(Position, [Velocity, { x: 1 }])`.
-   */
   createEntity(...specs: ComponentSpec[]): Entity {
     const index = this.#freeIndices.pop() ?? this.#nextIndex++;
     const generation = this.#generations[index] ?? 0;
@@ -184,7 +139,7 @@ export class World implements QueryHost {
         });
       }
       types.push(definition);
-      values.set(definition.id, { ...(definition.defaults() as object), ...(data ?? {}) });
+      values.set(definition.id, mergeComponentData(definition, data));
     }
 
     const archetype = this.#getOrCreateArchetype(types);
@@ -193,7 +148,6 @@ export class World implements QueryHost {
     return entity;
   }
 
-  /** Create `count` entities sharing the same initial specs. */
   createEntities(count: number, ...specs: ComponentSpec[]): Entity[] {
     const entities: Entity[] = [];
     for (let i = 0; i < count; i += 1) {
@@ -202,7 +156,6 @@ export class World implements QueryHost {
     return entities;
   }
 
-  /** Destroy an entity (and optionally its subtree). Returns false if stale. */
   destroyEntity(entity: Entity, options: DestroyOptions = {}): boolean {
     if (!this.isAlive(entity)) return false;
 
@@ -217,7 +170,6 @@ export class World implements QueryHost {
       }
     }
 
-    // Detach from parent.
     const parent = this.getParent(entity);
     if (parent !== undefined) {
       this.#removeChildFrom(parent, entity);
@@ -241,7 +193,6 @@ export class World implements QueryHost {
     return true;
   }
 
-  /** Whether the handle refers to a currently alive entity. */
   isAlive(entity: Entity): boolean {
     const index = entityIndex(entity);
     return (
@@ -250,14 +201,10 @@ export class World implements QueryHost {
     );
   }
 
-  /** All currently alive entities (snapshot). */
   listEntities(): Entity[] {
     return [...this.#locations.keys()];
   }
 
-  /* ------------------------------ Components --------------------- */
-
-  /** Attach a component; returns the live stored data object. */
   addComponent<T extends object>(
     entity: Entity,
     definition: ComponentDefinition<T>,
@@ -271,7 +218,7 @@ export class World implements QueryHost {
       );
     }
 
-    const value = { ...(definition.defaults() as object), ...(data ?? {}) } as T;
+    const value = mergeComponentData(definition, data) as T;
     const targetTypes = [...location.archetype.types, definition];
     const target = this.#getOrCreateArchetype(targetTypes);
 
@@ -281,7 +228,6 @@ export class World implements QueryHost {
     return value;
   }
 
-  /** Detach a component. Returns false when the entity lacks it. */
   removeComponent(entity: Entity, definition: AnyComponentDefinition): boolean {
     const location = this.#requireLocation(entity);
     if (!location.archetype.has(definition.id)) return false;
@@ -294,7 +240,6 @@ export class World implements QueryHost {
     return true;
   }
 
-  /** Live component data (mutate it in place), or undefined. */
   getComponent<T extends object>(entity: Entity, definition: ComponentDefinition<T>): T | undefined {
     if (!this.isAlive(entity)) {
       throw new NotFoundError(`Entity is not alive`, { context: { entity } });
@@ -303,7 +248,6 @@ export class World implements QueryHost {
     return location.archetype.get(location.row, definition.id) as T | undefined;
   }
 
-  /** Live component data or throw. */
   getComponentOrThrow<T extends object>(entity: Entity, definition: ComponentDefinition<T>): T {
     const value = this.getComponent(entity, definition);
     if (value === undefined) {
@@ -314,21 +258,16 @@ export class World implements QueryHost {
     return value;
   }
 
-  /** Whether the entity has the component. */
   hasComponent(entity: Entity, definition: AnyComponentDefinition): boolean {
     if (!this.isAlive(entity)) return false;
     const location = this.#locations.get(entity) as EntityLocation;
     return location.archetype.has(definition.id);
   }
 
-  /* ------------------------------ Queries ------------------------ */
-
-  /** Cached query over entities having ALL listed components. */
   query<T extends readonly AnyComponentDefinition[]>(...all: T): Query<T> {
     return this.#cachedQuery({ all, any: [], none: [] }) as Query<T>;
   }
 
-  /** Cached query with `all` / `any` / `none` constraints. */
   queryWith<T extends readonly AnyComponentDefinition[] = AnyComponentDefinition[]>(
     spec: Partial<QuerySpec> & { all?: T },
   ): Query<T> {
@@ -339,9 +278,6 @@ export class World implements QueryHost {
     }) as Query<T>;
   }
 
-  /* ------------------------------ Systems ------------------------ */
-
-  /** Register a system definition or options object. */
   addSystem(system: SystemDefinition | SystemOptions): SystemDefinition {
     const definition = isSystemDefinition(system) ? system : defineSystem(system);
     this.#systems.add(definition);
@@ -352,23 +288,18 @@ export class World implements QueryHost {
     return this.#systems.remove(name);
   }
 
-  /** Execute the default `update` phase and advance world time. */
   update(delta: number): void {
     this.#time += delta;
     this.#systems.run(this, delta, this.#time, DEFAULT_PHASE);
   }
 
-  /** Execute one named phase (e.g. `"fixedUpdate"`, `"render"`). */
   runPhase(phase: string, delta: number): void {
     this.#systems.run(this, delta, this.#time, phase);
   }
 
-  /** Access the system scheduler (order inspection, custom runs). */
   get systems(): SystemScheduler {
     return this.#systems;
   }
-
-  /* ------------------------------ Resources ---------------------- */
 
   addResource<T>(definition: ResourceDefinition<T>, value: T): void {
     if (this.#resources.has(definition.id)) {
@@ -379,7 +310,6 @@ export class World implements QueryHost {
     this.#resources.set(definition.id, value);
   }
 
-  /** Insert or replace. */
   setResource<T>(definition: ResourceDefinition<T>, value: T): void {
     this.#resources.set(definition.id, value);
   }
@@ -406,9 +336,6 @@ export class World implements QueryHost {
     return this.#resources.delete(definition.id);
   }
 
-  /* ------------------------------ Hierarchy ---------------------- */
-
-  /** Set/clear the parent of `child` (null to orphan). Cycle-safe. */
   setParent(child: Entity, parent: Entity | null): void {
     this.#requireLocation(child);
     if (parent !== null) {
@@ -418,7 +345,6 @@ export class World implements QueryHost {
     const currentParent = this.getParent(child) ?? null;
     if (currentParent === parent) return;
 
-    // Cycle detection: walking up from the new parent must never reach `child`.
     let cursor = parent;
     const visited = new Set<Entity>();
     while (cursor !== null && cursor !== undefined) {
@@ -457,20 +383,17 @@ export class World implements QueryHost {
     }
   }
 
-  /** Parent handle, or undefined when orphaned. */
   getParent(child: Entity): Entity | undefined {
     if (!this.isAlive(child)) return undefined;
     const parentData = this.getComponent(child, Parent);
     return parentData?.entity ?? undefined;
   }
 
-  /** Direct children (empty when none). */
   getChildren(parent: Entity): readonly Entity[] {
     if (!this.isAlive(parent)) return [];
     return this.getComponent(parent, Children)?.entities ?? [];
   }
 
-  /** Convenience name accessors backed by the {@link Name} component. */
   setName(entity: Entity, name: string): void {
     if (this.hasComponent(entity, Name)) {
       this.getComponentOrThrow(entity, Name).value = name;
@@ -484,9 +407,6 @@ export class World implements QueryHost {
     return this.getComponent(entity, Name)?.value ?? null;
   }
 
-  /* ------------------------------ Serialization ------------------ */
-
-  /** Serialize world state (entities + components + resources + time). */
   serialize(): SerializedWorld {
     const entities: SerializedEntity[] = [];
     for (const [entity, location] of this.#locations) {
@@ -506,7 +426,6 @@ export class World implements QueryHost {
     };
   }
 
-  /** Load serialized state into this (typically fresh) world. */
   loadSerialized(data: SerializedWorld, options: LoadOptions = {}): void {
     const allowUnknown = options.allowUnknownComponents ?? true;
     for (const serialized of data.entities) {
@@ -531,14 +450,11 @@ export class World implements QueryHost {
     }
   }
 
-  /** Convenience: deserialize into a new world. */
   static fromSerialized(data: SerializedWorld, options?: LoadOptions): World {
     const world = new World();
     world.loadSerialized(data, options);
     return world;
   }
-
-  /* ------------------------------ Debugging ---------------------- */
 
   stats(): WorldStats {
     const componentsByType: Record<string, number> = {};
@@ -576,8 +492,6 @@ export class World implements QueryHost {
     };
   }
 
-  /* ------------------------------ Internals ---------------------- */
-
   #requireLocation(entity: Entity): EntityLocation {
     const location = this.#locations.get(entity);
     if (!location || !this.isAlive(entity)) {
@@ -598,7 +512,6 @@ export class World implements QueryHost {
     return archetype;
   }
 
-  /** Move an entity between archetypes at fixed values. */
   #relocate(
     entity: Entity,
     from: EntityLocation,
@@ -634,7 +547,6 @@ export class World implements QueryHost {
     }
   }
 
-  /** Recreate an entity with an exact packed handle (save/load support). */
   #reviveEntity(packed: Entity): Entity {
     const index = entityIndex(packed);
     const generation = entityGeneration(packed);
@@ -645,7 +557,7 @@ export class World implements QueryHost {
     this.#aliveFlags[index] = true;
     this.#entityCount += 1;
     const entity = makeEntity(index, generation);
-    // Place in the empty archetype; components migrate it as they load.
+
     const archetype = this.#getOrCreateArchetype([]);
     const row = archetype.add(entity, new Map());
     this.#locations.set(entity, { archetype, row });
@@ -662,11 +574,17 @@ export class World implements QueryHost {
   }
 }
 
-/* ------------------------------------------------------------------ */
-/* Helpers                                                             */
-/* ------------------------------------------------------------------ */
+function mergeComponentData(
+  definition: AnyComponentDefinition,
+  data?: Record<string, unknown>,
+): unknown {
+  const value = definition.defaults() as Record<string, unknown>;
+  if (data) {
+    Object.assign(value, data);
+  }
+  return value;
+}
 
-/** A fully-resolved system definition (all scheduling fields present). */
 function isSystemDefinition(value: SystemDefinition | SystemOptions): value is SystemDefinition {
   return (
     typeof (value as SystemDefinition).phase === "string" &&
@@ -676,18 +594,9 @@ function isSystemDefinition(value: SystemDefinition | SystemOptions): value is S
   );
 }
 
-/* ------------------------------------------------------------------ */
-/* Resource name registry (serialization support)                      */
-/* ------------------------------------------------------------------ */
-
 const RESOURCE_DEFINITION_NAMES = new Map<number, string>();
 const RESOURCE_DEFINITIONS_BY_NAME = new Map<string, ResourceDefinition>();
 
-/**
- * Register a resource definition with serialization support.
- * Equivalent to {@link defineResource} but keeps a name registry so
- * resources survive world (de)serialization.
- */
 export function defineWorldResource<T = unknown>(name: string): ResourceDefinition<T> {
   const definition = defineResource<T>(name);
   RESOURCE_DEFINITION_NAMES.set(definition.id, name);

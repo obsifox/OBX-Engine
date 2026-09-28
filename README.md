@@ -1,120 +1,108 @@
-# ObsiFox Engine
+# OBX Engine
 
-**One engine for games, applications and the web — TypeScript-first, cross-platform.**
+<p align="center">
+  <img src="brand/hero.png" width="720" alt="OBX Engine brand artwork"/>
+</p>
 
-ObsiFox Engine is a modular game & application engine built as a TypeScript
-monorepo. It targets 2D/3D games, desktop/mobile/web applications, websites,
-tools and simulations — from one codebase, for Windows, Linux, Android, Web and
-headless servers.
+**One engine. Any platform.** — a TypeScript-first game & application engine for
+2D/3D games, desktop/mobile/web applications, websites, tools and simulations:
+one codebase targeting Windows, Linux, Android, Web and headless servers.
 
-> `ENGINE ≠ GAME` — the engine is a **platform for creating software**.
+> `ENGINE != GAME` — the engine is a **platform for creating software**.
+
+| | |
+|---|---|
+| **Engine** | OBX Engine |
+| **Editor** | ObsiFox Studio (roadmap v0.8) |
+| **Packages** | `@obx/core` `@obx/runtime` `@obx/ecs` `@obx/engine` `@obx/math` `@obx/input` `@obx/rendering` `@obx/scene` |
+| **Logo / identity** | [`brand/`](brand/) — `logo.svg`, `wordmark.svg`, `brand.md` |
 
 ---
 
-## ✨ Current status (v0.2)
+## Current status (v0.3)
 
-| Roadmap phase | Status | Packages |
+| Roadmap phase | Status | Highlights |
 |---|---|---|
-| **v0.1 — Foundation** (Core, Runtime, Game Loop, Events, Time, Config, Logging) | ✅ done | `@obsifox/core`, `@obsifox/runtime` |
-| **v0.2 — ECS** (Entity, Component, System, World, Queries, Resources) | ✅ done | `@obsifox/ecs`, `@obsifox/engine` |
-| v0.3 — 2D | ⬜ planned | `rendering/`, … |
-| v0.4 — 3D | ⬜ planned | |
-| v0.5 — Gameplay (Physics, Audio, UI, Save) | ⬜ planned | |
-| … up to v1.0 | ⬜ planned | see [`docs/ROADMAP.md`](docs/ROADMAP.md) |
+| **v0.1 — Foundation** | ✅ | core services, game loop, fixed timestep, time/config/logging |
+| **v0.2 — ECS** | ✅ | archetype ECS, queries, systems, resources, hierarchy, save/load |
+| **v0.3 — 2D** | ✅ | math/transforms, renderer + backends, sprites, cameras, animation, input |
+| v0.4 — 3D | ⬜ | meshes, materials, cameras, lights |
+| v0.5+ | ⬜ | see [`docs/ROADMAP.md`](docs/ROADMAP.md) |
 
-Full checklist: [`docs/ROADMAP.md`](docs/ROADMAP.md) · Architecture: [`docs/architecture.md`](docs/architecture.md)
+Latest update screenshot: [`docs/screenshots/v0.3-update.svg`](docs/screenshots/v0.3-update.svg)
 
 ---
 
-## 🚀 Getting started
+## Getting started
 
 ```bash
-npm install        # workspace deps
-npm run build      # tsc -b core runtime ecs engine
-npm test           # 84 tests (vitest)
-npm run example:hello   # real-time 3s demo at 60 FPS
+npm install
+npm test                # 153 tests (vitest)
+npm run example:twod    # renders a real PNG frame with the 2D engine
+npm run example:hello   # real-time 60 FPS loop demo
 npm run example:ecs     # deterministic ECS tour
 ```
 
 ### Minimal code
 
 ```ts
-import { Application, defineComponent, defineSystem } from "@obsifox/engine";
+import { Application, Camera2D, Colors, Renderer2D, SoftwareBackend, Texture } from "@obx/engine";
 
-const Position = defineComponent<{ x: number; y: number }>("Position", {
-  defaults: () => ({ x: 0, y: 0 }),
+const backend = new SoftwareBackend(960, 540);
+const renderer = new Renderer2D(backend);
+const camera = new Camera2D({ viewportWidth: 960, viewportHeight: 540 });
+
+renderer.begin(camera, Colors.obsidian);
+renderer.drawSprite({
+  texture: Texture.solid(Colors.foxOrange, 16, 16),
+  x: 480, y: 270, width: 128, height: 128,
 });
-const Velocity = defineComponent<{ x: number; y: number }>("Velocity", {
-  defaults: () => ({ x: 60, y: 0 }),
-});
-
-const app = new Application({ name: "my-game", config: { targetFps: 60 } });
-
-const player = app.engine.world.createEntity(Position, [Velocity, { x: 60 }]);
-
-app.engine.world.addSystem(defineSystem({
-  name: "move",
-  execute: ({ delta }) => {
-    for (const [, pos, vel] of app.engine.world.query(Position, Velocity)) {
-      pos.x += vel.x * delta;
-    }
-  },
-}));
-
-await app.run();
+renderer.end();
 ```
 
 ---
 
-## 📦 Packages
+## Packages
 
 | Package | Path | Responsibility (roadmap §) |
 |---|---|---|
-| `@obsifox/core` | `core/` | Logger, Errors, EventBus, Signals, Clock/Time, Scheduler, Config, Memory, Lifecycle (§2) |
-| `@obsifox/runtime` | `runtime/` | GameLoop (fixed timestep), LoopDrivers, FrameLimiter, FpsCounter, TaskSystem, Platforms (§3, §62, §64) |
-| `@obsifox/ecs` | `ecs/` | Entities, Components, Archetypes, Queries, Systems, Resources, Hierarchy, Serialization (§4, §5, §36) |
-| `@obsifox/engine` | `engine/` | `Engine` + `Application` facades wiring everything together (§2, §51) |
+| `@obx/core` | `core/` | errors, logging, events, signals, clock, scheduler, config, memory, lifecycle (§2) |
+| `@obx/runtime` | `runtime/` | game loop, loop drivers, frame limiter, FPS, tasks, platforms (§3, §62, §64) |
+| `@obx/ecs` | `ecs/` | entities, components, archetypes, queries, systems, resources, serialization (§4, §5, §36) |
+| `@obx/math` | `math/` | vectors, matrices, quaternions, bounds, colors, transforms (§6) |
+| `@obx/input` | `input/` | keyboard, mouse, touch, gamepad, actions, axes, profiles (§20) |
+| `@obx/rendering` | `rendering/` | 2D renderer, textures, sprite sheets, animation, camera, batching, backends, PNG (§7, §9) |
+| `@obx/scene` | `scene/` | transform components, hierarchy propagation, interpolation (§5, §6) |
+| `@obx/engine` | `engine/` | `Engine` + `Application` facades re-exporting the full stack (§2, §51) |
 
 ### Repository layout (target)
 
 ```
-obsifox-engine/
-├── core/        runtime/     ecs/        engine/      ← implemented (v0.1–v0.2)
-├── rendering/   physics/     audio/      input/       ← v0.3+
-├── animation/   networking/  scripting/  ui/
-├── assets/      scene/       world/      ai/
-├── tools/       editor/      cli/        build/
-├── plugins/     native/      wasm/       runtimes/
-├── templates/   examples/    tests/      docs/
+obx-engine/
+├── core/        runtime/     ecs/        engine/      math/        input/
+├── rendering/   scene/       physics/    audio/       animation/   networking/
+├── scripting/   ui/          assets/     world/       ai/          tools/
+├── editor/      cli/         build/      plugins/     native/      wasm/
+├── runtimes/    templates/   examples/   tests/       docs/        brand/
 └── packages/
 ```
 
 ---
 
-## 🧩 Design highlights
+## Design highlights
 
 - **Fixed-timestep game loop** with interpolation alpha, time scale, pause and
-  spiral-of-death protection — driver-agnostic (manual/timeout/…).
-- **Archetype-based ECS**: SoA component columns, O(1) entity handles with
-  generations (stale-handle detection), cached `all/any/none` queries.
-- **Deterministic system scheduling** — `order` + `before`/`after` topological
-  sort, phases (`update`, `fixedUpdate`, …), cycle detection.
-- **Engine-time scheduler**: timers respect `timeScale` and `pause` automatically.
-- **World serialization** with stable entity ids, custom (de)serialize hooks and
-  resource round-tripping (save-game foundation).
-- **Everything tested** — unit + integration suites run on `vitest`.
-
----
-
-## 🇮🇷 خلاصه به فارسی
-
-**ObsiFox Engine** یک موتور بازی/نرم‌افزار چندپلتفرمی مبتنی بر TypeScript است که
-از یک کدپایه برای ویندوز، لینوکس، اندروید، وب و سرور هدف می‌گیرد.
-
-این مخزن در حال حاضر **v0.1 (هسته: حلقه بازی، رویدادها، زمان، کانفیگ، لاگینگ)**
-و **v0.2 (سیستم ECS: Entity/Component/System/Query/Resource)** را کامل و تست‌شده
-پیاده‌سازی کرده است. مسیر کامل توسعه تا v1.0 در [`docs/ROADMAP.md`](docs/ROADMAP.md)
-آمده است. برای شروع: `npm install && npm test && npm run example:hello`
+  spiral-of-death protection — driver-agnostic (manual/timeout/...).
+- **Archetype ECS**: dense SoA columns, generation-safe entity handles,
+  cached `all/any/none` queries, topological system scheduling.
+- **2D renderer with real output**: CPU camera math, layer-sorted sprite
+  batching, a pixel-tested software rasterizer, a Canvas2D backend and PNG
+  export (portable, dependency-free).
+- **Input abstraction**: actions/axes mapping across keyboard, mouse, touch and
+  gamepads with a DOM adapter and full manual injection for tests/servers.
+- **Scene transforms**: parent/child propagation with previous/current state for
+  render interpolation, custom serialization hooks.
+- **Everything tested** — 153 unit + integration tests, pixel-exact renderer checks.
 
 ---
 

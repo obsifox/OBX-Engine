@@ -1,16 +1,12 @@
-/**
- * @obsifox/engine — the ObsiFox Engine facade.
- *
- * Composes @obsifox/core, @obsifox/runtime and @obsifox/ecs into the
- * Engine/Application entry points described in §2 of the roadmap.
- */
-
 export * from "./engine.js";
 export * from "./application.js";
 
-// Re-export the building blocks so consumers can depend on one package.
-export * from "@obsifox/core";
-export * from "@obsifox/runtime";
-export * from "@obsifox/ecs";
+export * from "@obx/core";
+export * from "@obx/runtime";
+export * from "@obx/ecs";
+export * from "@obx/math";
+export * from "@obx/input";
+export * from "@obx/rendering";
+export * from "@obx/scene";
 
-export const ENGINE_VERSION = "0.1.0";
+export const ENGINE_VERSION = "0.3.0";

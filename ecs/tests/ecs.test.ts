@@ -12,7 +12,7 @@ import {
   formatEntity,
   isEntity,
   makeEntity,
-} from "@obsifox/ecs";
+} from "@obx/ecs";
 
 const Position = defineComponent<{ x: number; y: number }>("Test.Position", {
   defaults: () => ({ x: 0, y: 0 }),
@@ -79,7 +79,6 @@ describe("World entities & components (§4)", () => {
       world.getComponentOrThrow(entity, Position).x = index * 10;
     });
 
-    // Add/remove a component on every entity — exercises swap-remove paths.
     for (const entity of entities) {
       world.addComponent(entity, Health);
     }
@@ -101,7 +100,6 @@ describe("World entities & components (§4)", () => {
     expect(world.destroyEntity(first)).toBe(false);
     expect(() => world.getComponent(first, Position)).toThrowError("not alive");
 
-    // Index is reused with a bumped generation — stale handle stays dead.
     const second = world.createEntity(Position);
     expect(second).not.toBe(first);
     expect(entityIndex(second)).toBe(entityIndex(first));
@@ -150,7 +148,7 @@ describe("Queries (§4)", () => {
   it("iterates tuples with component data", () => {
     const world = new World();
     const entity = world.createEntity([Position, { x: 5, y: 0 }], [Velocity, { x: 2, y: 0 }]);
-    world.createEntity(Position); // not moving — excluded
+    world.createEntity(Position);
 
     const seen: number[] = [];
     for (const [e, pos, vel] of world.query(Position, Velocity)) {
@@ -389,7 +387,7 @@ describe("Debugging (§4 ECS debugging)", () => {
 
     const stats = world.stats();
     expect(stats.entities).toBe(1);
-    // createEntity(Position) + setName(...) adding core.Name = 2 archetypes.
+
     expect(stats.archetypes).toBe(2);
     expect(stats.systems).toBe(1);
     expect(stats.componentsByType["Test.Position"]).toBe(1);

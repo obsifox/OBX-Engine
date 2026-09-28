@@ -1,15 +1,3 @@
-/**
- * ObsiFox Game Loop — §3 Game Loop.
- *
- * ```text
- * Input → Simulation → Physics → AI → Animation → Audio → Networking → UI → Rendering
- * ```
- *
- * The loop is driver-agnostic: a {@link LoopDriver} supplies timestamps, the
- * loop advances a {@link Clock}, runs `fixedUpdate` at a fixed timestep
- * (accumulator pattern) and then variable `update` + `render` callbacks.
- */
-
 import {
   Clock,
   InvalidStateError,
@@ -17,7 +5,7 @@ import {
   Signal,
   type ClockOptions,
   type Unsubscribe,
-} from "@obsifox/core";
+} from "@obx/core";
 import type { LoopDriver } from "./loop-driver.js";
 import { ManualLoopDriver } from "./loop-driver.js";
 import { FpsCounter } from "./fps-counter.js";
@@ -28,26 +16,15 @@ export type RenderCallback = (interpolationAlpha: number) => void;
 export type FrameCallback = (frame: number) => void;
 
 export interface GameLoopOptions extends ClockOptions {
-  /** Heartbeat source (default: {@link ManualLoopDriver}). */
+
   driver?: LoopDriver;
-  /** Track FPS statistics (default true). */
+
   trackFps?: boolean;
 }
 
-/**
- * Fixed-timestep game loop with variable-rate update/render phases.
- *
- * ```ts
- * const loop = new GameLoop();
- * loop.onFixedUpdate((dt) => world.update(dt));
- * loop.onUpdate((dt) => ui.update(dt));
- * loop.onRender((alpha) => renderer.render(alpha));
- * loop.start();
- * ```
- */
 export class GameLoop {
   readonly clock: Clock;
-  /** Fired at the end of each processed frame with the frame index. */
+
   readonly onFrameEnd: Signal<[frame: number]> = new Signal();
 
   #driver: LoopDriver;
@@ -69,7 +46,6 @@ export class GameLoop {
     return this.#running;
   }
 
-  /** Current FPS estimate (0 when tracking disabled). */
   get fps(): number {
     return this.#fps?.fps ?? 0;
   }
@@ -85,10 +61,6 @@ export class GameLoop {
     this.#driver = value;
   }
 
-  /**
-   * Wrap every frame body in a custom hook (used by schedulers, profilers,
-   * or a parent engine wanting to run its Scheduler.update alongside frames).
-   */
   setStepHook(hook: ((fn: () => void) => void) | null): void {
     this.#stepHook = hook;
   }
@@ -117,7 +89,6 @@ export class GameLoop {
     };
   }
 
-  /** Start the loop with the configured driver. */
   start(): void {
     if (this.#running) {
       throw new InvalidStateError("GameLoop is already running");
@@ -127,7 +98,6 @@ export class GameLoop {
     this.#driver.start((timestampMs) => this.step(timestampMs));
   }
 
-  /** Stop the loop (driver heartbeat halts; state is preserved). */
   stop(): void {
     if (!this.#running) return;
     this.#running = false;
@@ -135,10 +105,6 @@ export class GameLoop {
     this.#lastTimestampMs = null;
   }
 
-  /**
-   * Process exactly one frame at `timestampMs` (milliseconds, monotonic).
-   * Called by the driver; public for deterministic tests.
-   */
   step(timestampMs: number): void {
     const run = (): void => this.#stepBody(timestampMs);
     if (this.#stepHook) {
@@ -156,7 +122,6 @@ export class GameLoop {
     this.clock.advance(deltaSeconds);
     this.#fps?.sample(this.clock.deltaUnscaled);
 
-    // Fixed timestep: run simulation N times at fixedDelta.
     const { steps, alpha } = this.clock.consumeFixedSteps();
     for (let i = 0; i < steps; i += 1) {
       for (const callback of this.#fixedCallbacks) {
@@ -164,12 +129,10 @@ export class GameLoop {
       }
     }
 
-    // Variable update (delta is 0 while paused).
     for (const callback of this.#updateCallbacks) {
       callback(this.clock.delta);
     }
 
-    // Render with interpolation alpha (still runs while paused — pause menus etc.).
     for (const callback of this.#renderCallbacks) {
       callback(alpha);
     }

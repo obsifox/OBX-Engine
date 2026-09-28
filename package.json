@@ -1,24 +1,29 @@
 {
-  "name": "obsifox-engine",
-  "version": "0.1.0",
+  "name": "obx-engine",
+  "version": "0.3.0",
   "private": true,
-  "description": "ObsiFox Engine — a cross-platform TypeScript game & application engine",
+  "description": "OBX Engine \u2014 a cross-platform TypeScript game & application engine",
   "type": "module",
   "license": "MIT",
   "workspaces": [
     "core",
     "runtime",
     "ecs",
-    "engine"
+    "engine",
+    "math",
+    "input",
+    "rendering",
+    "scene"
   ],
   "scripts": {
-    "build": "tsc -b core runtime ecs engine",
-    "clean": "tsc -b core runtime ecs engine --clean && node -e \"const fs=require('fs');for (const d of ['core','runtime','ecs','engine']) fs.rmSync(d+'/dist',{recursive:true,force:true,recursiveRetry:true})\"",
+    "build": "tsc -b core runtime ecs engine math input rendering scene",
+    "clean": "node scripts/clean.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc -b core runtime ecs engine --pretty",
+    "typecheck": "tsc -b core runtime ecs engine math input rendering scene --pretty",
     "example:hello": "npm run build && node examples/hello-engine/index.js",
-    "example:ecs": "npm run build && node examples/ecs-demo/index.js"
+    "example:ecs": "npm run build && node examples/ecs-demo/index.js",
+    "example:twod": "npm run build && node examples/twod-demo/index.js"
   },
   "devDependencies": {
     "@types/node": "^20.14.0",

@@ -1,24 +1,15 @@
-/**
- * Archetype storage — §4 ECS / Archetype, Component storage.
- *
- * Entities sharing an exact component set live together in one archetype,
- * with one column (dense array) per component type. Adding/removing a
- * component migrates the entity to another archetype (classic ECS move).
- */
-
 import type { AnyComponentDefinition } from "./component.js";
 import type { Entity } from "./entity.js";
 
-/** Stable key for a component set (sorted type ids). */
 export function archetypeKey(typeIds: readonly number[]): string {
   return [...typeIds].sort((a, b) => a - b).join(",");
 }
 
 export class Archetype {
   readonly key: string;
-  /** Component types in this archetype, sorted by id. */
+
   readonly types: readonly AnyComponentDefinition[];
-  /** Entities packed densely, indexed by row. */
+
   readonly entities: Entity[] = [];
 
   #columns: Map<number, unknown[]>;
@@ -36,7 +27,6 @@ export class Archetype {
     return this.entities.length;
   }
 
-  /** Whether this archetype contains the given component type. */
   has(typeId: number): boolean {
     return this.#columns.has(typeId);
   }
@@ -53,10 +43,6 @@ export class Archetype {
     column[row] = value;
   }
 
-  /**
-   * Append an entity with pre-built component values keyed by type id.
-   * Returns the row assigned.
-   */
   add(entity: Entity, values: ReadonlyMap<number, unknown>): number {
     const row = this.entities.length;
     this.entities.push(entity);
@@ -67,11 +53,6 @@ export class Archetype {
     return row;
   }
 
-  /**
-   * Swap-remove the entity at `row`.
-   * Returns the entity that was moved into `row` (so the caller can fix its
-   * location), or undefined when the removed row was the last one.
-   */
   removeAt(row: number): Entity | undefined {
     const lastRow = this.entities.length - 1;
     if (row < 0 || row > lastRow) {
@@ -96,7 +77,6 @@ export class Archetype {
     return movedEntity;
   }
 
-  /** Collect all component values of a row keyed by type id. */
   collectValues(row: number): Map<number, unknown> {
     const values = new Map<number, unknown>();
     for (const type of this.types) {

@@ -1,0 +1,19 @@
+{
+  "name": "@obx/math",
+  "version": "0.3.0",
+  "description": "OBX Engine math — vectors, matrices, quaternions, bounds, transforms",
+  "type": "module",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  }
+}

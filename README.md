@@ -13,23 +13,26 @@ one codebase targeting Windows, Linux, Android, Web and headless servers.
 | | |
 |---|---|
 | **Engine** | OBX Engine |
-| **Editor** | ObsiFox Studio (roadmap v0.8) |
-| **Packages** | `@obx/core` `@obx/runtime` `@obx/ecs` `@obx/engine` `@obx/math` `@obx/input` `@obx/rendering` `@obx/scene` |
+| **Editor** | ObsiFox Studio (roadmap v0.9) |
+| **Packages** | `@obx/core` `@obx/runtime` `@obx/ecs` `@obx/engine` `@obx/math` `@obx/input` `@obx/rendering` `@obx/scene` `@obx/physics` `@obx/audio` `@obx/animation` `@obx/character` `@obx/ui` `@obx/save` `@obx/vehicle` `@obx/particles` `@obx/vfx` `@obx/world` `@obx/navigation` `@obx/ai` |
 | **Logo / identity** | [`brand/`](brand/) — `logo.svg`, `wordmark.svg`, `brand.md` |
 
 ---
 
-## Current status (v0.3)
+## Current status (v0.7)
 
 | Roadmap phase | Status | Highlights |
 |---|---|---|
 | **v0.1 — Foundation** | ✅ | core services, game loop, fixed timestep, time/config/logging |
 | **v0.2 — ECS** | ✅ | archetype ECS, queries, systems, resources, hierarchy, save/load |
 | **v0.3 — 2D** | ✅ | math/transforms, renderer + backends, sprites, cameras, animation, input |
-| v0.4 — 3D | ⬜ | meshes, materials, cameras, lights |
-| v0.5+ | ⬜ | see [`docs/ROADMAP.md`](docs/ROADMAP.md) |
+| **v0.4 — 3D** | ✅ | meshes, materials, cameras, lights, software3D rasterizer |
+| **v0.5 — Gameplay** | ✅ | physics, audio, 3D animation, character, UI, save |
+| **v0.6 — Motion & Effects** | ✅ | vehicles, particles, VFX |
+| **v0.7 — World & AI** | ✅ | terrain, streaming/LOD, day/night, weather, A*, crowds, AI |
+| v0.8+ | ⬜ | see [`docs/ROADMAP.md`](docs/ROADMAP.md) |
 
-Latest update screenshot: [`docs/screenshots/v0.3-update.svg`](docs/screenshots/v0.3-update.svg)
+Latest update screenshot: [`docs/screenshots/v0.7-update.svg`](docs/screenshots/v0.7-update.svg)
 
 ---
 
@@ -37,7 +40,7 @@ Latest update screenshot: [`docs/screenshots/v0.3-update.svg`](docs/screenshots/
 
 ```bash
 npm install
-npm test                # 153 tests (vitest)
+npm test                # 345 tests (vitest)
 npm run example:twod    # renders a real PNG frame with the 2D engine
 npm run example:hello   # real-time 60 FPS loop demo
 npm run example:ecs     # deterministic ECS tour

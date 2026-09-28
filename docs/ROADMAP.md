@@ -44,23 +44,26 @@ Execution status of the master development roadmap. ✅ = implemented & tested,
       shading, directional/point lights, exponential fog, near-plane clipping,
       frustum + back-face culling, `MeshRenderer3D` scene integration
 
-### ⬜ v0.5 — Gameplay
-- [ ] Physics, Audio, Animation (3D), Character, UI, Save
+### ✅ v0.5 — Gameplay (2026-09-28)
+- [x] Physics, Audio, Animation (3D), Character, UI, Save
 
-### ⬜ v0.6 — World
-- [ ] Terrain, Navigation, AI, Streaming, World System
+### ✅ v0.6 — Motion & Effects (2026-09-28)
+- [x] Vehicle, Particles, VFX, seeded Random
 
-### ⬜ v0.7 — Scripting
+### ✅ v0.7 — World & AI (2026-09-28)
+- [x] Terrain, World partition, Streaming, LOD, Day/night, Weather, World persistence
+- [x] Navigation (navgrid mesh, A*, dynamic obstacles, crowds), AI (perception, FSM,
+      behavior trees, utility AI, goals, schedules, NPC/animal brains)
+
+### ⬜ v0.8 — Scripting
 - [ ] JavaScript, TypeScript, Native bindings, WASM, ObsiScript foundation
 
-### ⬜ v0.8 — Editor (ObsiFox Studio)
+### ⬜ v0.9 — Editor (ObsiFox Studio)
 - [ ] Project Manager, Scene Editor, Inspector, Asset Browser, Script Editor, Debugger
 
-### ⬜ v0.9 — Build
+### ⬜ v0.95 — Build & Advanced
 - [ ] CLI, Windows / Linux / Web / Android export
-
-### ⬜ v0.95 — Advanced
-- [ ] Networking, Multiplayer, Open World, Advanced AI, Advanced Rendering, Profiler
+- [ ] Networking, Multiplayer, Advanced AI, Advanced Rendering, Profiler
 
 ### ⬜ v1.0 — Stable
 - [ ] Stable API / Runtime / Editor / Build System, Documentation, Templates, Plugin System, Marketplace Foundation
@@ -87,19 +90,19 @@ Execution status of the master development roadmap. ✅ = implemented & tested,
 | 8 | 3D engine | ✅ meshes, software3D rasterizer, culling, clipping, stats |
 | 9 | Rendering architecture | 🟡 renderer API + 3 backends (WebGL/WebGPU/Vulkan/DX ⬜) |
 | 10–12 | Materials / Lighting / Camera | ✅ Material (unlit/standard PBR-lite), ambient/directional/point lights, fog, Camera3D (frustum, look-at) |
-| 13 | Animation | 🟡 2D sprite animator |
-| 14–16 | Physics / Vehicles / Characters | ⬜ |
-| 17–18 | Particles / VFX | ⬜ |
-| 19 | Audio | ⬜ |
+| 13 | Animation | ✅ clips, tracks, state machine + crossfade, blend trees, IK, root motion, 2D sprite animator |
+| 14–16 | Physics / Vehicles / Characters | ✅ solver/casts/joints/controller · suspension/drivetrain/AI · movement/health/equipment |
+| 17–18 | Particles / VFX | ✅ emitters/curves/collision/GPU batches/presets · graphs/screen effects/weather |
+| 19 | Audio | ✅ clips, envelopes, voices, mixer/buses, 2D + 3D spatial, echo, reverb |
 | 20 | Input | ✅ complete for v0.3 scope (virtual controls ⬜) |
-| 21 | UI | ⬜ |
-| 22–25 | World / Open World / Navigation / AI | ⬜ |
+| 21 | UI | ✅ tree/layout/flex/anchors, themes, text, widgets, windows, UI animation |
+| 22–25 | World / Open World / Navigation / AI | 🟡 terrain/partition/streaming/LOD/day-night/weather · persistence/distance tiers · navgrid/A*/crowds · perception/FSM/BT/utility/goals/schedules (async load, HLOD, occlusion, vehicle nav, enemy AI ⬜) |
 | 26–28 | Inventory / Dialogue / Quest | ⬜ |
 | 29–30 | Networking / Server runtime | ⬜ |
 | 31–33 | Scripting / ObsiScript / Native | ⬜ |
 | 34–35 | Asset pipeline / Resources | 🟡 procedural textures + sprite sheets |
 | 36 | Serialization | 🟡 JSON + entity/component (de)serialization |
-| 37 | Save system | 🟡 snapshot format exists; slots/encryption/cloud ⬜ |
+| 37 | Save system | ✅ slots, checksum, compression, encryption, migration, autosave, cloud API |
 | 38 | Localization | ⬜ |
 | 39 | Plugin system | ⬜ |
 | 40–42 | Editor (ObsiFox Studio) / Extensions / Project system | ⬜ |
@@ -234,3 +237,49 @@ Output: `examples/v06-demo/output/frame.png`.
 - [x] §18 VFX — smoke, fire, explosion, sparks, dust, weather effects, screen effects, custom effects, VFX graph
 
 Screenshot: [v0.6-update](screenshots/v0.6-update.svg).
+
+## v0.7 — World & AI (2026-09-28)
+
+**345/345 tests green across 20 packages (24 files).** Terrain, streaming and time/weather
+systems land together with grid navigation, crowds and the AI stack — released as
+per-version GitHub release v0.7.0 with notes and a rendered output.
+
+### Delivered
+
+**@obx/world (15 tests)** — `Heightfield` seeded fBm value-noise terrain (generate,
+bilinear sampling, normals), `WorldPartition` chunk streaming (view/unload radii with
+hysteresis, per-tick budget, LOD refresh, load/unload events via result records),
+`LodSystem.pick`, `Region`/`RegionSystem` (bounds + tags), `DayNightCycle` (normalized
+day clock, sun elevation/color, ambient), `WeatherScheduler` (seeded markov weather with
+intensity easing), `SimulationTiers` (distance-tiered update intervals with catch-up),
+`WorldPersistence` (cell store + serialize/restore), `chunkKey`.
+
+**@obx/navigation (15 tests)** — `NavGrid` (walkability, costs, rect blocks, world↔cell),
+`AStar` (8-way, no corner cutting, cost-aware, deterministic tie-break), `lineOfSight`,
+`smoothPath` string-pulling, `PathAgent` (path following, arrival, neighbor separation),
+`Crowd` (shared avoidance), `DynamicObstacle` (block/restore), `NavigationRegion`
+(cost overlays).
+
+**@obx/ai (16 tests)** — `Blackboard`, `StateMachine` (full hook lifecycle), behavior
+trees (`Sequence`/`Selector`/`Inverter`/`Repeater`/`Condition`/`Action`/`BehaviorTree`),
+`UtilityAI`, `Perception` (vision cone + range + occlusion callback, hearing), `Schedule`
+(day-of-time entries with midnight wrap), `GoalSystem` (priority arbitration), `NpcAgent`,
+`FsmBrain`/`TreeBrain`, presets `patrolBrain` (chase on sight or sound) and `animalBrain`
+(flee on hearing).
+
+### Demo — examples/v07-demo
+
+Top-down world: procedural 64×36 terrain shaded by the live sun position, ten agents
+crossing the map on smoothed A* paths with crowd avoidance (routing around water, cliffs
+and a dynamic landslide), a player marker and a hearing/sighting NPC that switches from
+patrol scan to chase — captured mid-chase at golden hour with seeded rain. Output:
+`examples/v07-demo/output/frame.png` + `stats.json`.
+
+### Checklist (roadmap §22, §23, §24, §25)
+
+- [x] §22 World — terrain, large worlds, world coordinates, world partition, region system, streaming, unloading, LOD, procedural worlds, day/night cycle, weather (async loading, HLOD, occlusion ⬜)
+- [x] §23 Open World — world partition, streaming cells, population management, distance-based simulation, world persistence (background loading/unloading, NPC/vehicle/audio/asset streaming ⬜)
+- [x] §24 Navigation — navigation mesh (grid), pathfinding, A*, navigation regions, dynamic obstacles, agent avoidance, character navigation, crowd simulation (vehicle navigation ⬜)
+- [x] §25 AI — AI agents, perception, vision, hearing, navigation, state machines, behavior trees, utility AI, goals, schedules, crowd AI, NPC simulation, animal AI (tasks, enemy AI ⬜)
+
+Screenshot: [v0.7-update](screenshots/v0.7-update.svg).

@@ -1,15 +1,12 @@
 {
-  "name": "@obx/audio",
+  "name": "@obx/navigation",
   "version": "0.7.0",
-  "description": "OBX Engine audio \u2014 clips, voices, mixer, effects, spatial audio",
+  "description": "OBX Engine navigation — grid navmesh, A* pathfinding, dynamic obstacles, agent avoidance, crowds",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -b",
     "test": "vitest run"
-  },
-  "dependencies": {
-    "@obx/math": "0.7.0"
   }
 }

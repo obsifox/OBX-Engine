@@ -201,3 +201,37 @@ through seeded `@obx/core` `Random` — identical seeds reproduce frames exactly
 `VfxGraph` fires timed events that register emitters and drive `ScreenEffects`; events
 compose library effects (explosion = sparks burst + smoke plume + flash + shake).
 `WeatherSystem` wraps rain/snow emitters with wind-steered volume spawns.
+
+## v0.7 — World, Navigation & AI
+
+### World streaming pipeline
+
+`WorldPartition.update(cx, cz, time)`: cells whose centers fall inside `viewDistance`
+are candidates (nearest-first, budgeted per tick), each tagged with `LodSystem.pick`
+against `lodDistances`; cells beyond `unloadDistance` flip to `unloaded` (the gap between
+the two radii is load/unload hysteresis). `Heightfield` builds terrain from seeded fBm
+value noise with bilinear sampling and central-difference normals. `DayNightCycle` keeps
+a normalized 0..1 day clock (elevation = −cos(2πt)); `WeatherScheduler` walks a seeded
+markov chain (clear/cloudy/rain/storm) and eases intensity toward the per-type target.
+`SimulationTiers` slows far entities down (interval × tier) and culls beyond a radius.
+
+### Navigation pipeline
+
+`AStar.findPath(start, goal)` on a `NavGrid` of walkable cells with per-cell costs:
+8-way expansion, diagonal moves rejected when either orthogonal neighbor is blocked (no
+corner cutting), g-scores scaled by cell cost, deterministic tie-break (f, then deeper g,
+then insertion order). `smoothPath` string-pulls the polyline using `lineOfSight` rays.
+`PathAgent.update(dt, neighbors)` advances along the path with arrival snapping and
+separation steering from neighbors inside `avoidanceRadius`; `Crowd` feeds the shared
+neighbor set so agents push each other apart while crossing.
+
+### AI pipeline
+
+`NpcAgent.update(dt)` writes its position to the `Blackboard`, then delegates to an
+`AgentBrain` (`TreeBrain` ticks a `BehaviorTree`, `FsmBrain` advances a `StateMachine`).
+`perceive()` tests the target against the `Perception` vision cone (range + half-angle +
+occlusion callback) and hearing radius, storing `target.visible/heard`. Preset brains:
+`patrolBrain` (chase when the target is seen or heard, else patrol), `animalBrain`
+(flee on hearing, else idle/wander). `UtilityAI` scores options each tick; `GoalSystem`
+arbitrates priority goals until `isDone`; `Schedule` fires time-of-day entries across
+midnight wraps.

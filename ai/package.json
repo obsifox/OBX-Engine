@@ -1,7 +1,7 @@
 {
-  "name": "@obx/audio",
+  "name": "@obx/ai",
   "version": "0.7.0",
-  "description": "OBX Engine audio \u2014 clips, voices, mixer, effects, spatial audio",
+  "description": "OBX Engine AI — perception, state machines, behavior trees, utility AI, goals, schedules, NPC brains",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,6 +10,6 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@obx/math": "0.7.0"
+    "@obx/core": "0.7.0"
   }
 }

@@ -1,0 +1,21 @@
+{
+  "steps": 120,
+  "agents": 10,
+  "reached": 10,
+  "averageWaypoints": 5.4,
+  "npcMode": "chase",
+  "playerDistanceToNpc": 3.56,
+  "weather": {
+    "type": "rain",
+    "intensity": 0.5166666666666666
+  },
+  "sunElevation": 0.125,
+  "ambient": 0.265,
+  "dayTime": 0.73,
+  "loadedChunks": 96,
+  "samples": {
+    "cols": 64,
+    "rows": 36,
+    "seed": 77
+  }
+}

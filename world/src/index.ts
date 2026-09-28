@@ -1,0 +1,23 @@
+export {
+  DayNightCycle,
+  Heightfield,
+  LodSystem,
+  Region,
+  RegionSystem,
+  SimulationTiers,
+  WeatherScheduler,
+  WorldPartition,
+  WorldPersistence,
+  chunkKey,
+  type ChunkCoord,
+  type ChunkRecord,
+  type ChunkStateName,
+  type HeightfieldOptions,
+  type PartitionOptions,
+  type PartitionUpdate,
+  type RegionBounds,
+  type TieredEntity,
+  type WeatherName,
+  type WeatherState,
+} from "./world.js";
+export const WORLD_VERSION = "0.7.0";

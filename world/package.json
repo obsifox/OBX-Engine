@@ -1,7 +1,7 @@
 {
-  "name": "@obx/audio",
+  "name": "@obx/world",
   "version": "0.7.0",
-  "description": "OBX Engine audio \u2014 clips, voices, mixer, effects, spatial audio",
+  "description": "OBX Engine world — terrain heightfields, streaming partition, regions, LOD, day/night, weather, persistence",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,6 +10,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@obx/core": "0.7.0",
     "@obx/math": "0.7.0"
   }
 }

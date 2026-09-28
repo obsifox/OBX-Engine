@@ -29,4 +29,14 @@ export {
   type StateHandlers,
   type UtilityOption,
 } from "./ai.js";
+export {
+  CombatBrain,
+  WildlifeBrain,
+  AI_ADVANCED_VERSION,
+  type CombatAction,
+  type CombatPerception,
+  type WildlifeAction,
+  type WildlifePerception,
+} from "./advanced.js";
+
 export const AI_VERSION = "0.7.0";

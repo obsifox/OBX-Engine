@@ -68,4 +68,16 @@ export {
   type GltfNode,
 } from "./gltf.js";
 
+export {
+  DecalProjector,
+  FoliageInstancer,
+  HeightFog,
+  WaterSurface,
+  RENDERING_ADVANCED_VERSION,
+  type Decal,
+  type FogOptions,
+  type FoliageInstance,
+  type Wave,
+} from "./advanced.js";
+
 export const RENDERING_VERSION = "0.4.0";

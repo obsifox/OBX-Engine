@@ -1,6 +1,6 @@
 {
   "name": "@obx/networking",
-  "version": "0.95.0",
+  "version": "0.96.0",
   "description": "OBX Engine networking \u2014 transports, reliable channels, RPC, replication, prediction, interpolation, lag compensation, interest management",
   "type": "module",
   "main": "dist/index.js",

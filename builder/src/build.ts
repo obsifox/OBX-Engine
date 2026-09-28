@@ -399,4 +399,4 @@ export function packageProject(input: BuildInput, result: BuildResult): string {
   }, null, 2);
 }
 
-export const BUILD_VERSION = "0.95.0";
+export const BUILD_VERSION = "0.96.0";

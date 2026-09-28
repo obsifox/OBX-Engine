@@ -20,4 +20,18 @@ export {
   type WeatherName,
   type WeatherState,
 } from "./world.js";
+export {
+  AsyncStreamer,
+  HlodSystem,
+  OcclusionGrid,
+  WorldSimulation,
+  WORLD_ADVANCED_VERSION,
+  type LodLevel,
+  type Season,
+  type SeasonState,
+  type StreamReport,
+  type StreamRequest,
+  type WorldEvent,
+} from "./advanced.js";
+
 export const WORLD_VERSION = "0.7.0";

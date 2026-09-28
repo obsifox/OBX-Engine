@@ -360,3 +360,36 @@ imports), compile, `bundleModules` (dependency-first registry bundle), `processA
 packaging, checksum signing and build-info release — with `BuildCache` keyed by content
 hashes and `BuildGraph` providing topological, cycle-checked, dirty-tracked
 incremental rebuilds.
+
+## v0.96 — Advanced Systems
+
+### Multiplayer pipeline
+
+`Lobby` tracks membership, readiness and ordered chat; `RoomManager` allocates rooms
+with capacity limits and host hand-off; `Matchmaking` sorts tickets by skill and groups
+size-matched, range-bounded parties; `AntiCheatHooks` runs exception-safe validators
+over audit events and accumulates per-player violation logs.
+
+### Open world + simulation pipeline
+
+`AsyncStreamer` drains a priority queue under a per-tick load budget with duplicate and
+drop accounting and unload hand-off; `HlodSystem` maps distance bands to mesh levels;
+`OcclusionGrid` walks grid rays through cell occluders for line-of-sight queries;
+`WorldSimulation` advances seeded days with season cycles, population drift and
+procedural events.
+
+### Advanced AI + rendering pipeline
+
+`CombatBrain` scores engage/flank/flee/reload/idle utilities with distance falloff,
+threat, ammo and health; `WildlifeBrain` decides flee/graze/herd/wander from predator
+and food distances with seeded tie-breaks. `HeightFog` computes exponential
+height-falloff shading; `FoliageInstancer` scatters seeded instances into cell batches;
+`DecalProjector` projects and queries overlapping decals; `WaterSurface` sums wave
+heights with finite-difference normals and foam thresholds.
+
+### Profiler pipeline
+
+`CpuProfiler` records begin/end spans and aggregates count/total/average/max;
+`MemoryProfiler` tracks current/peak/allocation counts per name; `ChannelTracker`
+aggregates named metrics per subsystem; `FrameDebugger` captures per-frame events and
+draw-call statistics; `ProfileReport` combines everything into a JSON bundle.

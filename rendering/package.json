@@ -1,6 +1,6 @@
 {
   "name": "@obx/rendering",
-  "version": "0.95.0",
+  "version": "0.96.0",
   "description": "OBX Engine rendering \u2014 2D + 3D renderers, meshes, materials, lighting, glTF, PNG",
   "type": "module",
   "license": "MIT",
@@ -19,6 +19,6 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@obx/math": "0.95.0"
+    "@obx/math": "0.96.0"
   }
 }

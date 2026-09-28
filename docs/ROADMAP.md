@@ -78,7 +78,14 @@ Execution status of the master development roadmap. ✅ = implemented & tested,
 - [x] Export targets (Windows / Linux / Web / Android / Headless Server)
 - [x] Networking (protocol profiles, reliable channels, RPC, replication, prediction, interpolation, lag compensation, interest management)
 - [x] Server runtime (headless runtime, dedicated server, plugins, scripts, config, logging, monitoring)
-- [ ] Multiplayer framework, Open World, Advanced AI, Advanced Rendering, Profiler
+
+### ✅ v0.96 — Advanced Systems (2026-09-28)
+- [x] Multiplayer (lobby, rooms, matchmaking abstraction, anti-cheat hooks)
+- [x] Open World (async streaming, HLOD, occlusion, seasons, population, procedural events)
+- [x] Advanced AI (combat brain, wildlife brain)
+- [x] Advanced Rendering (height fog, foliage instancing, decals, water waves/normals/foam)
+- [x] Profiler (CPU spans, memory profiler, channel metrics, frame debugger, draw-call statistics)
+- [ ] Global illumination, soft body/cloth/hair, GPU profiler, network/physics/script deep profilers
 
 ### ⬜ v1.0 — Stable
 - [ ] Stable API / Runtime / Editor / Build System, Documentation, Templates, Plugin System, Marketplace Foundation
@@ -111,7 +118,7 @@ Execution status of the master development roadmap. ✅ = implemented & tested,
 | 19 | Audio | ✅ clips, envelopes, voices, mixer/buses, 2D + 3D spatial, echo, reverb |
 | 20 | Input | ✅ complete for v0.3 scope (virtual controls ⬜) |
 | 21 | UI | ✅ tree/layout/flex/anchors, themes, text, widgets, windows, UI animation |
-| 22–25 | World / Open World / Navigation / AI | 🟡 terrain/partition/streaming/LOD/day-night/weather · persistence/distance tiers · navgrid/A*/crowds · perception/FSM/BT/utility/goals/schedules (async load, HLOD, occlusion, vehicle nav, enemy AI ⬜) |
+| 22–25 | World / Open World / Navigation / AI | 🟡 terrain/partition/streaming/LOD/day-night/weather · async streaming, HLOD, occlusion, seasons/population/events · navgrid/A*/crowds · perception/FSM/BT/utility/goals/schedules + combat/wildlife brains (GI, cloth, GPU profiler ⬜) |
 | 26–28 | Inventory / Dialogue / Quest | ✅ items/stacks/weight/durability/equipment/containers · nodes/choices/conditions/variables/i18n/voice · objectives/conditions/rewards/dependencies/branching/serialization (dialogue editor ⬜ with Studio) |
 | 29–30 | Networking / Server runtime | ✅ protocol profiles, memory links, reliable channels, RPC, replication/sync, prediction/interpolation/lag, interest, client-server · headless runtime, dedicated server, plugins, scripts, config, logging, metrics |
 | 31–33 | Scripting / ObsiScript / Native | 🟡 JS/ObsiScript hosts, sandbox, lifecycle, hot reload, .d.ts gen · language + types/modules/functions/classes/async/debug · FFI/ABI, native modules, WASM, binding gen (TS compile pipeline, language server, Rust/C++ crates ⬜) |
@@ -122,7 +129,7 @@ Execution status of the master development roadmap. ✅ = implemented & tested,
 | 39 | Plugin system | ⬜ |
 | 40–42 | Editor (ObsiFox Studio) / Extensions / Project system | 🟡 editor model + project + extensions (script editor, debugger, specialized editors ⬜) |
 | 43 | CLI | ✅ obsifox create/dev/editor/build/run/test/clean/doctor/assets/package/plugin/export/config |
-| 44–46 | Hot reload / Debugging / Profiling | 🟡 ECS inspect/stats |
+| 44–46 | Hot reload / Debugging / Profiling | 🟡 ECS inspect/stats + CPU/memory/channel profilers, frame debugger, draw stats (GPU profiler ⬜) |
 | 47–52 | Platform runtimes | 🟡 platform adapter + loop drivers |
 | 53–54 | Build system / Export targets | ✅ graph, dep analysis, bundling, asset processing, cache, incremental · windows/linux/android/web/server |
 | 55 | Security | 🟡 error codes + plugin permission design pending |
@@ -130,7 +137,7 @@ Execution status of the master development roadmap. ✅ = implemented & tested,
 | 58–60 | Documentation / Templates / Testing | 🟡 docs + 191 unit/integration tests ✅ |
 | 61–63 | Performance / Jobs / Memory | 🟡 TaskSystem + MemoryTracker foundations |
 | 64–65 | Platform / renderer abstraction | 🟡 platform interface + backend interface |
-| 66–70 | Advanced 3D / World / MP / Editor UX / Workflow | ⬜ |
+| 66–70 | Advanced 3D / World / MP / Editor UX / Workflow | 🟡 fog/foliage/decals/water · seasons/population/events · lobby/rooms/matchmaking/anti-cheat (GI, soft body, editor UX, workflow ⬜) |
 
 ---
 
@@ -490,3 +497,51 @@ dirty nodes and the pipeline cache flips 0→1 hit. Output:
 - [x] §54 Export targets — Windows, Linux, Android, Web, Headless Server
 
 Screenshot: [v095-update](screenshots/v095-update.svg).
+
+## v0.96 — Advanced Systems (2026-09-28)
+
+**493/493 tests green across 42 files / 34 packages.** The Advanced block ships as two
+new packages plus three extended ones: multiplayer, profiler, and advanced modules for
+world, ai and rendering.
+
+### Delivered
+
+**@obx/multiplayer (4 tests)** — `Lobby` (join/leave, ready-state, ordered chat),
+`RoomManager` (capacity, host hand-off, private rooms, limits), `Matchmaking`
+(skill-sorted tickets with size + range matching), `AntiCheatHooks` (exception-safe
+validator registry with per-player violation logs).
+
+**open world (4 tests)** — `AsyncStreamer` (priority queue + per-tick load budget +
+unload hand-off), `HlodSystem` (distance-band LOD), `OcclusionGrid` (cell occluders +
+line-of-sight), `WorldSimulation` (seeded seasons, population drift, procedural events).
+
+**advanced AI (3 tests)** — `CombatBrain` utility tactics (engage/flank/flee/reload with
+distance falloff) and `WildlifeBrain` seeded decisions (flee/graze/herd/wander).
+
+**advanced rendering (4 tests)** — `HeightFog`, `FoliageInstancer` (seeded cell
+batches), `DecalProjector`, `WaterSurface` (wave heights, normals, foam).
+
+**@obx/profiler (5 tests)** — `CpuProfiler`, `MemoryProfiler`, `ChannelTracker`,
+`FrameDebugger` (draw-call statistics), `ProfileReport` JSON bundles.
+
+### Demo — examples/v096-demo
+
+A foggy coastline: 90-day world simulation (summer→autumn→winter, 7 events, city 191),
+five streaming cells loaded priority-first, LOD h/m/l, one occluded target; combat
+engage→idle→reload→flee and wildlife flee→graze→herd; lobby ready, room Dust2, match
+bob+ada (avg skill 1210) with anti-cheat flags on a cheating player; height fog sky,
+220 foliage instances in 73 batches, two decals, rolling waves with foam; profiler CPU
+(world 2.4 ms, ai 1.2 ms, multiplayer 0.6 ms), memory peaks and 6 draw calls. Output:
+`examples/v096-demo/output/frame.png` + `stats.json`.
+
+### Checklist (roadmap §23, §25, §45, §46, §66, §67, §68)
+
+- [x] §23 Open World — background loading/unloading, asset streaming, population management, distance-based simulation, world persistence foundations (NPC/vehicle/audio streaming ⬜)
+- [x] §25 AI — enemy AI (combat brain), animal AI (wildlife brain) (advanced crowd behaviors ⬜)
+- [x] §45 Debugging — memory debug, network profiling hooks (interactive debug console, breakpoints ⬜)
+- [x] §46 Profiling — CPU profiler, memory profiler, asset/network/physics/script channels, frame debugger, draw-call statistics (GPU profiler ⬜)
+- [x] §66 Advanced 3D — volumetric-style height fog, vegetation + foliage instancing, water (waves/normals/foam), decals (GI, cloth, hair, soft body, destruction ⬜)
+- [x] §67 Advanced World Simulation — seasons, population, dynamic + procedural events (traffic, wildlife migration ⬜)
+- [x] §68 Multiplayer — matchmaking abstraction, lobby, rooms, anti-cheat hooks (dedicated server/replication/prediction/interpolation/reconciliation/server plugins from v0.95)
+
+Screenshot: [v096-update](screenshots/v096-update.svg).

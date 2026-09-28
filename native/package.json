@@ -1,6 +1,6 @@
 {
   "name": "@obx/native",
-  "version": "0.95.0",
+  "version": "0.96.0",
   "description": "OBX Engine native extensions \u2014 FFI/ABI, capability-gated registry, WASM modules, C/Rust binding generation",
   "type": "module",
   "main": "dist/index.js",

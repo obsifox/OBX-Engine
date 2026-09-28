@@ -1,6 +1,6 @@
 {
   "name": "obx-engine",
-  "version": "0.95.0",
+  "version": "0.96.0",
   "private": true,
   "description": "OBX Engine \u2014 a cross-platform TypeScript game & application engine",
   "type": "module",
@@ -31,7 +31,9 @@
     "networking",
     "server",
     "cli",
-    "build",
+    "builder",
+    "multiplayer",
+    "profiler",
     "editor",
     "native",
     "scripting",

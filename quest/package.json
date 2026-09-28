@@ -1,6 +1,6 @@
 {
   "name": "@obx/quest",
-  "version": "0.95.0",
+  "version": "0.96.0",
   "description": "OBX Engine quests \u2014 objectives, conditions, rewards, dependencies, branching, serialization",
   "type": "module",
   "main": "dist/index.js",

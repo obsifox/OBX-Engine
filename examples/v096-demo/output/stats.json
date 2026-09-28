@@ -1,0 +1,183 @@
+{
+  "version": "0.96.0",
+  "world": {
+    "seasons": [
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "finalDay": 91,
+    "demographics": {
+      "village": 55,
+      "city": 191,
+      "camp": 12
+    },
+    "events": [
+      "festival",
+      "storm",
+      "migration",
+      "migration",
+      "raid",
+      "storm",
+      "festival"
+    ],
+    "streamLoaded": [
+      "cell_1_0",
+      "cell_0_0",
+      "cell_0_1",
+      "cell_1_1",
+      "cell_2_0"
+    ],
+    "streamerStats": {
+      "enqueued": 5,
+      "loaded": 5,
+      "unloaded": 1,
+      "dropped": 0
+    },
+    "lod": [
+      {
+        "id": "mountain",
+        "level": 2,
+        "mesh": "low"
+      },
+      {
+        "id": "rock",
+        "level": 0,
+        "mesh": "high"
+      },
+      {
+        "id": "tower",
+        "level": 1,
+        "mesh": "medium"
+      }
+    ],
+    "visibleTargets": [
+      "left"
+    ]
+  },
+  "ai": {
+    "combat": [
+      "engage",
+      "idle",
+      "reload",
+      "flee"
+    ],
+    "wildlife": [
+      "flee",
+      "graze",
+      "herd"
+    ],
+    "heroHealth": 18
+  },
+  "multiplayer": {
+    "lobbyReady": true,
+    "messages": 1,
+    "room": {
+      "id": "room_1",
+      "name": "Dust2",
+      "private": false,
+      "capacity": 4,
+      "host": "ada",
+      "players": [
+        "ada",
+        "bob"
+      ]
+    },
+    "match": {
+      "id": "match_1",
+      "players": [
+        "bob",
+        "ada"
+      ],
+      "averageSkill": 1210
+    },
+    "queued": [
+      "cat"
+    ],
+    "auditClean": {
+      "ok": true,
+      "violations": []
+    },
+    "auditCheat": {
+      "ok": false,
+      "violations": [
+        "speed",
+        "ammo"
+      ]
+    }
+  },
+  "profiler": {
+    "cpu": [
+      {
+        "name": "world",
+        "count": 1,
+        "total": 2.4,
+        "average": 2.4,
+        "max": 2.4
+      },
+      {
+        "name": "ai",
+        "count": 1,
+        "total": 1.2,
+        "average": 1.2,
+        "max": 1.1999999999999997
+      },
+      {
+        "name": "multiplayer",
+        "count": 1,
+        "total": 0.6,
+        "average": 0.6,
+        "max": 0.5999999999999996
+      },
+      {
+        "name": "report",
+        "count": 1,
+        "total": 0,
+        "average": 0,
+        "max": 0
+      }
+    ],
+    "memory": [
+      {
+        "name": "meshes",
+        "current": 393216,
+        "peak": 393216,
+        "allocations": 1
+      },
+      {
+        "name": "textures",
+        "current": 655360,
+        "peak": 786432,
+        "allocations": 2
+      }
+    ],
+    "network": {
+      "bytes": {
+        "count": 2,
+        "total": 4200,
+        "average": 2100,
+        "max": 2400
+      },
+      "packets": {
+        "count": 1,
+        "total": 42,
+        "average": 42,
+        "max": 42
+      }
+    },
+    "drawStats": {
+      "frames": 1,
+      "calls": 6,
+      "triangles": 550,
+      "averageCalls": 6
+    },
+    "frames": 1
+  },
+  "rendering": {
+    "foliage": 220,
+    "batches": 73,
+    "decals": 2,
+    "fogSample": 0.139,
+    "waveSample": -0.281
+  }
+}

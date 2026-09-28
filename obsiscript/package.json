@@ -1,6 +1,6 @@
 {
   "name": "@obx/obsiscript",
-  "version": "0.95.0",
+  "version": "0.96.0",
   "description": "OBX Engine ObsiScript \u2014 lexer, parser, AST, type checker, interpreter, modules, scheduler",
   "type": "module",
   "main": "dist/index.js",

@@ -1,6 +1,6 @@
 {
   "name": "@obx/character",
-  "version": "0.95.0",
+  "version": "0.96.0",
   "description": "OBX Engine character \u2014 locomotion, stamina, health, equipment, interaction",
   "type": "module",
   "main": "dist/index.js",
@@ -10,7 +10,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@obx/math": "0.95.0",
-    "@obx/physics": "0.95.0"
+    "@obx/math": "0.96.0",
+    "@obx/physics": "0.96.0"
   }
 }

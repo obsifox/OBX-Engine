@@ -1,6 +1,6 @@
 {
   "name": "@obx/audio",
-  "version": "0.10.0",
+  "version": "0.95.0",
   "description": "OBX Engine audio \u2014 clips, voices, mixer, effects, spatial audio",
   "type": "module",
   "main": "dist/index.js",
@@ -10,6 +10,6 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@obx/math": "0.10.0"
+    "@obx/math": "0.95.0"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "@obx/editor",
-  "version": "0.10.0",
-  "description": "OBX Engine editor core — scene documents, command stack, inspector, transform tools, console, profiler, viewport",
+  "version": "0.95.0",
+  "description": "OBX Engine editor core \u2014 scene documents, command stack, inspector, transform tools, console, profiler, viewport",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

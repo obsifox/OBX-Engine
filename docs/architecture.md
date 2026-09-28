@@ -326,3 +326,37 @@ contributions). `activate`/`deactivate` drive lifecycle with an `ExtensionContex
 node type (priority), gizmos by node type, importers/asset types by file extension, and
 create custom nodes. Failures inside any extension are captured per extension id
 (`errorsFor`, `stats`) — the registry itself never throws on extension faults.
+
+## v0.95 — Networking, Server, CLI & Build
+
+### Networking pipeline
+
+`MemoryNetwork` schedules packets between `MemoryTransport` endpoints through seeded
+wires (latency + jitter + drop rate), stepped deterministically. `ReliableChannel`
+frames payloads with `encodePacket` headers (magic/kind/channel/sequence/length),
+piggybacks acks, retransmits aged unacked packets up to a retry budget, and reassembles
+ordered delivery through a hold-back buffer. `RpcSystem` layers JSON request/response
+frames with correlation ids and timeout accounting. `ReplicationSystem` tracks entity
+states and emits tick-stamped snapshots that `ReplicationClient` applies with stale
+rejection; `GameServer` binds sessions to entity ids, applies inputs authoritatively
+through a reducer, records `LagCompensation` history and broadcasts `InterestManagement`
+filtered snapshots; `GameClient` feeds per-entity `InterpolationSystem` buffers and
+reconciles `PredictionSystem` state against server corrections.
+
+### Server runtime pipeline
+
+`DedicatedServer` composes `createServerConfig` (validated), `ServerLogger` (leveled,
+capacity-bounded, sink fan-out), `ServerMetrics` (counters/gauges), `ServerPluginHost`
+and `ServerScriptHost` (per-id error isolation) with a `HeadlessRuntime` tick loop
+that drives scripts → plugins → network each tick.
+
+### CLI + build pipeline
+
+`runCli` parses argv into command/positionals/flags and executes fourteen commands
+against an injectable `CliHost` file store, bridging `@obx/project` manifests with the
+`@obx/build` pipeline. `BuildPipeline` runs the release chain — analyze (module
+imports), compile, `bundleModules` (dependency-first registry bundle), `processAssets`
+(packBits + base64), optimize, runtime injection per `exportTarget`, manifest
+packaging, checksum signing and build-info release — with `BuildCache` keyed by content
+hashes and `BuildGraph` providing topological, cycle-checked, dirty-tracked
+incremental rebuilds.

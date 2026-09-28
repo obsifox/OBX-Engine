@@ -73,9 +73,12 @@ Execution status of the master development roadmap. ✅ = implemented & tested,
 - [x] Editor extensions (commands, panels, menus, inspectors, tools, gizmos, importers, asset + node types, error isolation)
 - [ ] Script Editor, Debugger, specialized editors (animation / material / shader / UI / terrain / nav)
 
-### ⬜ v0.95 — Build & Advanced
-- [ ] CLI, Windows / Linux / Web / Android export
-- [ ] Networking, Multiplayer, Advanced AI, Advanced Rendering, Profiler
+### ✅ v0.95 — Build & Advanced (2026-09-28)
+- [x] CLI (obsifox create/dev/editor/build/run/test/clean/doctor/assets/package/plugin/export/config)
+- [x] Export targets (Windows / Linux / Web / Android / Headless Server)
+- [x] Networking (protocol profiles, reliable channels, RPC, replication, prediction, interpolation, lag compensation, interest management)
+- [x] Server runtime (headless runtime, dedicated server, plugins, scripts, config, logging, monitoring)
+- [ ] Multiplayer framework, Open World, Advanced AI, Advanced Rendering, Profiler
 
 ### ⬜ v1.0 — Stable
 - [ ] Stable API / Runtime / Editor / Build System, Documentation, Templates, Plugin System, Marketplace Foundation
@@ -110,7 +113,7 @@ Execution status of the master development roadmap. ✅ = implemented & tested,
 | 21 | UI | ✅ tree/layout/flex/anchors, themes, text, widgets, windows, UI animation |
 | 22–25 | World / Open World / Navigation / AI | 🟡 terrain/partition/streaming/LOD/day-night/weather · persistence/distance tiers · navgrid/A*/crowds · perception/FSM/BT/utility/goals/schedules (async load, HLOD, occlusion, vehicle nav, enemy AI ⬜) |
 | 26–28 | Inventory / Dialogue / Quest | ✅ items/stacks/weight/durability/equipment/containers · nodes/choices/conditions/variables/i18n/voice · objectives/conditions/rewards/dependencies/branching/serialization (dialogue editor ⬜ with Studio) |
-| 29–30 | Networking / Server runtime | ⬜ |
+| 29–30 | Networking / Server runtime | ✅ protocol profiles, memory links, reliable channels, RPC, replication/sync, prediction/interpolation/lag, interest, client-server · headless runtime, dedicated server, plugins, scripts, config, logging, metrics |
 | 31–33 | Scripting / ObsiScript / Native | 🟡 JS/ObsiScript hosts, sandbox, lifecycle, hot reload, .d.ts gen · language + types/modules/functions/classes/async/debug · FFI/ABI, native modules, WASM, binding gen (TS compile pipeline, language server, Rust/C++ crates ⬜) |
 | 34–35 | Asset pipeline / Resources | 🟡 procedural textures + sprite sheets |
 | 36 | Serialization | 🟡 JSON + entity/component (de)serialization |
@@ -118,10 +121,10 @@ Execution status of the master development roadmap. ✅ = implemented & tested,
 | 38 | Localization | ⬜ |
 | 39 | Plugin system | ⬜ |
 | 40–42 | Editor (ObsiFox Studio) / Extensions / Project system | 🟡 editor model + project + extensions (script editor, debugger, specialized editors ⬜) |
-| 43 | CLI | ⬜ |
+| 43 | CLI | ✅ obsifox create/dev/editor/build/run/test/clean/doctor/assets/package/plugin/export/config |
 | 44–46 | Hot reload / Debugging / Profiling | 🟡 ECS inspect/stats |
 | 47–52 | Platform runtimes | 🟡 platform adapter + loop drivers |
-| 53–54 | Build system / Export targets | ⬜ |
+| 53–54 | Build system / Export targets | ✅ graph, dep analysis, bundling, asset processing, cache, incremental · windows/linux/android/web/server |
 | 55 | Security | 🟡 error codes + plugin permission design pending |
 | 56–57 | Package manager / Marketplace | ⬜ |
 | 58–60 | Documentation / Templates / Testing | 🟡 docs + 191 unit/integration tests ✅ |
@@ -434,3 +437,56 @@ extension contributing 10 pieces with 0 errors. Output:
 - [x] §42 Project system — folder structure (project.json + 11 folders), project creation, project configuration, metadata, dependencies, settings, versioning, migration
 
 Screenshot: [v10-update](screenshots/v10-update.svg).
+
+## v0.95 — Networking, Server, CLI & Build (2026-09-28)
+
+**473/473 tests green across 37 files / 33 packages.** The Build & Advanced layer
+ships as four packages: networking, server runtime, the obsifox CLI and the build
+system with five export targets.
+
+### Delivered
+
+**@obx/networking (12 tests)** — protocol profiles for TCP/UDP/WebSocket/WebRTC/memory,
+seeded `MemoryNetwork` links with latency/jitter/drop, packet codec, `ReliableChannel`
+(acks, retransmit, ordered reassembly), `RpcSystem` (correlation + timeouts),
+`ReplicationSystem`/`ReplicationClient` (patched entity snapshots with tick ordering),
+`PredictionSystem` (correction + input replay), `InterpolationSystem` (tick lerp),
+`LagCompensation` (rewind), `InterestManagement` (radius filtering), `GameServer`/
+`GameClient` (server-authoritative client/server architecture).
+
+**@obx/server (8 tests)** — `createServerConfig` validation, `ServerLogger` (levels,
+capacity, sinks), `ServerMetrics` (counters/gauges/uptime), `ServerPluginHost` +
+`ServerScriptHost` with error isolation, `HeadlessRuntime`, `DedicatedServer` fusing
+config/logging/monitoring/plugins/scripts/networking with connect/disconnect/
+broadcast/step/status.
+
+**@obx/cli (10 tests)** — `parseArgs`, `runCli` over an injectable `CliHost`, fourteen
+commands (create/dev/editor/build/run/test/clean/doctor/assets/package/plugin/export/
+config/help/version) with exit codes 0/1/2.
+
+**@obx/build (11 tests)** — `BuildGraph` (topo order, cycle detection, dirty
+incremental rebuilds), `BuildCache`, `parseImports`/`analyzeDependencies`,
+`bundleModules`, `processAssets`/`extractAsset` (packBits compression), `optimizeCode`,
+`exportTarget` ×5 (windows/linux/android/web/server), `BuildPipeline`
+(analyze→compile→bundle→assets→optimize→runtime→package→sign→release), `packageProject`.
+
+### Demo — examples/v095-demo
+
+An `arena-eu` dedicated server (plugin crash isolated per tick, weather script
+disabled) with two clients over seeded lossy links: 6 inputs, 60 interest-filtered
+snapshots, hero converging to x=8 y=4 identically across server/client/interpolation/
+prediction, lag rewind agreeing at tick 12; RPC 41→42 and "obx"→"OBX" with graceful
+failure for unknown methods. The obsifox CLI then runs a 10-command all-green flow
+producing 30 dist files (web/windows/server packages) while `BuildGraph` rebuilds only
+dirty nodes and the pipeline cache flips 0→1 hit. Output:
+`examples/v095-demo/output/frame.png` + `stats.json`.
+
+### Checklist (roadmap §29, §30, §43, §53, §54)
+
+- [x] §29 Networking — TCP/UDP/WebSocket/WebRTC protocol profiles, client/server architecture, entity replication, state synchronization, RPC, server authority, client prediction, interpolation, lag compensation, interest management, dedicated server
+- [x] §30 Server runtime — headless runtime, dedicated server, server scripting, server plugins, server networking, server configuration, server logging, server monitoring
+- [x] §43 CLI — project generator, development server, build command, export command, asset commands, plugin commands, testing commands, diagnostics, configuration commands
+- [x] §53 Build system — build graph, dependency analysis, JavaScript bundling, asset processing, asset compression, code optimization, runtime packaging, platform packaging, build cache, incremental builds (TypeScript/native/WASM compilation steps ⬜ with §31 pipeline)
+- [x] §54 Export targets — Windows, Linux, Android, Web, Headless Server
+
+Screenshot: [v095-update](screenshots/v095-update.svg).

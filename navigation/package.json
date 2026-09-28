@@ -1,7 +1,7 @@
 {
   "name": "@obx/navigation",
-  "version": "0.10.0",
-  "description": "OBX Engine navigation — grid navmesh, A* pathfinding, dynamic obstacles, agent avoidance, crowds",
+  "version": "0.95.0",
+  "description": "OBX Engine navigation \u2014 grid navmesh, A* pathfinding, dynamic obstacles, agent avoidance, crowds",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

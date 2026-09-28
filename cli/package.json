@@ -1,0 +1,12 @@
+{
+  "name": "@obx/cli",
+  "version": "0.95.0",
+  "description": "OBX Engine CLI \u2014 obsifox create/dev/editor/build/run/test/clean/doctor/assets/package/plugin/export/config",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run"
+  }
+}

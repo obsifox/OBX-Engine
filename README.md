@@ -14,12 +14,12 @@ one codebase targeting Windows, Linux, Android, Web and headless servers.
 |---|---|
 | **Engine** | OBX Engine |
 | **Editor** | ObsiFox Studio (in development) |
-| **Packages** | `@obx/core` `@obx/runtime` `@obx/ecs` `@obx/engine` `@obx/math` `@obx/input` `@obx/rendering` `@obx/scene` `@obx/physics` `@obx/audio` `@obx/animation` `@obx/character` `@obx/ui` `@obx/save` `@obx/vehicle` `@obx/particles` `@obx/vfx` `@obx/world` `@obx/navigation` `@obx/ai` `@obx/inventory` `@obx/dialogue` `@obx/quest` `@obx/obsiscript` `@obx/scripting` `@obx/native` `@obx/editor` `@obx/project` `@obx/extensions` |
+| **Packages** | `@obx/core` `@obx/runtime` `@obx/ecs` `@obx/engine` `@obx/math` `@obx/input` `@obx/rendering` `@obx/scene` `@obx/physics` `@obx/audio` `@obx/animation` `@obx/character` `@obx/ui` `@obx/save` `@obx/vehicle` `@obx/particles` `@obx/vfx` `@obx/world` `@obx/navigation` `@obx/ai` `@obx/inventory` `@obx/dialogue` `@obx/quest` `@obx/obsiscript` `@obx/scripting` `@obx/native` `@obx/editor` `@obx/project` `@obx/extensions` `@obx/networking` `@obx/server` `@obx/cli` `@obx/build` |
 | **Logo / identity** | [`brand/`](brand/) — `logo.svg`, `wordmark.svg`, `brand.md` |
 
 ---
 
-## Current status (v0.10)
+## Current status (v0.95)
 
 | Roadmap phase | Status | Highlights |
 |---|---|---|
@@ -33,9 +33,10 @@ one codebase targeting Windows, Linux, Android, Web and headless servers.
 | **v0.8 — Gameplay Systems II** | ✅ | inventory, dialogue, quests |
 | **v0.9 — Scripting** | ✅ | ObsiScript language, sandboxed JS/OS hosts, hot reload, FFI, WASM |
 | **v0.10 — Editor core** | ✅ | ObsiFox Studio model: scene editing + undo/redo, inspector, project system, extensions |
-| v0.95+ | ⬜ | see [`docs/ROADMAP.md`](docs/ROADMAP.md) |
+| **v0.95 — Build & Advanced** | ✅ | networking + dedicated server + obsifox CLI + build/export (5 targets) |
+| v1.0 | ⬜ | see [`docs/ROADMAP.md`](docs/ROADMAP.md) |
 
-Latest update screenshot: [`docs/screenshots/v10-update.svg`](docs/screenshots/v10-update.svg)
+Latest update screenshot: [`docs/screenshots/v095-update.svg`](docs/screenshots/v095-update.svg)
 
 ---
 
@@ -43,7 +44,7 @@ Latest update screenshot: [`docs/screenshots/v10-update.svg`](docs/screenshots/v
 
 ```bash
 npm install
-npm test                # 432 tests (vitest)
+npm test                # 473 tests (vitest)
 npm run example:twod    # renders a real PNG frame with the 2D engine
 npm run example:hello   # real-time 60 FPS loop demo
 npm run example:ecs     # deterministic ECS tour

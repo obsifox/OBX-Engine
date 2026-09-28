@@ -1,5 +1,16 @@
-# cli
+# @obx/cli
 
-CLI (§43) — obx create/dev/build/run/test/package — planned v0.9
+The `obsifox` command line — project generation, development server, build, export,
+run, test, clean, diagnostics, assets, packaging, plugins and configuration over an
+injectable in-memory host.
 
-See [`docs/ROADMAP.md`](../docs/ROADMAP.md) for status.
+```ts
+import { runCli, createCliHost } from "@obx/cli";
+
+const host = createCliHost();
+runCli(["create", "MyGame"], host);
+runCli(["doctor"], host);
+runCli(["export", "web"], host);
+```
+
+See `docs/releases/v0.95.md` for the full API tour. License: MIT.

@@ -1,0 +1,184 @@
+{
+  "version": "0.95.0",
+  "server": {
+    "status": {
+      "running": true,
+      "tick": 30,
+      "clients": 2,
+      "metrics": {
+        "ticks": 30,
+        "connections": 2,
+        "clients": 2
+      }
+    },
+    "logs": 4,
+    "pluginErrors": [
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick",
+      "tick: bad tick"
+    ],
+    "scripts": [
+      "spawner",
+      "weather"
+    ]
+  },
+  "network": {
+    "inputs": 6,
+    "snapshots": 60,
+    "hero": {
+      "x": 8,
+      "y": 4,
+      "hp": 100
+    },
+    "heroClientView": {
+      "x": 8,
+      "y": 4,
+      "hp": 100
+    },
+    "interpX": 8,
+    "predicted": {
+      "x": 8,
+      "y": 4,
+      "hp": 100
+    },
+    "lagRewind12": {
+      "x": 8,
+      "y": 4,
+      "hp": 100
+    },
+    "rpc": [
+      {
+        "method": "add",
+        "ok": true,
+        "value": "42"
+      },
+      {
+        "method": "echo",
+        "ok": true,
+        "value": "OBX"
+      },
+      {
+        "method": "missing",
+        "ok": false,
+        "value": "unknown method"
+      }
+    ],
+    "profiles": [
+      "tcp",
+      "udp",
+      "websocket",
+      "webrtc",
+      "memory"
+    ]
+  },
+  "build": {
+    "graphRan": [
+      "analyze",
+      "compile",
+      "bundle",
+      "package",
+      "compile",
+      "bundle",
+      "package"
+    ],
+    "firstCacheHits": 0,
+    "secondCacheHits": 1,
+    "thirdTarget": "android",
+    "steps": [
+      "analyze(3)",
+      "compile(3)",
+      "bundle(655)",
+      "assets(2)",
+      "optimize(640)",
+      "runtime(2)",
+      "package",
+      "sign",
+      "release"
+    ],
+    "assetCompressed": 10,
+    "assetOriginal": 25,
+    "bundleHash": "dfef8301"
+  },
+  "cli": {
+    "flow": [
+      {
+        "argv": "create NebulaQuest",
+        "code": 0,
+        "out": 2
+      },
+      {
+        "argv": "doctor",
+        "code": 0,
+        "out": 6
+      },
+      {
+        "argv": "build web",
+        "code": 0,
+        "out": 3
+      },
+      {
+        "argv": "export web",
+        "code": 0,
+        "out": 2
+      },
+      {
+        "argv": "export windows",
+        "code": 0,
+        "out": 2
+      },
+      {
+        "argv": "export server",
+        "code": 0,
+        "out": 2
+      },
+      {
+        "argv": "config set difficulty hard",
+        "code": 0,
+        "out": 1
+      },
+      {
+        "argv": "assets check",
+        "code": 0,
+        "out": 1
+      },
+      {
+        "argv": "package",
+        "code": 0,
+        "out": 1
+      },
+      {
+        "argv": "test",
+        "code": 0,
+        "out": 1
+      }
+    ],
+    "distFiles": 30
+  }
+}

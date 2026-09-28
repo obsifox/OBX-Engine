@@ -1,0 +1,60 @@
+{
+  "dialogue": {
+    "startedAt": "greet",
+    "endedAt": null,
+    "finished": true,
+    "visibleChoices": [
+      "accept",
+      "price"
+    ],
+    "historyLength": 3,
+    "localeSample": "برای درمانگر گیاه داری؟"
+  },
+  "quests": {
+    "herbs": "completed",
+    "cure": "active",
+    "herbsProgress": 5,
+    "cureHunt": 2,
+    "followUps": [
+      "cure"
+    ],
+    "flag": true
+  },
+  "inventory": {
+    "weight": 1.9,
+    "maxWeight": 20,
+    "usedSlots": 3,
+    "herbs": 5,
+    "coins": 10,
+    "potions": 2
+  },
+  "equipment": {
+    "main": "sword",
+    "head": "helmet",
+    "durability": 160
+  },
+  "world": {
+    "sunElevation": -0.187,
+    "ambient": 0.16
+  },
+  "events": [
+    "speak:greet",
+    "choose:accept->accept",
+    "advance:bye",
+    "quest:start:herbs",
+    "collect:herb:1",
+    "collect:herb:2",
+    "collect:herb:3",
+    "collect:herb:4",
+    "collect:herb:5",
+    "reward:coin:10",
+    "quest:status:completed",
+    "quest:start:cure",
+    "cure:progress:2/3",
+    "equip:sword",
+    "equip:helmet"
+  ],
+  "unlocked": [
+    "cure"
+  ]
+}

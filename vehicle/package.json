@@ -1,6 +1,6 @@
 {
   "name": "@obx/vehicle",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "OBX Engine vehicles \u2014 suspension, steering, transmission, engine simulation, vehicle AI",
   "type": "module",
   "main": "dist/index.js",
@@ -10,7 +10,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@obx/math": "0.7.0",
-    "@obx/physics": "0.7.0"
+    "@obx/math": "0.8.0",
+    "@obx/physics": "0.8.0"
   }
 }

@@ -235,3 +235,30 @@ occlusion callback) and hearing radius, storing `target.visible/heard`. Preset b
 (flee on hearing, else idle/wander). `UtilityAI` scores options each tick; `GoalSystem`
 arbitrates priority goals until `isDone`; `Schedule` fires time-of-day entries across
 midnight wraps.
+
+## v0.8 — Inventory, Dialogue & Quests
+
+### Inventory pipeline
+
+`Inventory.add(item)`: stackable items first merge into matching stacks (`sameKind` —
+same definition + durability) up to `maxStack` under the weight cap, then open slots
+take fresh stacks; anything that does not fit is returned as leftover and kept on the
+input item. `onAdd`/`onRemove` hooks can veto operations (custom rules). `Equipment`
+binds items to typed slots (`definition.equipmentSlot`) and aggregates weight, tags and
+durability. `Container` is an openable inventory for chests/NPCs.
+
+### Dialogue pipeline
+
+`DialogueRunner.start(id)` enters a node (effects + history + `onSpeak`), then either
+`advance()` (linear `next`) or `choose(id)` (branch `next` with optional `condition`
+gate on `DialogueVariables` and `effects`). Text resolves through a `TextResolver`
+(`LocalizedText` provides locale tables with fallback); `voice()` exposes the clip id
+for the audio layer. `DialogueGraph.validate()` reports dangling `next` references.
+
+### Quest pipeline
+
+`QuestSystem.notify({type, target, count})` increments matching objectives on every
+active quest (clamped at target counts) and flips a quest to `completed` once all
+non-optional objectives are full. Starts are gated by completed-quest prerequisites;
+`claimRewards` grants items/flags exactly once; `followUps` lists branching next
+quests; `serialize`/`restore` round-trips versioned snapshots of all quest states.

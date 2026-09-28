@@ -1,15 +1,12 @@
 {
-  "name": "@obx/ui",
+  "name": "@obx/dialogue",
   "version": "0.8.0",
-  "description": "OBX Engine UI \u2014 tree, layout, widgets, themes, draw commands",
+  "description": "OBX Engine dialogue — nodes, choices, branching, conditions, variables, localization, voice hooks",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -b",
     "test": "vitest run"
-  },
-  "dependencies": {
-    "@obx/math": "0.8.0"
   }
 }

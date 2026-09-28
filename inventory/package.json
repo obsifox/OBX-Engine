@@ -1,15 +1,12 @@
 {
-  "name": "@obx/ui",
+  "name": "@obx/inventory",
   "version": "0.8.0",
-  "description": "OBX Engine UI \u2014 tree, layout, widgets, themes, draw commands",
+  "description": "OBX Engine inventory — items, stacks, weight, durability, containers, equipment",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -b",
     "test": "vitest run"
-  },
-  "dependencies": {
-    "@obx/math": "0.8.0"
   }
 }

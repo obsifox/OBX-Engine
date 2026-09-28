@@ -55,10 +55,15 @@ Execution status of the master development roadmap. ✅ = implemented & tested,
 - [x] Navigation (navgrid mesh, A*, dynamic obstacles, crowds), AI (perception, FSM,
       behavior trees, utility AI, goals, schedules, NPC/animal brains)
 
-### ⬜ v0.8 — Scripting
+### ✅ v0.8 — Gameplay Systems II (2026-09-28)
+- [x] Inventory (items, stacks, weight, durability, equipment, containers)
+- [x] Dialogue (nodes, branching, conditions, variables, localization, voice hooks)
+- [x] Quests (objectives, dependencies, rewards, branching, serialization)
+
+### ⬜ v0.9 — Scripting
 - [ ] JavaScript, TypeScript, Native bindings, WASM, ObsiScript foundation
 
-### ⬜ v0.9 — Editor (ObsiFox Studio)
+### ⬜ v0.10 — Editor (ObsiFox Studio)
 - [ ] Project Manager, Scene Editor, Inspector, Asset Browser, Script Editor, Debugger
 
 ### ⬜ v0.95 — Build & Advanced
@@ -97,7 +102,7 @@ Execution status of the master development roadmap. ✅ = implemented & tested,
 | 20 | Input | ✅ complete for v0.3 scope (virtual controls ⬜) |
 | 21 | UI | ✅ tree/layout/flex/anchors, themes, text, widgets, windows, UI animation |
 | 22–25 | World / Open World / Navigation / AI | 🟡 terrain/partition/streaming/LOD/day-night/weather · persistence/distance tiers · navgrid/A*/crowds · perception/FSM/BT/utility/goals/schedules (async load, HLOD, occlusion, vehicle nav, enemy AI ⬜) |
-| 26–28 | Inventory / Dialogue / Quest | ⬜ |
+| 26–28 | Inventory / Dialogue / Quest | ✅ items/stacks/weight/durability/equipment/containers · nodes/choices/conditions/variables/i18n/voice · objectives/conditions/rewards/dependencies/branching/serialization (dialogue editor ⬜ with Studio) |
 | 29–30 | Networking / Server runtime | ⬜ |
 | 31–33 | Scripting / ObsiScript / Native | ⬜ |
 | 34–35 | Asset pipeline / Resources | 🟡 procedural textures + sprite sheets |
@@ -283,3 +288,44 @@ patrol scan to chase — captured mid-chase at golden hour with seeded rain. Out
 - [x] §25 AI — AI agents, perception, vision, hearing, navigation, state machines, behavior trees, utility AI, goals, schedules, crowd AI, NPC simulation, animal AI (tasks, enemy AI ⬜)
 
 Screenshot: [v0.7-update](screenshots/v0.7-update.svg).
+
+## v0.8 — Gameplay Systems II (2026-09-28)
+
+**368/368 tests green across 23 packages (27 files).** Inventory, dialogue and quests
+ship as one gameplay layer — released as per-version GitHub release v0.8.0 with notes
+and a rendered output.
+
+### Delivered
+
+**@obx/inventory (10 tests)** — `ItemRegistry` definitions with metadata merge, `Item`
+stacks/split/weight/durability (damage, repair, destroyed), `Inventory` stacking adds
+with leftovers, slot + weight limits, find/count/removeById, swap and cross-inventory
+transfer, `onAdd`/`onRemove` veto hooks for custom logic, `Container` (open/close),
+`Equipment` typed slots with equip-swaps and weight/tags/durability aggregates.
+
+**@obx/dialogue (5 tests)** — `DialogueGraph` with reference validation,
+`DialogueRunner` (start/advance/choose, condition-filtered choices, effects, history,
+`onSpeak`), `DialogueVariables`, `LocalizedText` locale tables with fallback, per-node
+voice hook ids, injectable `TextResolver` for custom pipelines.
+
+**@obx/quest (8 tests)** — `QuestSystem` with definition guards, prerequisite-gated
+starts, event-driven objective progress (`notify`), optional objectives, fail/abandon,
+one-shot `claimRewards` with flags, `followUps` branching, `available`/`activeQuests`/
+`completedQuests`, versioned `serialize`/`restore` snapshots.
+
+### Demo — examples/v08-demo
+
+A merchant encounter driven end-to-end by the real systems: dialogue with a
+condition-locked choice, accept branch starts the herb quest, five collect events
+complete it, reward coins land in the inventory, the follow-up quest unlocks at 2/3
+progress, sword + helmet equip — rendered as the game HUD (inventory grid, dialogue
+scene, quest tracker, equipment and progress bars). Output:
+`examples/v08-demo/output/frame.png` + `stats.json`.
+
+### Checklist (roadmap §26, §27, §28)
+
+- [x] §26 Inventory — items, item definitions, stacks, equipment, containers, weight, durability, item metadata, custom inventory logic
+- [x] §27 Dialogue — dialogue nodes, choices, branching, conditions, variables, localization, voice, custom dialogue systems (dialogue editor ⬜ ships with ObsiFox Studio)
+- [x] §28 Quest — quest definitions, objectives, conditions, rewards, dependencies, branching, quest state, quest serialization
+
+Screenshot: [v0.8-update](screenshots/v0.8-update.svg).

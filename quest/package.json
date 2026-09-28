@@ -1,15 +1,12 @@
 {
-  "name": "@obx/ui",
+  "name": "@obx/quest",
   "version": "0.8.0",
-  "description": "OBX Engine UI \u2014 tree, layout, widgets, themes, draw commands",
+  "description": "OBX Engine quests — objectives, conditions, rewards, dependencies, branching, serialization",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -b",
     "test": "vitest run"
-  },
-  "dependencies": {
-    "@obx/math": "0.8.0"
   }
 }

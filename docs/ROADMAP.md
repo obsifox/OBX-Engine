@@ -123,3 +123,69 @@ Execution status of the master development roadmap. ✅ = implemented & tested,
 3. Lighting (§11) — directional/point lights, simple shadow mapping
 4. glTF model import (§8, §34)
 5. `examples/threed-demo` — 3D scene rendered by the engine
+
+## v0.5 — Systems Layer (2026-09-28)
+
+**264/264 tests green across 17 packages.** Six engine systems shipped: physics, character,
+animation, audio, ui, save — each with its own package, full test suite, and a combined demo.
+
+### Delivered
+
+**@obx/physics (21 tests)** — `sphereShape/boxShape/planeShape`; `Body` (dynamic/kinematic/
+static, restitution, friction, damping, layers, triggers); `PhysicsWorld.step` with
+sequential-impulse solver (8 velocity iterations, Baumgarte 0.8, slop 5 mm); collision
+enter/stay/exit + trigger events; `raycast`, `sphereCast`, `sphereCastAll`; distance and
+spring joints; `CharacterController` with move/jump/run/crouch/fly, grounded snapping and
+slope-safe casts.
+
+**@obx/character (5 tests)** — `Health` with damage/death events, `Stamina` with drain,
+regen and exhaustion, `Equipment` slot modifiers (speed/damage/armor), `InteractionSystem`
+nearest-first queries, `Character` composing the physics controller with RPG state.
+
+**@obx/animation (12 tests)** — `AnimationTrack` (step/linear), `AnimationClip.sample`
+(looping), `AnimationPlayer`, `AnimationStateMachine` with crossfade, `BlendTree1D`,
+`Skeleton` topological world poses, `applyLayer` weighted masks, root-motion deltas,
+`twoBoneIK` law-of-cosines solver, quaternion `slerp` blending.
+
+**@obx/audio (14 tests)** — `createClip/createToneClip/createNoiseClip`, `Envelope`
+piecewise curves, `AudioVoice` + `AudioMixer` buses (volume, pitch, loop, envelope,
+equal-power pan, 3D distance attenuation with listener), `GainEffect`, `EchoEffect`
+feedback delay line, `ReverbEffect` Schroeder combs + allpass.
+
+**@obx/ui (11 tests)** — node tree with style inheritance, `measure`/`layout` flexbox
+(row/column, justify, align, gap, padding, absolute anchors + pivots), `paint` to
+draw commands, hit testing and click routing, text input editing, sliders from pointer
+positions, scrolling lists, windows, `UiTweenManager` easings, brand default theme.
+
+**@obx/save (10 tests)** — `SaveSystem` provider registry with versioned migration,
+`packBitsEncode/Decode` RLE, `fnv1a` checksums, `toBase64/fromBase64`, `xorCrypt`
+encryption, `MemoryStorage`, `Autosave`, `MemoryCloudClient`, corruption detection.
+
+### Demo — examples/v05-demo
+
+One deterministic run combining all six systems: physics scene with bouncing spheres,
+falling crates and a walking/running/jumping character; animation bob sampled per frame;
+audio bus with echo rendered to an RMS value; HUD built with the ui package (panel,
+health/stamina bars, slider) painted over the frame; save roundtrip with checksum.
+Output: `examples/v05-demo/output/frame.png` (640×360).
+
+### Fixes found by tests
+
+- `EchoEffect` delayed read used the write index (delay = buffer size); replaced with a
+  proper ring-buffer read head.
+- Loop wrap in `AudioMixer.render` consumed a frame on wrap; now retries the same frame.
+- `ui.layout` gave the root node the viewport rect, ignoring its style width/height/x/y.
+- `SaveSystem` slot metadata dropped provider ids on reload.
+- `updateGrounded` zeroing velocity each frame (physics, v0.5 prep) caused creeping
+  descent; collision response owns velocity zeroing.
+
+### Checklist (roadmap §13, §14, §16, §19, §21, §37)
+
+- [x] §13 Animation — clips, tracks, player, state machine + crossfade, blend trees, skeleton + world pose, layering/masks, root motion, two-bone IK
+- [x] §14 Physics — shapes, bodies, world solver, ray/sphere casts, events, joints, character controller
+- [x] §16 Character — controller, jump, crouch, fly, stamina, health, equipment, interaction
+- [x] §19 Audio — clips, envelopes, voices, mixer, buses, 2D pan, 3D spatial, echo, reverb
+- [x] §21 UI — tree, layout, flex, anchors, themes, text, buttons, inputs, sliders, lists, scroll, windows, UI animation
+- [x] §37 Save — slots, serialization, checksum, compression, encryption, migration, autosave, cloud API, storage abstraction
+
+Screenshot: [v0.5-update](screenshots/v0.5-update.svg).

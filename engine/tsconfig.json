@@ -4,14 +4,48 @@
     "rootDir": "src",
     "outDir": "dist"
   },
-  "include": ["src/**/*.ts"],
+  "include": [
+    "src/**/*.ts"
+  ],
   "references": [
-    { "path": "../core" },
-    { "path": "../runtime" },
-    { "path": "../ecs" },
-    { "path": "../math" },
-    { "path": "../input" },
-    { "path": "../rendering" },
-    { "path": "../scene" }
+    {
+      "path": "../core"
+    },
+    {
+      "path": "../runtime"
+    },
+    {
+      "path": "../ecs"
+    },
+    {
+      "path": "../math"
+    },
+    {
+      "path": "../input"
+    },
+    {
+      "path": "../rendering"
+    },
+    {
+      "path": "../scene"
+    },
+    {
+      "path": "../physics"
+    },
+    {
+      "path": "../audio"
+    },
+    {
+      "path": "../animation"
+    },
+    {
+      "path": "../character"
+    },
+    {
+      "path": "../ui"
+    },
+    {
+      "path": "../save"
+    }
   ]
 }

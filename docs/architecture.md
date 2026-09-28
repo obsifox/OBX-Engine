@@ -119,3 +119,52 @@ hooks), `WorldTransform` components holding previous+current state,
 Shading contract (verified numerically): unlit `= base × texel`; standard =
 emissive + ambient + Σ directional/point (Lambert × (1−metallic) + Blinn-Phong
 specular scaled by (1−roughness)); fog mix `1 − exp(−density · distance)`.
+
+---
+
+## v0.5 — Systems Layer packages
+
+```
+physics/     shapes · bodies · world solver · raycasts · joints · character controller
+character/   health · stamina · equipment · interaction · character facade
+animation/   tracks · clips · player · state machine · blend trees · skeleton · IK
+audio/       clips · envelopes · voices · mixer · effects · listener
+ui/          nodes · measure/layout · paint · hit testing · widgets · tweens · theme
+save/        codecs · checksums · save system · autosave · cloud client
+```
+
+### Physics pipeline
+
+`PhysicsWorld.step(dt)` integrates velocities, broadphase pair generation, sequential
+impulse resolution (8 iterations), penetration correction (Baumgarte 0.8, slop 0.005),
+then contact events (enter/stay/exit) and trigger events. Ray and sphere casts query
+the same shape set. `CharacterController` uses `sphereCastAll` with backface filtering
+so rest-contact casts do not self-block.
+
+### Animation evaluation
+
+`AnimationPlayer.update(dt)` produces a `Pose` (Map of animatable values). The
+`AnimationStateMachine` layers crossfades between clip poses; `BlendTree1D` interpolates
+clips along a parameter; `applyLayer` blends weighted, masked poses over a base pose.
+`Skeleton.worldPose` composes rest + pose through the parent chain; `twoBoneIK` solves
+two-link chains analytically.
+
+### Audio mixing
+
+`AudioMixer.render(out, frames, sampleRate, channels)` walks active voices: clip sample
+at pitch cursor, envelope gain, optional 3D attenuation + equal-power pan, then bus
+chains (gain, echo, reverb), finally master gain into interleaved output.
+
+### UI frame
+
+`measure` sizes nodes from style or children; `layout` places flow children by flexbox
+rules and absolute children by anchors/pivots; `paint` emits draw commands (rect, text,
+border) which host renderers rasterize. Interaction: `hitTest`, `click`, `typeText`,
+`setSliderValue`, `scroll`; animation via `UiTweenManager`.
+
+### Save pipeline
+
+Providers serialize per-id state → JSON body → `fnv1a` checksum → optional `packBits`
+compression → optional `xorCrypt` encryption → `toBase64` into a versioned envelope.
+Loading reverses the chain, verifies the checksum and migrates per-provider versions
+through `migrate(data, fromVersion)`.

@@ -1,6 +1,6 @@
 {
   "name": "obx-engine",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "description": "OBX Engine \u2014 a cross-platform TypeScript game & application engine",
   "type": "module",
@@ -13,10 +13,18 @@
     "math",
     "input",
     "rendering",
-    "scene"
+    "scene",
+    "physics",
+    "audio",
+    "animation",
+    "character",
+    "ui",
+    "save",
+    "tests/*",
+    "examples/*"
   ],
   "scripts": {
-    "build": "tsc -b core runtime ecs engine math input rendering scene",
+    "build": "tsc -b core runtime ecs engine math input rendering scene physics audio animation character ui save",
     "clean": "node scripts/clean.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -24,7 +32,8 @@
     "example:hello": "npm run build && node examples/hello-engine/index.js",
     "example:ecs": "npm run build && node examples/ecs-demo/index.js",
     "example:twod": "npm run build && node examples/twod-demo/index.js",
-    "example:threed": "npm run build && node examples/threed-demo/index.js"
+    "example:threed": "npm run build && node examples/threed-demo/index.js",
+    "example:v05": "npm run build && node examples/v05-demo/index.js"
   },
   "devDependencies": {
     "@types/node": "^20.14.0",

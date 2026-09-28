@@ -60,8 +60,10 @@ Execution status of the master development roadmap. ✅ = implemented & tested,
 - [x] Dialogue (nodes, branching, conditions, variables, localization, voice hooks)
 - [x] Quests (objectives, dependencies, rewards, branching, serialization)
 
-### ⬜ v0.9 — Scripting
-- [ ] JavaScript, TypeScript, Native bindings, WASM, ObsiScript foundation
+### ✅ v0.9 — Scripting (2026-09-28)
+- [x] ObsiScript language (lexer, parser, AST, type checker, interpreter, modules, classes, closures, scheduler)
+- [x] Scripting hosts (sandboxed JS + ObsiScript, lifecycle, hot reload, type definitions)
+- [x] Native extensions (FFI/ABI, capability gating, WASM modules, C/Rust binding generation)
 
 ### ⬜ v0.10 — Editor (ObsiFox Studio)
 - [ ] Project Manager, Scene Editor, Inspector, Asset Browser, Script Editor, Debugger
@@ -104,7 +106,7 @@ Execution status of the master development roadmap. ✅ = implemented & tested,
 | 22–25 | World / Open World / Navigation / AI | 🟡 terrain/partition/streaming/LOD/day-night/weather · persistence/distance tiers · navgrid/A*/crowds · perception/FSM/BT/utility/goals/schedules (async load, HLOD, occlusion, vehicle nav, enemy AI ⬜) |
 | 26–28 | Inventory / Dialogue / Quest | ✅ items/stacks/weight/durability/equipment/containers · nodes/choices/conditions/variables/i18n/voice · objectives/conditions/rewards/dependencies/branching/serialization (dialogue editor ⬜ with Studio) |
 | 29–30 | Networking / Server runtime | ⬜ |
-| 31–33 | Scripting / ObsiScript / Native | ⬜ |
+| 31–33 | Scripting / ObsiScript / Native | 🟡 JS/ObsiScript hosts, sandbox, lifecycle, hot reload, .d.ts gen · language + types/modules/functions/classes/async/debug · FFI/ABI, native modules, WASM, binding gen (TS compile pipeline, language server, Rust/C++ crates ⬜) |
 | 34–35 | Asset pipeline / Resources | 🟡 procedural textures + sprite sheets |
 | 36 | Serialization | 🟡 JSON + entity/component (de)serialization |
 | 37 | Save system | ✅ slots, checksum, compression, encryption, migration, autosave, cloud API |
@@ -329,3 +331,51 @@ scene, quest tracker, equipment and progress bars). Output:
 - [x] §28 Quest — quest definitions, objectives, conditions, rewards, dependencies, branching, quest state, quest serialization
 
 Screenshot: [v0.8-update](screenshots/v0.8-update.svg).
+
+## v0.9 — Scripting (2026-09-28)
+
+**404/404 tests green across 26 packages (30 files).** The scripting layer ships as
+three packages — the ObsiScript language, sandboxed script hosts and the native
+extension system — released as per-version GitHub release v0.9.0 with notes and a
+rendered output.
+
+### Delivered
+
+**@obx/obsiscript (17 tests)** — full language pipeline: lexer (positions, escapes,
+comment stripping, `and`/`or`/`not` keywords), recursive-descent parser with operator
+precedence → AST (declarations, if/while/for, classes with `init`/methods, functions,
+import/export, `spawn`), type checker over annotations, tree-walking interpreter with
+environment chains (closures, recursion, `this`-bound methods, arrays/maps, builtins,
+native function calls, line-tagged `RuntimeError`s, `BreakpointHit` debugging),
+time-based `Scheduler` for spawned tasks, `ModuleLoader` with caching and
+circular-import detection.
+
+**@obx/scripting (11 tests)** — `Sandbox` static identifier scanning
+(`SandboxViolation` for eval/process/require/globalThis-class code), `JavaScriptEngine`
+(bindings injected as identifiers, live export bag, init/update/dispose),
+`ObsiScriptEngine` (host API + persistent `state`), `ScriptHost` with register → load →
+init → update → reload → dispose phases, dependency ordering with circular detection,
+hooks and stats, hot reload that preserves state and re-runs init, `generateDts`
+TypeScript declaration emission, `validateApi`, `makeHost`.
+
+**@obx/native (8 tests)** — `parseSignature` ABI strings, `NativeAbi` FFI marshaling
+across i32/i64/f32/f64/string/ptr with arity checks, `generateCHeader` and
+`generateRustBindings` binding generation, `ExtensionRegistry` (platform allowlists,
+capability grants, lifecycle, ABI exposure), `WasmModule`/`WasmInstance` (byte
+validation, compile+instantiate, export invocation, memory views).
+
+### Demo — examples/v09-demo
+
+An ObsiScript program drives 8 bouncing entities through the sandboxed host (1600
+`setDot` binding calls), hot-reloads mid-run to a faster version with preserved state
+(two full phase cycles), a WASM `add` module computes checksum 108, a native `mathx`
+ABI extension streams seeded randoms, and 4 sandbox attacks are blocked. Output:
+`examples/v09-demo/output/frame.png` + `stats.json`.
+
+### Checklist (roadmap §31, §32, §33)
+
+- [x] §31 Scripting — JavaScript API, runtime bindings, script lifecycle, script hot reload, script debugging (breakpoints/step hooks), sandboxing, module loading, dependency management, native bindings, WASM bindings, type definitions via .d.ts generation (TS compile pipeline ⬜)
+- [x] §32 ObsiScript — language specification (grammar + runtime semantics), lexer, parser, AST, type system (annotations + checker), modules, functions, classes, async support (spawn + scheduler), engine API bindings, debugger (breakpoints + line hooks) (bytecode compiler, language server ⬜)
+- [x] §33 Native — native API, FFI, ABI, native modules, WASM modules, native plugin loading (capability-gated), platform-specific modules, Rust/C++ bindings (generated headers + extern decls; prebuilt crates ⬜)
+
+Screenshot: [v0.9-update](screenshots/v0.9-update.svg).

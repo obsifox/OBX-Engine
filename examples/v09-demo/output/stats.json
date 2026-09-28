@@ -1,0 +1,23 @@
+{
+  "phases": [
+    "field:registered",
+    "field:loaded",
+    "field:running",
+    "field:registered",
+    "field:loaded",
+    "field:running"
+  ],
+  "reloads": 1,
+  "setDotCalls": 1600,
+  "checksum": 108,
+  "nativeSum": 3.184,
+  "blockedAttempts": 4,
+  "missingBindings": [],
+  "dtsLines": 6,
+  "cHeaderLines": 6,
+  "wasmExports": [
+    "add"
+  ],
+  "modules": 1,
+  "scriptPhase": "running"
+}

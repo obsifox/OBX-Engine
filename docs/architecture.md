@@ -262,3 +262,34 @@ active quest (clamped at target counts) and flips a quest to `completed` once al
 non-optional objectives are full. Starts are gated by completed-quest prerequisites;
 `claimRewards` grants items/flags exactly once; `followUps` lists branching next
 quests; `serialize`/`restore` round-trips versioned snapshots of all quest states.
+
+## v0.9 — Scripting, ObsiScript & Native
+
+### ObsiScript pipeline
+
+`tokenize(source)` → `Parser.parse` → `Program` AST → `typeCheck` (annotation issues) →
+`Interpreter.run`. The interpreter walks the AST with `Environment` chains: functions
+capture their defining scope (closures), methods receive `this` via a bound call frame,
+classes construct `ObsiInstance` records with `init`, and `import` delegates to a
+`ModuleLoader` that caches exports and rejects circular loads. `spawn(delay, fn)` queues
+`ObsiFunction`s on a `Scheduler` drained by `tick(dt)`. Debugger hooks fire
+`onLine`/`BreakpointHit` from identifier lookups with source lines.
+
+### Script host pipeline
+
+`ScriptHost.register(id, source, {deps})` → `load` (dependency order, engine execute) →
+`init` → `update(dt)` per running module → `reload(id, source)` (dispose, version+1,
+re-execute, re-init — the `state` bag survives) → `dispose`. `JavaScriptEngine` builds a
+`Function` with every binding injected as an identifier parameter (live `exports` bag);
+`Sandbox.assert` runs first and rejects blocked identifiers. `ObsiScriptEngine` wires
+the same lifecycle to `@obx/obsiscript` exports (`init`/`update`/`dispose` functions).
+`generateDts`/`validateApi` keep the API surface typed and bound.
+
+### Native extension pipeline
+
+`ExtensionRegistry.load(module)` checks the platform allowlist and capability grants,
+then runs `init(context)`; `update(dt)`/`dispose()` drive lifecycles. `NativeAbi`
+marshals calls per declared signature ("i32(i32,i32)") with coercion and arity checks;
+`generateCHeader`/`generateRustBindings` emit foreign declarations from the same ABI.
+`WasmModule.fromBytes` validates magic/version, then `compile` + `instantiate` expose
+typed export calls and memory views.

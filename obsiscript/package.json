@@ -1,0 +1,12 @@
+{
+  "name": "@obx/obsiscript",
+  "version": "0.9.0",
+  "description": "OBX Engine ObsiScript — lexer, parser, AST, type checker, interpreter, modules, scheduler",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run"
+  }
+}

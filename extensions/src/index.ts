@@ -1,0 +1,18 @@
+export {
+  EXTENSIONS_VERSION,
+  ExtensionError,
+  ExtensionRegistry,
+  type AssetTypeContribution,
+  type CommandContribution,
+  type EditorExtension,
+  type ExtensionContributions,
+  type ExtensionContext,
+  type GizmoContribution,
+  type ImporterContribution,
+  type InspectorContribution,
+  type MenuContribution,
+  type NodeTypeContribution,
+  type PanelContribution,
+  type RegistryOptions,
+  type ToolContribution,
+} from "./extensions.js";

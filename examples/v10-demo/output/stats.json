@@ -1,0 +1,99 @@
+{
+  "version": "0.10.0",
+  "editor": {
+    "nodes": 8,
+    "selected": 2,
+    "undoDepth": 5,
+    "canUndo": true,
+    "canRedo": true,
+    "history": [
+      "batch",
+      "Rename to \"Blade\"",
+      "polish-scene",
+      "Reparent node_6",
+      "Set hp"
+    ],
+    "transformMode": "translate",
+    "heroPosition": {
+      "x": 1,
+      "y": 0,
+      "z": -0.5
+    }
+  },
+  "inspector": {
+    "fields": 2,
+    "hp": 140,
+    "validCheck": null,
+    "invalidCheck": "expected a number",
+    "schemas": [
+      "Node2D",
+      "Camera",
+      "Light"
+    ]
+  },
+  "console": {
+    "counts": {
+      "info": 3,
+      "warn": 1,
+      "error": 1
+    },
+    "entries": 5
+  },
+  "profiler": {
+    "report": [
+      {
+        "label": "render",
+        "average": 5.4,
+        "max": 5.4,
+        "count": 1
+      },
+      {
+        "label": "update",
+        "average": 2.25,
+        "max": 2.4,
+        "count": 2
+      },
+      {
+        "label": "script",
+        "average": 0.9,
+        "max": 0.9,
+        "count": 1
+      }
+    ],
+    "frameTotal": 10.8
+  },
+  "viewport": {
+    "camera": {
+      "x": 64,
+      "y": 36,
+      "zoom": 1.25
+    },
+    "gizmoOrigin": {
+      "x": -80,
+      "y": -45
+    }
+  },
+  "project": {
+    "format": 2,
+    "version": "0.1.0",
+    "folders": 11,
+    "files": 13,
+    "depsMissing": [],
+    "semverOk": true,
+    "migratedWidth": 320
+  },
+  "assets": {
+    "registered": 2,
+    "textures": 1,
+    "missing": [
+      "scenes/level1.scene"
+    ]
+  },
+  "extensions": {
+    "obx.scene-tools": {
+      "active": true,
+      "errors": 0,
+      "contributions": 10
+    }
+  }
+}

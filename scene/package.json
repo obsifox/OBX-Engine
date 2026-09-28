@@ -1,6 +1,6 @@
 {
   "name": "@obx/scene",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "OBX Engine scene \u2014 transforms, hierarchy, mesh renderers, interpolation",
   "type": "module",
   "license": "MIT",
@@ -19,9 +19,9 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@obx/core": "0.9.0",
-    "@obx/ecs": "0.9.0",
-    "@obx/math": "0.9.0",
-    "@obx/rendering": "0.9.0"
+    "@obx/core": "0.10.0",
+    "@obx/ecs": "0.10.0",
+    "@obx/math": "0.10.0",
+    "@obx/rendering": "0.10.0"
   }
 }

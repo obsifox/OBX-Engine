@@ -65,8 +65,13 @@ Execution status of the master development roadmap. ✅ = implemented & tested,
 - [x] Scripting hosts (sandboxed JS + ObsiScript, lifecycle, hot reload, type definitions)
 - [x] Native extensions (FFI/ABI, capability gating, WASM modules, C/Rust binding generation)
 
-### ⬜ v0.10 — Editor (ObsiFox Studio)
-- [ ] Project Manager, Scene Editor, Inspector, Asset Browser, Script Editor, Debugger
+### ✅ v0.10 — Editor core, ObsiFox Studio (2026-09-28)
+- [x] Project Manager (manifest v2, migration, semver, 11 folders, files, AssetIndex)
+- [x] Scene Editor model (document, undo/redo commands, transactions, selection)
+- [x] Inspector (schemas, read/validate), Asset Browser (AssetIndex), Transform tools with snap
+- [x] Console, Profiler, 2D Viewport (pan / anchored zoom / frame)
+- [x] Editor extensions (commands, panels, menus, inspectors, tools, gizmos, importers, asset + node types, error isolation)
+- [ ] Script Editor, Debugger, specialized editors (animation / material / shader / UI / terrain / nav)
 
 ### ⬜ v0.95 — Build & Advanced
 - [ ] CLI, Windows / Linux / Web / Android export
@@ -112,7 +117,7 @@ Execution status of the master development roadmap. ✅ = implemented & tested,
 | 37 | Save system | ✅ slots, checksum, compression, encryption, migration, autosave, cloud API |
 | 38 | Localization | ⬜ |
 | 39 | Plugin system | ⬜ |
-| 40–42 | Editor (ObsiFox Studio) / Extensions / Project system | ⬜ |
+| 40–42 | Editor (ObsiFox Studio) / Extensions / Project system | 🟡 editor model + project + extensions (script editor, debugger, specialized editors ⬜) |
 | 43 | CLI | ⬜ |
 | 44–46 | Hot reload / Debugging / Profiling | 🟡 ECS inspect/stats |
 | 47–52 | Platform runtimes | 🟡 platform adapter + loop drivers |
@@ -379,3 +384,53 @@ ABI extension streams seeded randoms, and 4 sandbox attacks are blocked. Output:
 - [x] §33 Native — native API, FFI, ABI, native modules, WASM modules, native plugin loading (capability-gated), platform-specific modules, Rust/C++ bindings (generated headers + extern decls; prebuilt crates ⬜)
 
 Screenshot: [v0.9-update](screenshots/v0.9-update.svg).
+
+## v0.10 — ObsiFox Studio: Editor, Project & Extensions (2026-09-28)
+
+**432/432 tests green across 33 files / 29 packages.** The editor foundation ships as
+three packages: the scene-editing model, the project system and the editor extension
+registry.
+
+### Delivered
+
+**@obx/editor (15 tests)** — `SceneDocument` (typed node tree, add/remove/rename/
+reparent with cycle rejection, findByName, snapshot/restore), `CommandStack`
+(undo/redo, depth limit, transactions committing as `CompositeCommand`), five commands
+(`AddNodeCommand` with snapshot redo, `RemoveNodeCommand`, `RenameNodeCommand`,
+`ReparentNodeCommand`, `SetPropertyCommand` covering name / `transform.*` / custom
+paths) + `CompositeCommand` with reverse-order undo, `Selection`, `Inspector` with
+`defaultInspectorSchemas` (Node2D/Camera/Light) and kind-aware `validate`,
+`TransformTool` (4 modes, snap 0.5 / 15° / 0.25, 0.01 scale floor), `EditorConsole`,
+`Profiler` (label report + frame total), `Viewport` (2D camera, pan, anchored zoomAt,
+frame), `EditorSession` bundling all parts.
+
+**@obx/project (8 tests)** — `ProjectManifest` + `createManifest` (name validation),
+`Project` with in-memory file store (traversal-safe resolve), settings, plugins,
+`addDependency`/`checkDependencies`, `standardFolders` (11 folders), `migrateManifest`
+(v1→v2 folds `width`/`height` into `render.*`, rejects future formats), `satisfies`
+semver ranges, `AssetIndex` (records with meta, byType, missing-vs-project),
+`ProjectError`.
+
+**@obx/extensions (5 tests)** — `ExtensionRegistry` with lifecycle + `ExtensionContext`,
+ten contribution kinds (commands, panels with locations, menus with ordering,
+inspectors with priority, tools, node-type gizmos, importers, asset types, node types),
+targeted lookups, chained `executeCommand`, `errorsFor` fault isolation and per-extension
+`stats`.
+
+### Demo — examples/v10-demo
+
+A full ObsiFox Studio mock workbench driven by the real APIs: 8-node scene edited
+through 5 commands + a batch transaction (undo depth 5), 2-node selection, inspector
+with passing + rejected validation, snapped translate drag, viewport pan + anchored
+zoom, console 3/1/1, profiler 10.8 ms total, manifest v2 project (11 folders, 13 files,
+deps ok, legacy manifest migrated), 2 assets with 1 missing, and a scene-tools
+extension contributing 10 pieces with 0 errors. Output:
+`examples/v10-demo/output/frame.png` + `stats.json`.
+
+### Checklist (roadmap §40, §41, §42)
+
+- [x] §40 Editor — project manager, scene editor + scene tree, inspector, asset browser, file browser, 2D viewport, gizmos, transform tools, console, profiler (script editor, debugger, 3D viewport, specialized editors ⬜)
+- [x] §41 Editor extensions — custom inspectors, custom windows/panels, custom tools, custom gizmos, custom importers, custom asset types, custom nodes, plugin packaging (plugin system §39 ⬜)
+- [x] §42 Project system — folder structure (project.json + 11 folders), project creation, project configuration, metadata, dependencies, settings, versioning, migration
+
+Screenshot: [v10-update](screenshots/v10-update.svg).

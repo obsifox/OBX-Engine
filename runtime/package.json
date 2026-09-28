@@ -1,6 +1,6 @@
 {
   "name": "@obx/runtime",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "OBX Engine runtime \u2014 game loop, frame limiting, FPS, tasks, platform adapters",
   "type": "module",
   "license": "MIT",
@@ -19,6 +19,6 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@obx/core": "0.9.0"
+    "@obx/core": "0.10.0"
   }
 }

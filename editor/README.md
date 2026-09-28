@@ -1,15 +1,20 @@
-# ObsiFox Studio
+# @obx/editor
 
-**ObsiFox Studio** is the official editor and development environment for
-OBX Engine (roadmap v0.8).
+Scene-editing model for **ObsiFox Studio** — scene document with undo/redo command
+stack, selection, inspector schemas, transform tools with snapping, editor console,
+profiler and a 2D viewport camera.
 
-Planned capabilities (§40, §41, §69):
+```ts
+import {
+  EditorSession, AddNodeCommand, SetPropertyCommand, CompositeCommand,
+} from "@obx/editor";
 
-- Project manager and templates
-- Scene editor with 2D/3D viewports, gizmos and transform tools
-- Inspector, asset browser, script editor, console, debugger, profiler
-- Animation / material / shader / UI / terrain / navigation editors
-- Docking, tabs, command palette, undo/redo, themes
-- Editor plugins: custom inspectors, tools, gizmos, importers
+const session = new EditorSession();
+const hero = session.document.addNode("Node3D", "Hero", session.document.rootId);
+session.stack.execute(new SetPropertyCommand(hero, "hp", 140));
+session.selection.select(hero.id);
+session.tool.setMode("translate");
+session.tool.applyDrag(hero, { x: 1.2, y: 0, z: -0.4 }, true);
+```
 
-See [`docs/ROADMAP.md`](../docs/ROADMAP.md) for status.
+See `docs/releases/v0.10.md` for the full API tour. License: MIT.

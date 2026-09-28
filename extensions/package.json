@@ -1,0 +1,12 @@
+{
+  "name": "@obx/extensions",
+  "version": "0.10.0",
+  "description": "OBX Engine editor extensions — commands, panels, menus, custom inspectors, tools, gizmos, importers, node types",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run"
+  }
+}

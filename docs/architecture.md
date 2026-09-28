@@ -293,3 +293,36 @@ marshals calls per declared signature ("i32(i32,i32)") with coercion and arity c
 `generateCHeader`/`generateRustBindings` emit foreign declarations from the same ABI.
 `WasmModule.fromBytes` validates magic/version, then `compile` + `instantiate` expose
 typed export calls and memory views.
+
+## v0.10 — ObsiFox Studio: Editor, Project & Extensions
+
+### Editor model pipeline
+
+`SceneDocument` keeps a typed node tree (`id/name/type/transform/properties/children/
+parent`) with cycle-checked reparenting and snapshot/restore for commands. Every edit
+is a `Command` executed through `CommandStack` (undo/redo stacks with depth limit;
+`beginTransaction`/`commitTransaction` folds batches into one `CompositeCommand` that
+undoes in reverse). `Selection` holds id sets; `Inspector` resolves `InspectorSchema`
+descriptors per node type and validates values by kind (number min/max, string, bool,
+enum, vec2/vec3); `TransformTool` applies drag deltas in 4 modes with optional snap;
+`EditorConsole`/`Profiler` collect logs and frame timings; `Viewport` maps world↔screen
+through a 2D camera (pan, anchored zoom, frame-bounds). `EditorSession` composes all
+parts into one workbench object.
+
+### Project system pipeline
+
+`ProjectManifest` (format 2) records name/version/engine/dependencies/settings/plugins;
+`migrateManifest` upgrades format-1 manifests (settings `width`/`height` → `render.*`)
+and rejects future formats. `Project` provides a traversal-safe in-memory file store
+plus settings/plugins/dependency checks; `standardFolders` defines the 11-folder
+layout; `satisfies` evaluates `^`/`~`/`>=`/exact semver ranges; `AssetIndex` tracks
+path/type/meta records and detects missing files against a `Project`.
+
+### Extension pipeline
+
+`ExtensionRegistry.register` installs an `EditorExtension` (id/name/version +
+contributions). `activate`/`deactivate` drive lifecycle with an `ExtensionContext`
+(state map, log, chained `executeCommand`). Contribution lookups resolve inspectors by
+node type (priority), gizmos by node type, importers/asset types by file extension, and
+create custom nodes. Failures inside any extension are captured per extension id
+(`errorsFor`, `stats`) — the registry itself never throws on extension faults.

@@ -1,0 +1,24 @@
+{
+  "name": "@obsifox/engine",
+  "version": "0.1.0",
+  "description": "ObsiFox Engine — Engine and Application facades wiring core + runtime",
+  "type": "module",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@obsifox/core": "0.1.0",
+    "@obsifox/runtime": "0.1.0",
+    "@obsifox/ecs": "0.2.0"
+  }
+}

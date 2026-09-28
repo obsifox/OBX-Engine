@@ -1,0 +1,31 @@
+{
+  "name": "obsifox-engine",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ObsiFox Engine — a cross-platform TypeScript game & application engine",
+  "type": "module",
+  "license": "MIT",
+  "workspaces": [
+    "core",
+    "runtime",
+    "ecs",
+    "engine"
+  ],
+  "scripts": {
+    "build": "tsc -b core runtime ecs engine",
+    "clean": "tsc -b core runtime ecs engine --clean && node -e \"const fs=require('fs');for (const d of ['core','runtime','ecs','engine']) fs.rmSync(d+'/dist',{recursive:true,force:true,recursiveRetry:true})\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -b core runtime ecs engine --pretty",
+    "example:hello": "npm run build && node examples/hello-engine/index.js",
+    "example:ecs": "npm run build && node examples/ecs-demo/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "typescript": "^5.5.4",
+    "vitest": "^2.1.9"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "@obx/ecs",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "OBX Engine ECS \u2014 archetype-based entities, components, systems, queries, resources",
   "type": "module",
   "license": "MIT",
@@ -19,6 +19,6 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@obx/core": "0.5.0"
+    "@obx/core": "0.6.0"
   }
 }

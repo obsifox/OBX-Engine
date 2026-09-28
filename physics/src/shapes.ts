@@ -249,16 +249,12 @@ export function overlapBoxPlane(
   normal: Vec3,
   offset: number,
 ): ShapeOverlap | null {
-  const px = normal.x >= 0 ? max.x : min.x;
-  const py = normal.y >= 0 ? max.y : min.y;
-  const pz = normal.z >= 0 ? max.z : min.z;
-  const nx = normal.x >= 0 ? min.x : max.x;
-  const ny = normal.y >= 0 ? min.y : max.y;
-  const nz = normal.z >= 0 ? min.z : max.z;
-  const far = normal.x * px + normal.y * py + normal.z * pz - offset;
-  if (far < 0) return null;
-  const near = normal.x * nx + normal.y * ny + normal.z * nz - offset;
-  return { normal: normal.clone(), penetration: far };
+  const px = normal.x >= 0 ? min.x : max.x;
+  const py = normal.y >= 0 ? min.y : max.y;
+  const pz = normal.z >= 0 ? min.z : max.z;
+  const near = normal.x * px + normal.y * py + normal.z * pz - offset;
+  if (near >= 0) return null;
+  return { normal: normal.clone(), penetration: -near };
 }
 
 export function boundsForShape(

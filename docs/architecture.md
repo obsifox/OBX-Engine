@@ -168,3 +168,36 @@ Providers serialize per-id state → JSON body → `fnv1a` checksum → optional
 compression → optional `xorCrypt` encryption → `toBase64` into a versioned envelope.
 Loading reverses the chain, verifies the checksum and migrates per-provider versions
 through `migrate(data, fromVersion)`.
+
+---
+
+## v0.6 — Motion & Effects packages
+
+```
+vehicle/    wheels · suspension · steering · transmission · engine · damage · AI
+particles/  curves · emitters · collision · trails · GPU buffers · presets
+vfx/        effect graphs · screen effects · weather · explosion/impact library
+```
+
+### Vehicle pipeline
+
+`Vehicle.update(dt, input, world)`: per wheel — steer toward input, raycast the
+suspension stroke, apply spring+damper force (capped) at the attach point with torque,
+drive force from `engine.torque(rpm) × gear × finalDrive`, braking/rolling resistance,
+lateral grip at the contact, then arcade yaw targeting (`steerRate × speedFactor`)
+with pitch/roll damping. `Transmission` shifts on rpm bands; `VehicleAI` runs
+pure-pursuit toward waypoints with yaw-rate damping.
+
+### Particle pipeline
+
+`ParticleEmitter.update(dt, world?)`: emission (rate/burst with carry), per-particle
+integration (gravity, drag, rotation), optional world ray collision (bounce/friction/
+kill), size/color curves over life, trail ring buffers. `GpuParticleBuffer` mirrors the
+sim in structure-of-arrays typed batches for renderer upload. All randomness flows
+through seeded `@obx/core` `Random` — identical seeds reproduce frames exactly.
+
+### VFX composition
+
+`VfxGraph` fires timed events that register emitters and drive `ScreenEffects`; events
+compose library effects (explosion = sparks burst + smoke plume + flash + shake).
+`WeatherSystem` wraps rain/snow emitters with wind-steered volume spawns.

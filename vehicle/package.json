@@ -1,7 +1,7 @@
 {
-  "name": "@obx/audio",
+  "name": "@obx/vehicle",
   "version": "0.6.0",
-  "description": "OBX Engine audio \u2014 clips, voices, mixer, effects, spatial audio",
+  "description": "OBX Engine vehicles \u2014 suspension, steering, transmission, engine simulation, vehicle AI",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,6 +10,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@obx/math": "0.6.0"
+    "@obx/math": "0.6.0",
+    "@obx/physics": "0.6.0"
   }
 }

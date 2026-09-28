@@ -276,3 +276,33 @@ describe("CharacterController", () => {
     expect(character.state).toBe("grounded");
   });
 });
+
+describe("box-plane regression", () => {
+  it("keeps a resting box on the plane without fake contacts", () => {
+    const world = new PhysicsWorld({ gravity: new Vec3(0, -12, 0) });
+    world.addBody(new Body({ type: "static", shape: planeShape(new Vec3(0, 1, 0), 0) }));
+    const box = world.addBody(
+      new Body({ shape: boxShape(new Vec3(0.5, 0.5, 0.5)), position: new Vec3(0, 3, 0), restitution: 0, friction: 0.8 }),
+    );
+    for (let i = 0; i < 240; i += 1) world.step(1 / 60);
+    expect(box.position.y).toBeGreaterThan(0.45);
+    expect(box.position.y).toBeLessThan(0.62);
+    expect(Math.abs(box.velocity.y)).toBeLessThan(0.25);
+  });
+
+  it("detects a box only when it penetrates the halfspace", () => {
+    const world = new PhysicsWorld({ gravity: new Vec3(0, 0, 0) });
+    world.addBody(new Body({ type: "static", shape: planeShape(new Vec3(0, 1, 0), 0) }));
+    const box = world.addBody(
+      new Body({ type: "kinematic", shape: boxShape(new Vec3(0.5, 0.5, 0.5)), position: new Vec3(0, 2, 0) }),
+    );
+    world.step(1 / 60);
+    world.step(1 / 60);
+    expect(box.position.y).toBeCloseTo(2, 9);
+    const deep = world.addBody(
+      new Body({ type: "kinematic", shape: boxShape(new Vec3(0.5, 0.5, 0.5)), position: new Vec3(4, -1, 0) }),
+    );
+    world.step(1 / 60);
+    expect(deep.position.y).toBe(-1);
+  });
+});

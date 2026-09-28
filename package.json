@@ -20,11 +20,14 @@
     "character",
     "ui",
     "save",
+    "vehicle",
+    "particles",
+    "vfx",
     "tests/*",
     "examples/*"
   ],
   "scripts": {
-    "build": "tsc -b core runtime ecs engine math input rendering scene physics audio animation character ui save",
+    "build": "tsc -b core runtime ecs engine math input rendering scene physics audio animation character ui save vehicle particles vfx",
     "clean": "node scripts/clean.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -33,7 +36,8 @@
     "example:ecs": "npm run build && node examples/ecs-demo/index.js",
     "example:twod": "npm run build && node examples/twod-demo/index.js",
     "example:threed": "npm run build && node examples/threed-demo/index.js",
-    "example:v05": "npm run build && node examples/v05-demo/index.js"
+    "example:v05": "npm run build && node examples/v05-demo/index.js",
+    "example:v06": "npm run build && node examples/v06-demo/index.js"
   },
   "devDependencies": {
     "@types/node": "^20.14.0",

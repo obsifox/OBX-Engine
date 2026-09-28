@@ -189,3 +189,48 @@ Output: `examples/v05-demo/output/frame.png` (640×360).
 - [x] §37 Save — slots, serialization, checksum, compression, encryption, migration, autosave, cloud API, storage abstraction
 
 Screenshot: [v0.5-update](screenshots/v0.5-update.svg).
+
+## v0.6 — Motion & Effects (2026-09-28)
+
+**299/299 tests green across 20 packages.** Vehicles, particles and VFX ship together with
+per-version GitHub releases (v0.1.0–v0.6.0) carrying release notes and rendered outputs.
+
+### Delivered
+
+**@obx/vehicle (9 tests)** — wheel raycasts with spring+damper suspension (force-capped),
+steering geometry, braking/rolling resistance, engine torque curve, multi-gear
+transmission with up/downshift bands and reverse, impact damage with integrity,
+`createCar` preset, `VehicleAI` pure-pursuit waypoint follower with yaw damping.
+
+**@obx/particles (11 tests)** — `Curve` keyframe sampling, `ParticleEmitter` (rate/burst,
+cone directions, gravity, drag, size/color over life, world collision with bounce/kill,
+trails), `ParticleSystem`, `GpuParticleBuffer` structure-of-arrays simulation,
+presets: smoke, fire, sparks, dust, rain, snow (volume spawns via `spawnBox`).
+
+**@obx/vfx (9 tests)** — `VfxGraph` timed event sequences with emitter registration,
+`ScreenEffects` (fade, flash, shake, vignette), `WeatherSystem` (rain/snow/clear with
+wind), `explosionEffect`/`impactEffect` compositions, smoke/fire screens.
+
+**@obx/core +4** — seeded `Random` (mulberry32: next/range/int/bool/pick/shuffle).
+
+### Engine bugs found and fixed by v0.6 tests
+
+- `overlapBoxPlane` was inverted: boxes above a plane reported fake contacts with huge
+  penetration (position correction exploded bodies to 1e30). Physics suite +2 regression
+  tests.
+- Vehicle damper sign error (force = k·c − d·ċ) zeroed suspension force exactly when
+  needed; correct form is k·c + d·ċ with a force cap.
+
+### Demo — examples/v06-demo
+
+A car with working suspension drives through rain, climbs a ramp, smashes crates with
+sparks and an explosion graph (screen shake + flash), tire smoke trailing the wheels.
+Output: `examples/v06-demo/output/frame.png`.
+
+### Checklist (roadmap §15, §17, §18)
+
+- [x] §15 Vehicle — wheel system, suspension, steering, braking, transmission, engine simulation, vehicle damage, vehicle controller, vehicle AI
+- [x] §17 Particle — emitter, lifetime, velocity, gravity, collision, materials, GPU particles, trails, effects library
+- [x] §18 VFX — smoke, fire, explosion, sparks, dust, weather effects, screen effects, custom effects, VFX graph
+
+Screenshot: [v0.6-update](screenshots/v0.6-update.svg).

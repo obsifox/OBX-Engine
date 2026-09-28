@@ -1,7 +1,7 @@
 {
-  "name": "@obx/character",
+  "name": "@obx/vfx",
   "version": "0.6.0",
-  "description": "OBX Engine character \u2014 locomotion, stamina, health, equipment, interaction",
+  "description": "OBX Engine VFX \u2014 effect graphs, screen effects, weather, explosion/impact library",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +10,9 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@obx/core": "0.6.0",
     "@obx/math": "0.6.0",
+    "@obx/particles": "0.6.0",
     "@obx/physics": "0.6.0"
   }
 }

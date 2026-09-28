@@ -16,4 +16,12 @@ export {
   createTransformSystem3D,
 } from "./transform3d.js";
 
-export const SCENE_VERSION = "0.3.0";
+export {
+  MeshRenderer3D,
+  addMeshRenderer3D,
+  collectRenderables3D,
+  type MeshRenderer3DData,
+  type Renderable3D,
+} from "./mesh-renderer.js";
+
+export const SCENE_VERSION = "0.4.0";

@@ -7,4 +7,4 @@ export { Color, Colors } from "./color.js";
 export { Transform2D } from "./transform2d.js";
 export { Transform3D } from "./transform3d.js";
 
-export const MATH_VERSION = "0.3.0";
+export const MATH_VERSION = "0.4.0";

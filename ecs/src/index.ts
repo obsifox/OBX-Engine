@@ -6,4 +6,4 @@ export * from "./query.js";
 export * from "./system.js";
 export * from "./world.js";
 
-export const ECS_VERSION = "0.2.0";
+export const ECS_VERSION = "0.4.0";

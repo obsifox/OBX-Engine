@@ -34,4 +34,38 @@ export {
 } from "./renderer2d.js";
 export { encodePng } from "./png.js";
 
-export const RENDERING_VERSION = "0.3.0";
+export { Mesh, createCube, createPlane, createUvSphere, computeNormals } from "./mesh.js";
+export {
+  Material,
+  createLighting,
+  type ShadingModel,
+  type MaterialOptions,
+  type AmbientLight,
+  type DirectionalLight,
+  type PointLight,
+  type LightingEnvironment,
+  type Fog,
+} from "./material.js";
+export { Camera3D, aabbVisible, type Plane4 } from "./camera3d.js";
+export {
+  Software3DBackend,
+  type RasterVertex,
+  type ShadingContext,
+  type Render3DBackend,
+} from "./backends/software3d.js";
+export { Recording3DBackend, type RecordedDraw3D } from "./backends/recording3d.js";
+export {
+  Renderer3D,
+  transformAabb,
+  composeWorldMatrix,
+  type Renderer3DOptions,
+  type Renderer3DStats,
+} from "./renderer3d.js";
+export {
+  parseGltf,
+  flattenGltf,
+  type GltfModel,
+  type GltfNode,
+} from "./gltf.js";
+
+export const RENDERING_VERSION = "0.4.0";

@@ -1,6 +1,6 @@
 # OBX Engine — Architecture Notes
 
-Living document for the implemented stack (v0.1–v0.3). Subsystem docs are
+Living document for the implemented stack (v0.1–v0.4). Subsystem docs are
 added as their roadmap phases land.
 
 ## Layering
@@ -18,13 +18,14 @@ added as their roadmap phases land.
                   @obx/scene   @obx/rendering
                         │          │
                   transforms   2D renderer (§7, §9)
+                              3D renderer (§8, §10–12)
 ```
 
 Dependency rules:
 
 - `core` and `math` depend on nothing.
 - `runtime`, `ecs`, `input`, `rendering` depend only on `core`/`math`.
-- `scene` depends on `ecs` + `math`.
+- `scene` depends on `ecs` + `math` + `rendering` (mesh renderer components).
 - `engine` composes everything and re-exports the public APIs.
 
 ## Core (§2)
@@ -101,3 +102,20 @@ hooks), `WorldTransform` components holding previous+current state,
   order, uv regions, rotation, camera movement) and PNG output validated
   against a real zlib decoder.
 - Determinism: `ManualLoopDriver` + `ManualPlatform` make frame timing exact.
+
+## Rendering 3D (§8, §10–12)
+
+| Piece | Module | Notes |
+|---|---|---|
+| Geometry | `Mesh`, `createCube`/`createPlane`/`createUvSphere`, `computeNormals` | AABB + bounding sphere, validated indices |
+| Materials | `Material` | `unlit` / `standard` (metallic-roughness PBR-lite), albedo texture, emissive |
+| Lighting | `createLighting`, `Fog` | ambient + directional + point lights, exponential distance fog |
+| Camera | `Camera3D` | look-at quaternion, perspective projection, Gribb-Hartmann frustum, `worldToScreen` |
+| Rasterizer | `Software3DBackend` | pixel-center fill, 64-bit depth (`<` test), perspective-correct attributes, alpha blending |
+| Pipeline | `Renderer3D` | frustum cull → normal matrix → near clip → project → winding cull → raster, draw stats |
+| Models | `parseGltf`, `flattenGltf` | glTF JSON + GLB + data-URI buffers, node hierarchy flattening |
+| Scene | `MeshRenderer3D`, `collectRenderables3D` (scene) | mesh + material per entity, world matrices from `Transform3D` |
+
+Shading contract (verified numerically): unlit `= base × texel`; standard =
+emissive + ambient + Σ directional/point (Lambert × (1−metallic) + Blinn-Phong
+specular scaled by (1−roughness)); fog mix `1 − exp(−density · distance)`.

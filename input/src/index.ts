@@ -14,4 +14,4 @@ export {
   type GamepadLike,
 } from "./dom.js";
 
-export const INPUT_VERSION = "0.3.0";
+export const INPUT_VERSION = "0.4.0";

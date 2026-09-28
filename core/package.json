@@ -1,6 +1,6 @@
 {
   "name": "@obx/core",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "OBX Engine core foundation \u2014 lifecycle, time, events, logging, config, memory",
   "type": "module",
   "license": "MIT",

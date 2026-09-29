@@ -87,6 +87,16 @@ Execution status of the master development roadmap. ✅ = implemented & tested,
 - [x] Profiler (CPU spans, memory profiler, channel metrics, frame debugger, draw-call statistics)
 - [ ] Global illumination, soft body/cloth/hair, GPU profiler, network/physics/script deep profilers
 
+### ✅ v1.1 — Runtime & Platform Foundation (2026-09-28)
+- [x] Platform abstraction (window, surface, input, filesystem, timing, threads, events, clipboard, lifecycle, capabilities)
+- [x] Runtime host (bootstrap, loop, frame timing, startup/shutdown, error handling)
+- [x] Job system (worker pool, task graph, handles, fences, work stealing, cancellation, deterministic inline mode)
+- [x] Virtual file system (memory/physical/package adapters, virtual paths with traversal protection, mounts)
+- [x] Resource management (loaders, refcounted handles, cache, lifetimes, dependency tracking, cascade invalidation)
+- [x] 58 tests (571 total) + demo
+
+Post-1.0 roadmap: [`docs/ROADMAP-1.9.md`](ROADMAP-1.9.md)
+
 ### ✅ v1.0 — Stable (2026-09-28)
 - [x] Stable API / Runtime / Editor / Build System (semver 1.x surface freeze, 36 lockstep packages)
 - [x] Documentation (17 guides: Getting Started, Installation, Core, ECS, 2D, 3D, Physics, Audio, Input, UI, Networking, Scripting, Plugins, Native, CLI, Editor, Build + stability policy)

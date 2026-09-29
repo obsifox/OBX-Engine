@@ -1,6 +1,6 @@
 {
   "name": "@obx/dialogue",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "OBX Engine dialogue \u2014 nodes, choices, branching, conditions, variables, localization, voice hooks",
   "type": "module",
   "main": "dist/index.js",

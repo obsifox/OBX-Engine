@@ -19,7 +19,7 @@ one codebase targeting Windows, Linux, Android, Web and headless servers.
 
 ---
 
-## Current status (v1.0)
+## Current status (v1.1)
 
 | Roadmap phase | Status | Highlights |
 |---|---|---|
@@ -37,7 +37,9 @@ one codebase targeting Windows, Linux, Android, Web and headless servers.
 | **v0.96 — Advanced Systems** | ✅ | multiplayer lobby/rooms/matchmaking, open world streaming + sim, AI brains, fog/foliage/decals/water, profiler |
 | v1.0 | ⬜ | see [`docs/ROADMAP.md`](docs/ROADMAP.md) |
 
-Latest update screenshot: [`docs/screenshots/v100-update.svg`](docs/screenshots/v100-update.svg)
+Latest update screenshot: [`docs/screenshots/v110-update.svg`](docs/screenshots/v110-update.svg)
+
+Post-1.0 roadmap: [`docs/ROADMAP-1.9.md`](docs/ROADMAP-1.9.md)
 
 Documentation: [`docs/api/`](docs/api/) (17 guides) · API stability: [`docs/stability.md`](docs/stability.md) · Releases: [`docs/releases/`](docs/releases/)
 
@@ -47,7 +49,7 @@ Documentation: [`docs/api/`](docs/api/) (17 guides) · API stability: [`docs/sta
 
 ```bash
 npm install
-npm test                # 513 tests (vitest)
+npm test                # 571 tests (vitest)
 npm run example:twod    # renders a real PNG frame with the 2D engine
 npm run example:hello   # real-time 60 FPS loop demo
 npm run example:ecs     # deterministic ECS tour
@@ -114,7 +116,7 @@ obx-engine/
   gamepads with a DOM adapter and full manual injection for tests/servers.
 - **Scene transforms**: parent/child propagation with previous/current state for
   render interpolation, custom serialization hooks.
-- **Everything tested** — 513 unit + integration tests, pixel-exact renderer checks.
+- **Everything tested** — 571 unit + integration tests, pixel-exact renderer checks.
 - **Stable API (v1.0)** — semver 1.x freeze across 36 lockstep packages; plugin system with sandboxed permissions; marketplace registry with signed packages and lockfiles.
 
 ---

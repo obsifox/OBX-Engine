@@ -1,0 +1,94 @@
+{
+  "version": "1.1.0",
+  "platform": {
+    "kind": "node",
+    "capabilities": {
+      "window": true,
+      "surface": true,
+      "threads": true,
+      "clipboard": true,
+      "timers": true,
+      "highResolutionTiming": true,
+      "filesystem": true,
+      "inputInjection": true
+    },
+    "threads": 2,
+    "lifecycle": "stopped"
+  },
+  "host": {
+    "frames": 3,
+    "running": false,
+    "fps": 0,
+    "errors": 0,
+    "window": {
+      "title": "OBX v1.1 Runtime Host",
+      "width": 640,
+      "height": 360
+    },
+    "surface": {
+      "width": 640,
+      "height": 360
+    },
+    "lifecycle": "stopped"
+  },
+  "vfs": {
+    "mounts": [
+      "/templates",
+      "/pack",
+      "/mem"
+    ],
+    "normalizedPath": "/mem/config/game.json",
+    "templateListed": [
+      "2d",
+      "3d",
+      "README.md",
+      "application"
+    ],
+    "packEntry": "{\"primary\":\"#FF6A1A\",\"secondar"
+  },
+  "resources": {
+    "configValue": {
+      "dep": "/pack/palette.json",
+      "level": 3
+    },
+    "paletteType": "json",
+    "templateName": "FPS Template",
+    "cacheHit": true,
+    "stats": {
+      "cache": {
+        "hits": 1,
+        "misses": 3,
+        "size": 1,
+        "invalidations": 2
+      },
+      "loaders": 2,
+      "trackedDependencies": 3,
+      "trackedDependents": 1
+    }
+  },
+  "jobs": {
+    "poolResults": [
+      144,
+      49,
+      441
+    ],
+    "inlineResult": 42,
+    "poolStats": {
+      "scheduled": 3,
+      "completed": 3,
+      "failed": 0,
+      "cancelled": 0,
+      "executor": {
+        "submitted": 3,
+        "completed": 3,
+        "failed": 0,
+        "cancelled": 0,
+        "queued": 0
+      }
+    },
+    "graph": 42
+  },
+  "ecs": {
+    "entities": 24
+  }
+}

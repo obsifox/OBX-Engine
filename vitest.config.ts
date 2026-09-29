@@ -7,6 +7,10 @@ const root = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   resolve: {
     alias: {
+      "@obx/platform": path.join(root, "platform/src/index.ts"),
+      "@obx/jobs": path.join(root, "jobs/src/index.ts"),
+      "@obx/vfs": path.join(root, "vfs/src/index.ts"),
+      "@obx/resources": path.join(root, "resources/src/index.ts"),
       "@obx/core": path.join(root, "core/src/index.ts"),
       "@obx/runtime": path.join(root, "runtime/src/index.ts"),
       "@obx/ecs": path.join(root, "ecs/src/index.ts"),
@@ -48,6 +52,10 @@ export default defineConfig({
   },
   test: {
     include: [
+      "platform/tests/**/*.test.ts",
+      "jobs/tests/**/*.test.ts",
+      "vfs/tests/**/*.test.ts",
+      "resources/tests/**/*.test.ts",
       "core/tests/**/*.test.ts",
       "runtime/tests/**/*.test.ts",
       "ecs/tests/**/*.test.ts",

@@ -408,3 +408,16 @@ generate 13 starter projects from `templates/`. 513 tests across 45 files cover 
 stack including stress scenarios (500-entity ECS churn, 50-module bundles, lossy 200-tick
 links, 100 sandboxed plugins). The v1.x API surface is frozen under semantic versioning
 (`docs/stability.md`).
+
+### Runtime & platform foundation (v1.1)
+
+`@obx/platform` defines the unified platform contract (window, surface, input bridge,
+filesystem, timing, threads, native events, clipboard, application lifecycle,
+capabilities) with a real `NodePlatform` (node:fs, Atomics sleep, `node:worker_threads`)
+and a deterministic `ManualPlatform`. `RuntimeHost` (`@obx/runtime`) bootstraps windows,
+surfaces and input over the existing `GameLoop` with per-frame error isolation.
+`@obx/jobs` provides `JobSystem`/`WorkerPool` (serialized self-contained jobs on real
+threads with work-stealing queues), `JobHandle`/`JobFence`/`TaskGraph` and an
+`InlineExecutor` for deterministic tests. `@obx/vfs` mounts memory/physical/package
+adapters under traversal-safe virtual paths. `@obx/resources` layers refcounted handles,
+extension-based loaders, caching and dependency-cascade invalidation over the VFS.

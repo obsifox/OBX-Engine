@@ -1,6 +1,6 @@
 {
   "name": "@obx/vfx",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "OBX Engine VFX \u2014 effect graphs, screen effects, weather, explosion/impact library",
   "type": "module",
   "main": "dist/index.js",
@@ -10,9 +10,9 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@obx/core": "1.0.0",
-    "@obx/math": "1.0.0",
-    "@obx/particles": "1.0.0",
-    "@obx/physics": "1.0.0"
+    "@obx/core": "1.1.0",
+    "@obx/math": "1.1.0",
+    "@obx/particles": "1.1.0",
+    "@obx/physics": "1.1.0"
   }
 }

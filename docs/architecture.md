@@ -393,3 +393,18 @@ heights with finite-difference normals and foam thresholds.
 `MemoryProfiler` tracks current/peak/allocation counts per name; `ChannelTracker`
 aggregates named metrics per subsystem; `FrameDebugger` captures per-frame events and
 draw-call statistics; `ProfileReport` combines everything into a JSON bundle.
+
+
+### Stable release (v1.0)
+
+`PluginLoader` validates manifests, topologically orders dependencies (cycle/missing
+detection), gates engine compatibility through semver ranges and runs load/start/tick/stop
+lifecycle with per-plugin error isolation; `PluginSandbox` enforces eight permissions
+(`file.read` → `audio`) and records violations. `Registry` publishes five package kinds
+(engine/plugin/template/asset/native) with `fnv1a` content checksums and signature
+verification; `PackageManager` resolves dependency trees into versioned lockfiles
+(format 1) and restores verified installs. `parseTemplate` + `instantiateTemplate`
+generate 13 starter projects from `templates/`. 513 tests across 45 files cover the full
+stack including stress scenarios (500-entity ECS churn, 50-module bundles, lossy 200-tick
+links, 100 sandboxed plugins). The v1.x API surface is frozen under semantic versioning
+(`docs/stability.md`).

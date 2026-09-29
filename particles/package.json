@@ -1,6 +1,6 @@
 {
   "name": "@obx/particles",
-  "version": "0.96.0",
+  "version": "1.0.0",
   "description": "OBX Engine particles \u2014 emitters, curves, trails, batched GPU buffers, effect presets",
   "type": "module",
   "main": "dist/index.js",
@@ -10,8 +10,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@obx/core": "0.96.0",
-    "@obx/math": "0.96.0",
-    "@obx/physics": "0.96.0"
+    "@obx/core": "1.0.0",
+    "@obx/math": "1.0.0",
+    "@obx/physics": "1.0.0"
   }
 }

@@ -14,12 +14,12 @@ one codebase targeting Windows, Linux, Android, Web and headless servers.
 |---|---|
 | **Engine** | OBX Engine |
 | **Editor** | ObsiFox Studio (in development) |
-| **Packages** | `@obx/core` `@obx/runtime` `@obx/ecs` `@obx/engine` `@obx/math` `@obx/input` `@obx/rendering` `@obx/scene` `@obx/physics` `@obx/audio` `@obx/animation` `@obx/character` `@obx/ui` `@obx/save` `@obx/vehicle` `@obx/particles` `@obx/vfx` `@obx/world` `@obx/navigation` `@obx/ai` `@obx/inventory` `@obx/dialogue` `@obx/quest` `@obx/obsiscript` `@obx/scripting` `@obx/native` `@obx/editor` `@obx/project` `@obx/extensions` `@obx/networking` `@obx/server` `@obx/cli` `@obx/build` `@obx/multiplayer` `@obx/profiler` |
+| **Packages** | `@obx/core` `@obx/runtime` `@obx/ecs` `@obx/engine` `@obx/math` `@obx/input` `@obx/rendering` `@obx/scene` `@obx/physics` `@obx/audio` `@obx/animation` `@obx/character` `@obx/ui` `@obx/save` `@obx/vehicle` `@obx/particles` `@obx/vfx` `@obx/world` `@obx/navigation` `@obx/ai` `@obx/inventory` `@obx/dialogue` `@obx/quest` `@obx/obsiscript` `@obx/scripting` `@obx/native` `@obx/editor` `@obx/project` `@obx/extensions` `@obx/networking` `@obx/server` `@obx/cli` `@obx/build` `@obx/multiplayer` `@obx/profiler` `@obx/plugins` `@obx/registry` |
 | **Logo / identity** | [`brand/`](brand/) — `logo.svg`, `wordmark.svg`, `brand.md` |
 
 ---
 
-## Current status (v0.96)
+## Current status (v1.0)
 
 | Roadmap phase | Status | Highlights |
 |---|---|---|
@@ -37,7 +37,9 @@ one codebase targeting Windows, Linux, Android, Web and headless servers.
 | **v0.96 — Advanced Systems** | ✅ | multiplayer lobby/rooms/matchmaking, open world streaming + sim, AI brains, fog/foliage/decals/water, profiler |
 | v1.0 | ⬜ | see [`docs/ROADMAP.md`](docs/ROADMAP.md) |
 
-Latest update screenshot: [`docs/screenshots/v096-update.svg`](docs/screenshots/v096-update.svg)
+Latest update screenshot: [`docs/screenshots/v100-update.svg`](docs/screenshots/v100-update.svg)
+
+Documentation: [`docs/api/`](docs/api/) (17 guides) · API stability: [`docs/stability.md`](docs/stability.md) · Releases: [`docs/releases/`](docs/releases/)
 
 ---
 
@@ -45,7 +47,7 @@ Latest update screenshot: [`docs/screenshots/v096-update.svg`](docs/screenshots/
 
 ```bash
 npm install
-npm test                # 493 tests (vitest)
+npm test                # 513 tests (vitest)
 npm run example:twod    # renders a real PNG frame with the 2D engine
 npm run example:hello   # real-time 60 FPS loop demo
 npm run example:ecs     # deterministic ECS tour
@@ -82,6 +84,8 @@ renderer.end();
 | `@obx/rendering` | `rendering/` | 2D renderer, textures, sprite sheets, animation, camera, batching, backends, PNG (§7, §9) |
 | `@obx/scene` | `scene/` | transform components, hierarchy propagation, interpolation (§5, §6) |
 | `@obx/engine` | `engine/` | `Engine` + `Application` facades re-exporting the full stack (§2, §51) |
+| `@obx/plugins` | `plugins/` | plugin manifests, lifecycle, dependency graph, permissions, sandboxing (§39) |
+| `@obx/registry` | `registry/` | registry publish/verify/sign, package manager, lockfiles, templates (§56-59) |
 
 ### Repository layout (target)
 
@@ -110,7 +114,8 @@ obx-engine/
   gamepads with a DOM adapter and full manual injection for tests/servers.
 - **Scene transforms**: parent/child propagation with previous/current state for
   render interpolation, custom serialization hooks.
-- **Everything tested** — 153 unit + integration tests, pixel-exact renderer checks.
+- **Everything tested** — 513 unit + integration tests, pixel-exact renderer checks.
+- **Stable API (v1.0)** — semver 1.x freeze across 36 lockstep packages; plugin system with sandboxed permissions; marketplace registry with signed packages and lockfiles.
 
 ---
 

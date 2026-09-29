@@ -1,0 +1,13 @@
+{
+  "id": "racing",
+  "name": "Racing Template",
+  "kind": "template",
+  "description": "Vehicle physics racing starter",
+  "files": {
+    "project.json": "{\n  \"format\": 2,\n  \"name\": \"{name}\",\n  \"version\": \"0.1.0\",\n  \"engine\": \"1.0.0\",\n  \"dependencies\": [],\n  \"settings\": {\n    \"language\": \"en\",\n    \"template\": \"racing\"\n  },\n  \"plugins\": []\n}",
+    "src/main.js": "const systems = [];\n  systems.push(\"vehicle\");\n  systems.push(\"physics\");\n\nfunction start() {\n  return { name: \"Racing Template\", systems };\n}\n\nmodule.exports = { start };\n",
+    "assets/.keep": "",
+    "scenes/.keep": "",
+    "scripts/.keep": ""
+  }
+}

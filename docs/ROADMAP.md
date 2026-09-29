@@ -87,8 +87,13 @@ Execution status of the master development roadmap. ✅ = implemented & tested,
 - [x] Profiler (CPU spans, memory profiler, channel metrics, frame debugger, draw-call statistics)
 - [ ] Global illumination, soft body/cloth/hair, GPU profiler, network/physics/script deep profilers
 
-### ⬜ v1.0 — Stable
-- [ ] Stable API / Runtime / Editor / Build System, Documentation, Templates, Plugin System, Marketplace Foundation
+### ✅ v1.0 — Stable (2026-09-28)
+- [x] Stable API / Runtime / Editor / Build System (semver 1.x surface freeze, 36 lockstep packages)
+- [x] Documentation (17 guides: Getting Started, Installation, Core, ECS, 2D, 3D, Physics, Audio, Input, UI, Networking, Scripting, Plugins, Native, CLI, Editor, Build + stability policy)
+- [x] Templates (13 starters: empty, 2d, 3d, platformer, rpg, fps, tps, racing, open-world, visual-novel, multiplayer, application, web)
+- [x] Plugin System (manifests, lifecycle, dependency graph, permissions, sandboxing)
+- [x] Marketplace Foundation (registry publish/verify/sign, package manager resolve/lockfile/restore, 5 package kinds)
+- [x] Testing (stress suite: ECS churn, module bundles, lossy links, 100 sandboxed plugins)
 
 ### ⬜ v2.0 — Long-term
 - [ ] Advanced Vulkan/DirectX/WebGPU backends, full WASM runtime, visual

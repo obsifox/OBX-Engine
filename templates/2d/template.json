@@ -1,0 +1,13 @@
+{
+  "id": "2d",
+  "name": "2D Project",
+  "kind": "template",
+  "description": "Sprite-based 2D starter with camera and input",
+  "files": {
+    "project.json": "{\n  \"format\": 2,\n  \"name\": \"{name}\",\n  \"version\": \"0.1.0\",\n  \"engine\": \"1.0.0\",\n  \"dependencies\": [],\n  \"settings\": {\n    \"language\": \"en\",\n    \"template\": \"2d\"\n  },\n  \"plugins\": []\n}",
+    "src/main.js": "const systems = [];\n  systems.push(\"sprite\");\n  systems.push(\"input\");\n\nfunction start() {\n  return { name: \"2D Project\", systems };\n}\n\nmodule.exports = { start };\n",
+    "assets/.keep": "",
+    "scenes/.keep": "",
+    "scripts/.keep": ""
+  }
+}

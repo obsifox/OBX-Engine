@@ -42,6 +42,8 @@ export default defineConfig({
       "@obx/cli": path.join(root, "cli/src/index.ts"),
       "@obx/multiplayer": path.join(root, "multiplayer/src/index.ts"),
       "@obx/profiler": path.join(root, "profiler/src/index.ts"),
+      "@obx/plugins": path.join(root, "plugins/src/index.ts"),
+      "@obx/registry": path.join(root, "registry/src/index.ts"),
     },
   },
   test: {
@@ -81,6 +83,8 @@ export default defineConfig({
       "cli/tests/**/*.test.ts",
       "multiplayer/tests/**/*.test.ts",
       "profiler/tests/**/*.test.ts",
+      "plugins/tests/**/*.test.ts",
+      "registry/tests/**/*.test.ts",
       "tests/**/*.test.ts",
     ],
     environment: "node",

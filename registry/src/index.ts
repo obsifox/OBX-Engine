@@ -1,0 +1,17 @@
+export {
+  PackageManager,
+  Registry,
+  RegistryError,
+  checksumOf,
+  instantiateTemplate,
+  packageKinds,
+  parseMetadata,
+  parseTemplate,
+  REGISTRY_VERSION,
+  type Lockfile,
+  type PackageKind,
+  type PackageMetadata,
+  type PublishedPackage,
+  type ResolvedPackage,
+  type TemplateDefinition,
+} from "./registry.js";

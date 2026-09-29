@@ -1,0 +1,99 @@
+{
+  "version": "1.0.0",
+  "plugins": {
+    "loadOrder": [
+      "obx-shader-kit",
+      "obx-weather-plus",
+      "obx-shady"
+    ],
+    "stats": {
+      "registered": 3,
+      "loaded": 3,
+      "started": 0,
+      "errors": 3,
+      "violations": 3,
+      "tick": 3
+    },
+    "shadyViolations": [
+      "network",
+      "network",
+      "network"
+    ],
+    "log": [
+      "shader-kit loaded",
+      "weather-plus loaded",
+      "weather-plus started"
+    ]
+  },
+  "marketplace": {
+    "published": 6,
+    "kinds": {
+      "engine": 1,
+      "plugin": 2,
+      "template": 1,
+      "asset": 1,
+      "native": 1
+    },
+    "resolved": {
+      "name": "obx-shader-kit",
+      "version": "1.1.0",
+      "checksum": "d7f9d513",
+      "dependencies": [
+        "obx-core-pack"
+      ]
+    },
+    "treeOrder": [
+      "obx-core-pack",
+      "obx-shader-kit"
+    ],
+    "lockfile": {
+      "format": 1,
+      "packages": {
+        "obx-core-pack": {
+          "version": "2.0.0",
+          "checksum": "01f67715"
+        },
+        "obx-shader-kit": {
+          "version": "1.1.0",
+          "checksum": "d7f9d513"
+        }
+      }
+    },
+    "restoredNames": [
+      "obx-core-pack",
+      "obx-shader-kit"
+    ],
+    "signatureValid": true,
+    "tamperDetected": true,
+    "checksum": "1954c312"
+  },
+  "templates": {
+    "count": 13,
+    "ids": [
+      "2d",
+      "3d",
+      "application",
+      "empty",
+      "fps",
+      "multiplayer",
+      "open-world",
+      "platformer",
+      "racing",
+      "rpg",
+      "tps",
+      "visual-novel",
+      "web"
+    ],
+    "instantiated": [
+      "project.json",
+      "src/main.js",
+      "assets/.keep",
+      "scenes/.keep",
+      "scripts/.keep"
+    ]
+  },
+  "stability": {
+    "packages": 36,
+    "note": "API surface frozen for 1.x"
+  }
+}

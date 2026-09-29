@@ -1,6 +1,6 @@
 {
   "name": "@obx/inventory",
-  "version": "0.96.0",
+  "version": "1.0.0",
   "description": "OBX Engine inventory \u2014 items, stacks, weight, durability, containers, equipment",
   "type": "module",
   "main": "dist/index.js",

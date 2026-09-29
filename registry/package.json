@@ -1,0 +1,12 @@
+{
+  "name": "@obx/registry",
+  "version": "1.0.0",
+  "description": "OBX Engine package manager and marketplace foundation \u2014 publishing, version resolution, lock files, verification, templates",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "multiplayer",
+  "name": "Multiplayer",
+  "kind": "template",
+  "description": "Lobby and networked session starter",
+  "files": {
+    "project.json": "{\n  \"format\": 2,\n  \"name\": \"{name}\",\n  \"version\": \"0.1.0\",\n  \"engine\": \"1.0.0\",\n  \"dependencies\": [],\n  \"settings\": {\n    \"language\": \"en\",\n    \"template\": \"multiplayer\"\n  },\n  \"plugins\": []\n}",
+    "src/main.js": "const systems = [];\n  systems.push(\"networking\");\n  systems.push(\"multiplayer\");\n\nfunction start() {\n  return { name: \"Multiplayer\", systems };\n}\n\nmodule.exports = { start };\n",
+    "assets/.keep": "",
+    "scenes/.keep": "",
+    "scripts/.keep": ""
+  }
+}

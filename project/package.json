@@ -1,6 +1,6 @@
 {
   "name": "@obx/project",
-  "version": "0.96.0",
+  "version": "1.0.0",
   "description": "OBX Engine project system \u2014 manifests, folders, settings, dependencies, asset index, versioning and migration",
   "type": "module",
   "main": "dist/index.js",

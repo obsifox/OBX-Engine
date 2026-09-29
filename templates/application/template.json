@@ -1,0 +1,13 @@
+{
+  "id": "application",
+  "name": "Application",
+  "kind": "template",
+  "description": "UI application shell with docking panels",
+  "files": {
+    "project.json": "{\n  \"format\": 2,\n  \"name\": \"{name}\",\n  \"version\": \"0.1.0\",\n  \"engine\": \"1.0.0\",\n  \"dependencies\": [],\n  \"settings\": {\n    \"language\": \"en\",\n    \"template\": \"application\"\n  },\n  \"plugins\": []\n}",
+    "src/main.js": "const systems = [];\n  systems.push(\"ui\");\n  systems.push(\"editor\");\n\nfunction start() {\n  return { name: \"Application\", systems };\n}\n\nmodule.exports = { start };\n",
+    "assets/.keep": "",
+    "scenes/.keep": "",
+    "scripts/.keep": ""
+  }
+}

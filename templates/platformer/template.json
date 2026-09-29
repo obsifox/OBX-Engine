@@ -1,0 +1,13 @@
+{
+  "id": "platformer",
+  "name": "Platformer",
+  "kind": "template",
+  "description": "Side-view platformer with physics and animation",
+  "files": {
+    "project.json": "{\n  \"format\": 2,\n  \"name\": \"{name}\",\n  \"version\": \"0.1.0\",\n  \"engine\": \"1.0.0\",\n  \"dependencies\": [],\n  \"settings\": {\n    \"language\": \"en\",\n    \"template\": \"platformer\"\n  },\n  \"plugins\": []\n}",
+    "src/main.js": "const systems = [];\n  systems.push(\"physics\");\n  systems.push(\"animation\");\n\nfunction start() {\n  return { name: \"Platformer\", systems };\n}\n\nmodule.exports = { start };\n",
+    "assets/.keep": "",
+    "scenes/.keep": "",
+    "scripts/.keep": ""
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "open-world",
+  "name": "Open World",
+  "kind": "template",
+  "description": "Terrain streaming and day-night starter",
+  "files": {
+    "project.json": "{\n  \"format\": 2,\n  \"name\": \"{name}\",\n  \"version\": \"0.1.0\",\n  \"engine\": \"1.0.0\",\n  \"dependencies\": [],\n  \"settings\": {\n    \"language\": \"en\",\n    \"template\": \"open-world\"\n  },\n  \"plugins\": []\n}",
+    "src/main.js": "const systems = [];\n  systems.push(\"world\");\n  systems.push(\"ai\");\n\nfunction start() {\n  return { name: \"Open World\", systems };\n}\n\nmodule.exports = { start };\n",
+    "assets/.keep": "",
+    "scenes/.keep": "",
+    "scripts/.keep": ""
+  }
+}

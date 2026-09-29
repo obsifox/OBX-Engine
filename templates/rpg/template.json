@@ -1,0 +1,13 @@
+{
+  "id": "rpg",
+  "name": "RPG Template",
+  "kind": "template",
+  "description": "Party, inventory and dialogue starter",
+  "files": {
+    "project.json": "{\n  \"format\": 2,\n  \"name\": \"{name}\",\n  \"version\": \"0.1.0\",\n  \"engine\": \"1.0.0\",\n  \"dependencies\": [],\n  \"settings\": {\n    \"language\": \"en\",\n    \"template\": \"rpg\"\n  },\n  \"plugins\": []\n}",
+    "src/main.js": "const systems = [];\n  systems.push(\"inventory\");\n  systems.push(\"dialogue\");\n  systems.push(\"quest\");\n\nfunction start() {\n  return { name: \"RPG Template\", systems };\n}\n\nmodule.exports = { start };\n",
+    "assets/.keep": "",
+    "scenes/.keep": "",
+    "scripts/.keep": ""
+  }
+}

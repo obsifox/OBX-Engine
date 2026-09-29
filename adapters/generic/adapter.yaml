@@ -1,0 +1,45 @@
+name: generic
+type: adapter
+description: "Generic fallback adapter, provider-independent"
+version: 1.2.1
+
+capabilities:
+  - agent_contract_translation
+  - tool_contract_translation
+  - model_policy_translation
+  - permission_policy_translation
+  - workflow_state_translation
+
+translation:
+  agent_contract:
+    from: "agents/*.yaml"
+    to: "generic execution"
+    mapping:
+      name: name
+      role: role
+      permissions: permissions
+      tools: tools
+      model_policy: model_policy
+
+  tool_contract:
+    filesystem: read/write per permission
+    shell: restricted/execute per permission
+    network: deny/limited per permission
+
+  model_policy:
+    low: "fast model"
+    medium: "balanced model"
+    high: "reasoning model"
+
+  permission_policy:
+    enforcement: "via permission_check.sh"
+
+  workflow_state:
+    states: "from config/state_machine.yaml"
+    validation: "via state_machine.sh"
+
+execution:
+  mode: "local bash + python"
+  tools: ["bash", "python3", "git"]
+
+notes: "This adapter is always available, no vendor lock-in"

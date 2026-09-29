@@ -1,0 +1,137 @@
+# Permission Matrix v1.2 - Least Privilege
+# Explicit permissions per role
+
+permissions_schema:
+  filesystem:
+    - read
+    - write
+  shell:
+    - deny
+    - restricted
+    - limited
+    - execute
+  network:
+    - deny
+    - limited
+    - read
+    - write
+  git:
+    - deny
+    - read
+    - write
+  dependency:
+    - deny
+    - limited
+    - install
+  database:
+    - deny
+    - read
+    - write
+  deployment:
+    - deny
+    - approval_required
+    - execute
+  secret:
+    - deny
+    - read
+
+roles:
+  architect:
+    filesystem: read
+    shell: restricted
+    network: deny
+    git: read
+    dependency.install: deny
+    database.read: deny
+    database.write: deny
+    deployment.execute: deny
+    secret.read: deny
+    description: "Can read code, limited shell (detect_env, state_machine), no network, no secrets"
+
+  investigator:
+    filesystem: read
+    shell: restricted
+    network: read
+    git: read
+    dependency.install: deny
+    secret.read: deny
+
+  worker:
+    filesystem: write
+    shell: execute
+    network: limited
+    git: write
+    dependency.install: limited
+    database.read: deny
+    database.write: deny
+    deployment.execute: deny
+    secret.read: deny
+    description: "Can write files, execute build/test, limited network for deps, no secret read"
+
+  reviewer:
+    filesystem: read
+    shell: restricted
+    network: deny
+    git: read
+    dependency.install: deny
+    secret.read: deny
+
+  security-reviewer:
+    filesystem: read
+    shell: restricted
+    network: deny
+    git: read
+    dependency.install: deny
+    secret.read: deny
+    note: "Even security reviewer cannot read secrets, only scan for them"
+
+  verifier:
+    filesystem: read
+    shell: restricted
+    network: deny
+    git: read
+    dependency.install: deny
+    secret.read: deny
+
+  release-manager:
+    filesystem: write
+    shell: execute
+    network: limited
+    git: write
+    dependency.install: deny
+    deployment.execute: approval_required
+    secret.read: deny
+
+  human:
+    filesystem: write
+    shell: execute
+    network: write
+    git: write
+    dependency.install: install
+    database.read: read
+    database.write: write
+    deployment.execute: execute
+    secret.read: read
+    note: "Human has full access but must explicitly approve sensitive ops"
+
+# Enforcement rules
+enforcement:
+  - rule: "No agent may have secret.read = read except human"
+  - rule: "filesystem.write only for worker, release-manager, human"
+  - rule: "shell.execute only for worker, release-manager, human"
+  - rule: "network.write only for human"
+  - rule: "deployment.execute requires approval_required for release-manager, execute for human only"
+  - rule: "Permissions must be declared in agent contract before activation"
+  - rule: "Attempt to use tool outside permission must be logged as violation and blocked"
+
+# Tool to permission mapping
+tool_permissions:
+  read_file: filesystem.read
+  write_file: filesystem.write
+  edit_file: filesystem.write
+  bash: shell.execute
+  restricted_shell: shell.restricted
+  curl: network.read
+  npm_install: dependency.install
+  git_write: git.write
+  deploy: deployment.execute

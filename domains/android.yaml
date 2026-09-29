@@ -1,0 +1,11 @@
+name: android
+type: domain_overlay
+detection:
+  files: ["AndroidManifest.xml", "build.gradle", "app/src/"]
+overlays:
+  lenses: [security, testing, performance, release]
+  checks: [permission_check, main_thread_io, memory_leak, exported_components]
+  playbook_base: references/playbooks/android.md
+risk_modifiers:
+  security: medium
+  performance: medium

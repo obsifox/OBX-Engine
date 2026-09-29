@@ -1,0 +1,13 @@
+name: minecraft
+type: domain_overlay
+description: "Minecraft general (Paper/Spigot/Bukkit)"
+detection:
+  files: ["plugin.yml", "paper.yml", "src/main/java/"]
+  keywords: ["org.bukkit", "net.minecraft", "PaperPlugin"]
+overlays:
+  lenses: [testing, performance, security]
+  checks: [main_thread_block, async_io, plugin_yml_valid, permission_nodes]
+  playbook_base: references/playbooks/minecraft-paper-plugin.md
+risk_modifiers:
+  performance: high
+  security: medium

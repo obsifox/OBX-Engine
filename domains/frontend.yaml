@@ -1,0 +1,11 @@
+name: frontend
+type: domain_overlay
+detection:
+  files: ["src/components/", "src/App.tsx", "public/index.html"]
+overlays:
+  lenses: [ux, testing, performance, security]
+  checks: [a11y, responsive, xss, bundle_size, lighthouse]
+  playbook_base: references/playbooks/web-api-backend.md
+risk_modifiers:
+  security: medium
+  performance: medium

@@ -1,0 +1,42 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "example-project",
+    "type": "web",
+    "tier": "1",
+    "domains": ["backend"]
+  },
+  "environment": {
+    "has_git": true,
+    "has_test_runner": true,
+    "has_subagents": false,
+    "can_run_code": true,
+    "can_persist_files": true,
+    "detected_at": "2025-01-01T00:00:00Z"
+  },
+  "gates": {
+    "G0_Build": "NOT_TESTED",
+    "G1_Tests": "NOT_TESTED",
+    "G2_Lens": "NOT_TESTED",
+    "G3_Security": "NOT_TESTED",
+    "G4_Release": "NOT_APPLICABLE"
+  },
+  "tasks": [
+    {
+      "id": "T1",
+      "desc": "Example task",
+      "owner_lens": "testing",
+      "status": "TODO",
+      "evidence_ref": "evidence.md#T1"
+    }
+  ],
+  "evidence": [],
+  "risks": [],
+  "assumptions": [],
+  "budget": {
+    "tokens_used_est": 0,
+    "token_budget": 60000,
+    "subagent_calls": 0,
+    "max_subagents": 1
+  }
+}

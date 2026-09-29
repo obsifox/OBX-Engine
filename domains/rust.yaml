@@ -1,0 +1,11 @@
+name: rust
+type: domain_overlay
+detection:
+  files: ["Cargo.toml", "src/main.rs", "src/lib.rs"]
+overlays:
+  lenses: [testing, security, performance, release]
+  checks: [no_unsafe_unchecked, no_panic_unwrap, cargo_audit]
+  playbook_base: references/playbooks/cli-tool.md
+risk_modifiers:
+  security: low
+  performance: high

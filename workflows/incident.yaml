@@ -1,0 +1,10 @@
+name: incident
+description: "Incident response"
+type: workflow
+states_required: [INTAKE, BASELINE, CLASSIFICATION, PLANNING, EXECUTION, VALIDATION, REVIEW, VERIFICATION, RELEASE_REVIEW, HUMAN_APPROVAL, COMPLETED]
+gates: [G0_Build, G1_Tests, G3_Security]
+agents_required: [architect, worker, security-reviewer, reviewer, verifier, release-manager]
+max_rework_cycles: 1
+human_approval: {required: true, reason: "Incident fix needs human approval"}
+artifacts_expected: [incident_report, root_cause, fix, verification, postmortem]
+risk: {security: high, data: high}

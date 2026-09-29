@@ -1,0 +1,8 @@
+name: investigation
+description: "Investigate issue, no code change yet"
+type: workflow
+states_required: [INTAKE, BASELINE, CLASSIFICATION, PLANNING, EXECUTION, REVIEW, COMPLETED]
+gates: []
+agents_required: [investigator, architect]
+max_rework_cycles: 1
+artifacts_expected: [investigation_report, root_cause, recommendations]

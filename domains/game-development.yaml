@@ -1,0 +1,11 @@
+name: game-development
+type: domain_overlay
+description: "Game development (engine, gameplay)"
+detection:
+  files: ["Assets/", "ProjectSettings/", "src/engine/", "Unity/", "Unreal/"]
+overlays:
+  lenses: [performance, testing, architecture]
+  checks: [no_gc_in_loop, asset_leak, fixed_timestep, object_pooling]
+  playbook_base: references/playbooks/game-engine-typescript.md
+risk_modifiers:
+  performance: high

@@ -1,0 +1,13 @@
+name: typescript
+type: domain_overlay
+description: "TypeScript project"
+detection:
+  files: ["tsconfig.json", "src/*.ts"]
+  keywords: ["typescript", "interface ", "type "]
+overlays:
+  lenses: [testing, performance, docs, architecture]
+  checks: [strict_mode, no_any, no_unused_vars, bundle_size]
+  playbook_base: references/playbooks/game-engine-typescript.md
+risk_modifiers:
+  security: low
+  performance: medium

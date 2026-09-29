@@ -1,0 +1,41 @@
+name: wordpress
+type: domain_overlay
+description: "WordPress plugin/theme domain"
+version: 1.2.1
+
+detection:
+  files: ["wp-config.php", "wp-content/", "style.css with Theme Name", "plugin header"]
+  keywords: ["WordPress", "WP_", "add_action", "add_filter"]
+
+overlays:
+  lenses:
+    - security
+    - testing
+    - performance
+    - ux
+
+  checks:
+    - nonce_verification
+    - capability_check
+    - sanitization_escaping
+    - wpdb_prepare
+
+  playbook_base: references/playbooks/wordpress-woocommerce.md
+
+  tools:
+    - phpcs_wordpress
+
+  permissions_additional:
+    filesystem: read
+
+  model_routing:
+    architect: high
+    worker: medium
+
+risk_modifiers:
+  security: medium
+  data: medium
+
+artifacts:
+  - plugin_activation_test
+  - query_monitor_check

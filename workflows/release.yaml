@@ -1,0 +1,9 @@
+name: release
+description: "Release preparation and validation"
+type: workflow
+states_required: [INTAKE, BASELINE, CLASSIFICATION, PLANNING, EXECUTION, VALIDATION, REVIEW, VERIFICATION, RELEASE_REVIEW, HUMAN_APPROVAL, COMPLETED]
+gates: [G0_Build, G1_Tests, G2_Lens, G3_Security, G4_Release]
+agents_required: [architect, worker, reviewer, verifier, release-manager]
+max_rework_cycles: 1
+human_approval: {required: true, reason: "Release requires human approval"}
+artifacts_expected: [release-review.md, artifact_hash, release_notes, rollback_plan, receipt.json]

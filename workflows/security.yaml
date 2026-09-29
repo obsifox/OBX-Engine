@@ -1,0 +1,11 @@
+name: security
+description: "Security fix or hardening"
+type: workflow
+states_required: [INTAKE, BASELINE, CLASSIFICATION, PLANNING, EXECUTION, VALIDATION, REVIEW, VERIFICATION, RELEASE_REVIEW]
+gates: [G0_Build, G1_Tests, G2_Lens, G3_Security]
+agents_required: [architect, worker, security-reviewer, reviewer, verifier]
+agents_optional: [release-manager]
+max_rework_cycles: 2
+human_approval: {required_when: [auth_change, secret_handling_change]}
+artifacts_expected: [security-review.md, secret_scan.log, dep_audit.log, threat_model]
+risk: {security: high}

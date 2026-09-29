@@ -1,0 +1,16 @@
+name: obx-engine
+kind: node-app
+
+commands:
+  build: npx tsc -b core math ecs input rendering audio scene animation physics ui scripting project runtime editor platform jobs vfs resources graphics assets --force
+  test: npx vitest run
+  lint: npx tsc -b core math ecs input rendering audio scene animation physics ui scripting project runtime editor platform jobs vfs resources graphics assets --force
+
+gates:
+  extras:
+    - name: example_demos
+      command: node examples/v110-demo/src/main.js && node examples/v120-demo/src/main.js && node examples/v130-demo/src/main.js && node examples/v140-demo/src/main.js
+      required: true
+
+secret_scan:
+  allow: .eng/secret_scan.allow

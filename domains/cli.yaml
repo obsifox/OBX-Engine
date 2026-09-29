@@ -1,0 +1,9 @@
+name: cli
+type: domain_overlay
+description: "CLI tool"
+detection:
+  files: ["src/cli.ts", "bin/", "src/main.go with cobra"]
+overlays:
+  lenses: [testing, docs, security]
+  checks: [help_flag, exit_codes, no_shell_injection, path_traversal]
+  playbook_base: references/playbooks/cli-tool.md

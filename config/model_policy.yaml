@@ -1,0 +1,106 @@
+# Model Routing Policy v1.2
+# Tier != Model separation
+
+# Tier represents engineering complexity/risk
+# Model represents execution capability
+
+tiers:
+  T0:
+    description: trivial <20 LOC
+    token_budget: 20000
+    max_subagents: 0
+    model_routing:
+      architect: low
+      worker: low
+      reviewer: low
+      verifier: low
+
+  T1:
+    description: small 20-200 LOC
+    token_budget: 60000
+    max_subagents: 1
+    model_routing:
+      architect: medium
+      worker: medium
+      reviewer: medium
+      verifier: medium
+      formatter: low
+
+  T2:
+    description: structured 200-1000 LOC
+    token_budget: 150000
+    max_subagents: 3
+    model_routing:
+      architect: high
+      worker: medium
+      reviewer: high
+      security-reviewer: high
+      verifier: high
+      formatter: low
+
+  T3:
+    description: large/prod/legacy >1000 LOC
+    token_budget: 350000
+    max_subagents: 6
+    model_routing:
+      architect: high
+      investigator: medium
+      worker: medium
+      reviewer: high
+      security-reviewer: high
+      verifier: high
+      release-manager: medium
+      formatter: low
+
+# Model classes (provider-independent)
+model_classes:
+  low:
+    description: "Fast, cheap, for formatting, simple tasks"
+    capabilities: [formatting, simple_edits, doc_generation]
+    cost: low
+    latency: low
+
+  medium:
+    description: "Balanced, for implementation, moderate reasoning"
+    capabilities: [code_generation, test_generation, moderate_review]
+    cost: medium
+    latency: medium
+
+  high:
+    description: "High reasoning, for architecture, security, verification"
+    capabilities: [architecture_design, security_review, complex_reasoning, independent_verification]
+    cost: high
+    latency: high
+
+# Provider adapters (abstraction, not hard-coded vendor)
+adapters:
+  claude:
+    enabled: true
+    model_mapping:
+      low: claude-3-haiku
+      medium: claude-3-sonnet
+      high: claude-3-opus
+    note: "Example mapping, actual model names via adapter config"
+
+  codex:
+    enabled: true
+    model_mapping:
+      low: gpt-4o-mini
+      medium: gpt-4o
+      high: o1
+
+  copilot:
+    enabled: false
+
+  generic:
+    enabled: true
+    description: "Fallback for any provider, uses reasoning level as hint"
+
+# Routing rules
+routing_rules:
+  - rule: "Tier and Model are independent concepts"
+  - rule: "Same Tier can use different Model classes for different agents"
+  - rule: "Architect and Verifier should use high reasoning where possible"
+  - rule: "Formatter can use low reasoning"
+  - rule: "Do not hard-code vendor, use adapter abstraction"
+  - rule: "Model selection must be logged in receipt.json"

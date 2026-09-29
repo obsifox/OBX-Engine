@@ -1,0 +1,64 @@
+name: architect
+role: architecture
+purpose: |
+  Analyze project, select tier, design task graph, make architecture decisions,
+  ensure proportionality and prevent over/under-engineering.
+
+inputs:
+  - repository
+  - brief.md
+  - existing_architecture
+  - requirements
+
+outputs:
+  - decisions.md (ADRs)
+  - plan.md (task graph)
+  - classification (tier, domains, risk)
+  - file_partition
+
+capabilities:
+  - code_analysis
+  - architecture_design
+  - risk_assessment
+  - task_decomposition
+
+permissions:
+  filesystem: read
+  shell: restricted
+  network: deny
+  git: read
+  dependency.install: deny
+  database.read: deny
+  database.write: deny
+  deployment.execute: deny
+  secret.read: deny
+
+tools:
+  - read_file
+  - glob_search
+  - detect_env.sh
+  - state_machine.sh
+
+model_policy:
+  reasoning: high
+  preferred_class: reasoning_high
+  fallback: medium
+
+delegation:
+  allowed: true
+  max_children: 2
+  allowed_roles:
+    - investigator
+    - worker
+
+termination:
+  required: plan_complete_and_validated
+
+failure_policy:
+  on_failure: escalate
+  max_retries: 1
+
+evidence_required:
+  - decisions.md
+  - plan.md
+  - classification_logged

@@ -1,0 +1,8 @@
+name: testing
+description: "Add or improve tests"
+type: workflow
+states_required: [INTAKE, BASELINE, CLASSIFICATION, PLANNING, EXECUTION, VALIDATION, REVIEW, VERIFICATION]
+gates: [G0_Build, G1_Tests]
+agents_required: [worker, reviewer]
+max_rework_cycles: 2
+artifacts_expected: [new_tests, coverage_report, current_test.log]

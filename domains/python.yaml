@@ -1,0 +1,10 @@
+name: python
+type: domain_overlay
+detection:
+  files: ["requirements.txt", "pyproject.toml", "src/*.py", "setup.py"]
+overlays:
+  lenses: [testing, security, performance, docs]
+  checks: [no_eval, sql_injection, path_traversal, type_hints]
+  playbook_base: references/playbooks/web-api-backend.md
+risk_modifiers:
+  security: medium

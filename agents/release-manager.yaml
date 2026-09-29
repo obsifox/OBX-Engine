@@ -1,0 +1,54 @@
+name: release-manager
+role: release
+purpose: |
+  Validate release artifact matches reviewed source,
+  ensure no secrets in artifact, version bump, release notes,
+  rollback plan.
+
+inputs:
+  - artifact
+  - reviewed_source
+  - release_notes
+  - version
+
+outputs:
+  - release-review.md with sha256
+  - artifact_hash_verified
+  - release_notes
+  - rollback_plan
+
+capabilities:
+  - artifact_validation
+  - hash_verification
+  - release_notes_generation
+
+permissions:
+  filesystem: write
+  shell: execute
+  network: limited
+  git: write
+  dependency.install: deny
+  deployment.execute: approval_required
+  secret.read: deny
+
+tools:
+  - file_sha256
+  - gate_check.sh
+  - lib_run.sh
+
+model_policy:
+  reasoning: medium
+
+delegation:
+  allowed: false
+
+termination:
+  required: release_validated
+
+failure_policy:
+  on_failure: block_release
+
+evidence_required:
+  - release-review.md with sha256
+  - artifact_path and hash
+  - build_log

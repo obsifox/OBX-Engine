@@ -1,0 +1,271 @@
+# State Machine Definition v1.2
+# Canonical orchestration states and transitions
+
+states:
+  - INTAKE
+  - BASELINE
+  - CLASSIFICATION
+  - PLANNING
+  - EXECUTION
+  - VALIDATION
+  - REVIEW
+  - REWORK
+  - VERIFICATION
+  - RELEASE_REVIEW
+  - HUMAN_APPROVAL
+  - COMPLETED
+  - BLOCKED
+  - FAILED
+  - CANCELLED
+  - ESCALATED
+  - RECOVERY
+
+# Initial state
+initial: INTAKE
+
+# Terminal states (no outgoing transitions except recovery)
+terminal:
+  - COMPLETED
+  - FAILED
+  - CANCELLED
+  - BLOCKED
+  - ESCALATED
+
+transitions:
+  - from: INTAKE
+    to: BASELINE
+    preconditions:
+      - run_created
+      - manifest_exists
+    required_evidence:
+      - run_id
+      - manifest.json
+    allowed_actor: orchestrator
+    on_failure: FAILED
+
+  - from: BASELINE
+    to: CLASSIFICATION
+    preconditions:
+      - baseline_completed
+    required_evidence:
+      - baseline_build.log
+      - baseline_test.log
+    allowed_actor: orchestrator
+    on_failure: FAILED
+
+  - from: CLASSIFICATION
+    to: PLANNING
+    preconditions:
+      - classification_completed
+      - tier_selected
+    required_evidence:
+      - brief.md
+      - classification_result
+    allowed_actor: architect
+    on_failure: BLOCKED
+
+  - from: PLANNING
+    to: EXECUTION
+    preconditions:
+      - plan_exists
+      - plan_approved_or_auto
+    required_evidence:
+      - plan.md
+      - task_graph
+    allowed_actor: architect
+    on_failure: BLOCKED
+
+  - from: EXECUTION
+    to: VALIDATION
+    preconditions:
+      - implementation_exists
+      - execution_not_failed
+    required_evidence:
+      - changed_files
+      - execution_result
+      - current_build.log
+    allowed_actor: worker
+    on_failure: FAILED
+
+  - from: VALIDATION
+    to: REVIEW
+    preconditions:
+      - validation_completed
+    required_evidence:
+      - current_build.log
+      - current_test.log
+    allowed_actor: orchestrator
+    on_failure: REWORK
+
+  - from: REVIEW
+    to: VERIFICATION
+    preconditions:
+      - review_completed
+      - no_open_high_findings
+    required_evidence:
+      - review_files
+      - gate_G2_result
+    allowed_actor: reviewer
+    on_failure: REWORK
+
+  - from: REVIEW
+    to: REWORK
+    preconditions:
+      - review_failed
+      - rework_cycles_lt_max
+    required_evidence:
+      - review_findings_open_high
+    allowed_actor: reviewer
+    on_failure: ESCALATED
+
+  - from: REWORK
+    to: VALIDATION
+    preconditions:
+      - rework_completed
+      - rework_cycles_lt_max
+    required_evidence:
+      - rework_changes
+    allowed_actor: worker
+    on_failure: ESCALATED
+
+  - from: REWORK
+    to: ESCALATED
+    preconditions:
+      - rework_cycles_gte_max
+    required_evidence:
+      - rework_cycle_count
+      - last_review
+    allowed_actor: orchestrator
+    on_failure: FAILED
+
+  - from: VERIFICATION
+    to: RELEASE_REVIEW
+    preconditions:
+      - verification_passed
+    required_evidence:
+      - verification_log
+      - independent_evidence
+    allowed_actor: verifier
+    on_failure: REWORK
+
+  - from: RELEASE_REVIEW
+    to: HUMAN_APPROVAL
+    preconditions:
+      - release_review_completed
+      - human_approval_required
+    required_evidence:
+      - release_review.md
+      - artifact_hash
+    allowed_actor: release-manager
+    on_failure: BLOCKED
+
+  - from: RELEASE_REVIEW
+    to: COMPLETED
+    preconditions:
+      - release_review_passed
+      - no_human_approval_required
+    required_evidence:
+      - all_gates_pass_or_na
+      - receipt.json
+    allowed_actor: orchestrator
+    on_failure: BLOCKED
+
+  - from: HUMAN_APPROVAL
+    to: COMPLETED
+    preconditions:
+      - human_approved
+    required_evidence:
+      - human_approval_event
+      - receipt.json
+    allowed_actor: human
+    on_failure: CANCELLED
+
+  - from: HUMAN_APPROVAL
+    to: CANCELLED
+    preconditions:
+      - human_rejected
+    required_evidence:
+      - human_rejection_event
+    allowed_actor: human
+    on_failure: FAILED
+
+  - from: ESCALATED
+    to: HUMAN_APPROVAL
+    preconditions:
+      - escalation_requires_human
+    required_evidence:
+      - escalation_reason
+    allowed_actor: orchestrator
+    on_failure: FAILED
+
+  - from: ESCALATED
+    to: RECOVERY
+    preconditions:
+      - recovery_possible
+    required_evidence:
+      - last_checkpoint
+    allowed_actor: orchestrator
+    on_failure: FAILED
+
+  - from: RECOVERY
+    to: EXECUTION
+    preconditions:
+      - recovery_completed
+      - checkpoint_restored
+    required_evidence:
+      - recovery_log
+      - reconciled_state
+    allowed_actor: orchestrator
+    on_failure: FAILED
+
+  - from: RECOVERY
+    to: FAILED
+    preconditions:
+      - recovery_failed
+    required_evidence:
+      - recovery_failure_reason
+    allowed_actor: orchestrator
+    on_failure: FAILED
+
+  # Failure transitions from any non-terminal to FAILED/BLOCKED/CANCELLED
+  - from: "*"
+    to: FAILED
+    preconditions:
+      - unrecoverable_error
+    required_evidence:
+      - error_log
+    allowed_actor: any
+    on_failure: FAILED
+
+  - from: "*"
+    to: BLOCKED
+    preconditions:
+      - blocked_by_dependency_or_policy
+    required_evidence:
+      - blocker_description
+    allowed_actor: any
+    on_failure: BLOCKED
+
+  - from: "*"
+    to: CANCELLED
+    preconditions:
+      - cancelled_by_human
+    required_evidence:
+      - cancellation_event
+    allowed_actor: human
+    on_failure: CANCELLED
+
+# Invalid transitions (explicitly forbidden)
+invalid_transitions:
+  - from: EXECUTION
+    to: COMPLETED
+    reason: "Must go through VALIDATION, REVIEW, VERIFICATION"
+  - from: INTAKE
+    to: COMPLETED
+    reason: "Must complete full lifecycle"
+  - from: PLANNING
+    to: VERIFICATION
+    reason: "Missing EXECUTION and REVIEW"
+  - from: BASELINE
+    to: EXECUTION
+    reason: "Missing CLASSIFICATION and PLANNING"

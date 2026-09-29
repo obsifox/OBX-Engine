@@ -1,0 +1,8 @@
+name: web
+type: domain_overlay
+detection:
+  files: ["package.json", "src/", "public/"]
+overlays:
+  lenses: [security, testing, performance, ux, docs]
+  checks: [xss, cors, csp, bundle_size]
+  playbook_base: references/playbooks/web-api-backend.md

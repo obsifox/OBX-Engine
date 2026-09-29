@@ -1,0 +1,16 @@
+name: woocommerce
+type: domain_overlay
+description: "WooCommerce extension domain"
+version: 1.2.1
+detection:
+  files: ["woocommerce/", "includes/class-wc-", "wc-*.php"]
+  keywords: ["WooCommerce", "WC_", "wc_get_product"]
+overlays:
+  lenses: [security, testing, performance, ux]
+  checks: [nonce_verification, capability_check, wc_sanitization, order_data_validation]
+  playbook_base: references/playbooks/wordpress-woocommerce.md
+risk_modifiers:
+  security: high
+  data: high
+  performance: medium
+artifacts: [wc_activation_test, order_flow_test, payment_sandbox]

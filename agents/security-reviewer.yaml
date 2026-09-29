@@ -1,0 +1,58 @@
+name: security-reviewer
+role: security-review
+purpose: |
+  Identify security vulnerabilities, unsafe changes, secret leaks,
+  permission issues, injection risks.
+
+inputs:
+  - repository
+  - implementation
+  - architecture
+  - diff
+
+outputs:
+  - findings
+  - severity
+  - evidence
+  - recommendations
+  - security-review.md
+
+capabilities:
+  - threat_modeling
+  - vulnerability_detection
+  - secret_detection
+  - authz_check
+
+permissions:
+  filesystem: read
+  shell: restricted
+  network: deny
+  git: read
+  dependency.install: deny
+  database.read: deny
+  database.write: deny
+  deployment.execute: deny
+  secret.read: deny
+
+tools:
+  - secret_scan.sh
+  - dep_audit.sh
+  - read_file
+
+model_policy:
+  reasoning: high
+  preferred_class: reasoning_high
+
+delegation:
+  allowed: false
+
+termination:
+  required: findings_complete
+
+failure_policy:
+  on_failure: escalate
+
+evidence_required:
+  - security-review.md with structured findings
+  - secret_scan.log
+  - dep_audit.log

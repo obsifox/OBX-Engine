@@ -1,0 +1,33 @@
+name: bug-fix
+description: "Fix bug with regression protection"
+type: workflow
+version: 1.2.1
+
+states_required:
+  - INTAKE
+  - BASELINE
+  - CLASSIFICATION
+  - PLANNING
+  - EXECUTION
+  - VALIDATION
+  - REVIEW
+  - VERIFICATION
+
+gates:
+  - G0_Build
+  - G1_Tests # must prove no new failures + regression test for bug
+
+agents_required:
+  - worker
+  - reviewer
+  - verifier
+
+max_rework_cycles: 2
+
+artifacts_expected:
+  - regression_test
+  - current_test.log showing bug fixed
+  - baseline comparison
+
+risk_overlay:
+  - testing

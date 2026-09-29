@@ -1,0 +1,52 @@
+name: verifier
+role: verification
+purpose: |
+  Independently verify implementation in fresh context.
+  Sees only spec + diff + command outputs, not chat history.
+  Must reference concrete evidence.
+
+inputs:
+  - brief.md
+  - plan.md
+  - diff
+  - evidence.md
+  - logs
+
+outputs:
+  - verification_log
+  - independent_evidence
+  - verdict PASS/FAIL
+
+capabilities:
+  - independent_verification
+  - evidence_validation
+  - gate_re_execution
+
+permissions:
+  filesystem: read
+  shell: restricted
+  network: deny
+  git: read
+  dependency.install: deny
+  secret.read: deny
+
+tools:
+  - gate_check.sh --no-run
+  - report_lint.sh
+
+model_policy:
+  reasoning: high
+  preferred_class: reasoning_high
+
+delegation:
+  allowed: false
+
+termination:
+  required: verification_complete
+
+failure_policy:
+  on_failure: escalate
+
+evidence_required:
+  - verification_log
+  - gate_check outputs

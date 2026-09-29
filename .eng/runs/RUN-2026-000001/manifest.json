@@ -1,0 +1,13 @@
+{
+  "run_id": "RUN-2026-000001",
+  "created_at": "2026-09-29T17:44:27Z",
+  "project": {
+    "type": "refactor",
+    "domain": "game-development",
+    "workflow": "refactor",
+    "tier": "T2"
+  },
+  "task": "orchestrated rewrite of v1.1 Runtime & Platform Foundation (platform, runtime, jobs, vfs, resources) under green baseline",
+  "state": "INTAKE",
+  "version": "1.2.1"
+}

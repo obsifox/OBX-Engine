@@ -1,0 +1,19 @@
+name: claude
+type: adapter
+description: "Claude adapter (example mapping)"
+version: 1.2.1
+enabled: true
+
+model_mapping:
+  low: claude-3-haiku-20240307
+  medium: claude-3-sonnet-20240229
+  high: claude-3-opus-20240229
+
+translation:
+  agent_contract:
+    to: "claude tool use"
+  tool_contract:
+    filesystem: "via claude filesystem tools"
+    shell: "via bash tool with permission check"
+
+notes: "Example only, actual model names via config"

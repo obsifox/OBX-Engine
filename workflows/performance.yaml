@@ -1,0 +1,9 @@
+name: performance
+description: "Performance optimization"
+type: workflow
+states_required: [INTAKE, BASELINE, CLASSIFICATION, PLANNING, EXECUTION, VALIDATION, REVIEW, VERIFICATION]
+gates: [G0_Build, G1_Tests, G2_Lens]
+agents_required: [architect, worker, reviewer]
+agents_optional: [performance-lens]
+max_rework_cycles: 2
+artifacts_expected: [perf-review.md, benchmark_before, benchmark_after, measured_vs_estimated]

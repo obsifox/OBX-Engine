@@ -1,0 +1,11 @@
+name: backend
+type: domain_overlay
+detection:
+  files: ["src/api/", "server.js", "go.mod", "requirements.txt"]
+overlays:
+  lenses: [security, testing, performance, docs, architecture]
+  checks: [authz, input_validation, n_plus_one, rate_limit]
+  playbook_base: references/playbooks/web-api-backend.md
+risk_modifiers:
+  security: high
+  data: high

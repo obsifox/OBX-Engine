@@ -1,0 +1,6 @@
+name: copilot
+type: adapter
+description: "Copilot adapter"
+version: 1.2.1
+enabled: false
+note: "Placeholder for future copilot integration"

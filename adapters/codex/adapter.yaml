@@ -1,0 +1,9 @@
+name: codex
+type: adapter
+description: "Codex / GPT adapter"
+version: 1.2.1
+enabled: true
+model_mapping:
+  low: gpt-4o-mini
+  medium: gpt-4o
+  high: o1

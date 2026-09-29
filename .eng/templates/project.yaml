@@ -1,0 +1,18 @@
+# Project profile - copy to .eng/project.yaml and fill in.
+# Read by scripts/project_profile.py; used by lib_run.sh and the G5_Project gate.
+name: <project name>
+kind: <wordpress-plugin | node-app | python-package | shell-tool | documentation>
+
+commands:
+  build: <command>
+  test: <command>
+  lint: <command>
+
+gates:
+  extras:
+    - name: <check_name>
+      command: <command>
+      required: true
+
+secret_scan:
+  allow: .eng/secret_scan.allow

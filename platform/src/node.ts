@@ -1,20 +1,9 @@
 import * as nodeFs from "node:fs";
 import * as nodePath from "node:path";
 import * as nodeWorker from "node:worker_threads";
-import {
-  BasePlatform,
-  PlatformError,
-  type FileStat,
-  type PlatformCapabilities,
-  type PlatformFileSystem,
-  type PlatformKind,
-  type PlatformTiming,
-  type PlatformThreads,
-  type ThreadContext,
-  type ThreadEntry,
-  type ThreadHandle,
-  type TimerHandle,
-} from "./platform.js";
+import { BasePlatform } from "./platform.js";
+import { PlatformError } from "./errors.js";
+import type { FileStat, PlatformCapabilities, PlatformFileSystem, PlatformKind, PlatformThreads, PlatformTiming, ThreadContext, ThreadEntry, ThreadHandle, TimerHandle } from "./types.js";
 
 class NodeTiming implements PlatformTiming {
   now(): number {

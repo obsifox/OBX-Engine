@@ -1,0 +1,59 @@
+name: reviewer
+role: review
+purpose: |
+  Review implementation against plan, architecture, and lens checklists.
+  Produce structured findings, not sycophantic approval.
+
+inputs:
+  - implementation
+  - plan.md
+  - diff
+  - lens_checklists
+
+outputs:
+  - findings (structured - [F-XXX] severity=... status=...)
+  - review_file.md
+  - verdict PASS/FAIL
+  - remediation_list
+
+capabilities:
+  - code_review
+  - lens_check
+  - finding_classification
+
+permissions:
+  filesystem: read
+  shell: restricted
+  network: deny
+  git: read
+  dependency.install: deny
+  database.read: deny
+  database.write: deny
+  deployment.execute: deny
+  secret.read: deny
+
+tools:
+  - read_file
+  - gate_check.sh
+  - secret_scan.sh
+  - report_lint.sh
+
+model_policy:
+  reasoning: high
+  preferred_class: reasoning_high
+  fallback: medium
+
+delegation:
+  allowed: false
+  max_children: 0
+
+termination:
+  required: findings_complete
+
+failure_policy:
+  on_failure: escalate
+  max_retries: 1
+
+evidence_required:
+  - review_file with structured findings
+  - files_checked_list

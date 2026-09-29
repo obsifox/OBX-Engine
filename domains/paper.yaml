@@ -1,0 +1,10 @@
+name: paper
+type: domain_overlay
+description: "PaperMC plugin"
+detection:
+  files: ["paper-plugin.yml", "src/main/java/"]
+  keywords: ["io.papermc.paper", "PaperPlugin"]
+overlays:
+  lenses: [testing, performance]
+  checks: [no_nms, async_scheduler, lifecycle_events]
+  playbook_base: references/playbooks/minecraft-paper-plugin.md

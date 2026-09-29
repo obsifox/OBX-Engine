@@ -1,0 +1,9 @@
+name: migration
+description: "Data or code migration"
+type: workflow
+states_required: [INTAKE, BASELINE, CLASSIFICATION, PLANNING, EXECUTION, VALIDATION, REVIEW, VERIFICATION, RELEASE_REVIEW, HUMAN_APPROVAL]
+gates: [G0_Build, G1_Tests, G2_Lens, G3_Security]
+agents_required: [architect, worker, reviewer, verifier, release-manager]
+max_rework_cycles: 2
+human_approval: {required: true, reason: "Migration irreversible"}
+artifacts_expected: [migration_plan, rollback_plan, data_backup_proof]

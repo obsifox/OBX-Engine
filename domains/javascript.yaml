@@ -1,0 +1,8 @@
+name: javascript
+type: domain_overlay
+detection:
+  files: ["package.json", "src/*.js"]
+overlays:
+  lenses: [testing, performance, security]
+  checks: [no_eval, prototype_pollution, xss]
+  playbook_base: references/playbooks/web-api-backend.md

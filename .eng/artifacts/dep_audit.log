@@ -1,0 +1,119 @@
+=== DEP AUDIT 2026-09-29T18:02:33Z ===
+
+--- Manifests found ---
+  ./ai/package.json
+  ./animation/package.json
+  ./assets/package.json
+  ./audio/package.json
+  ./builder/package.json
+  ./character/package.json
+  ./cli/package.json
+  ./core/package.json
+  ./dialogue/package.json
+  ./ecs/package.json
+  ./editor/package.json
+  ./engine/package.json
+  ./extensions/package.json
+  ./graphics/package.json
+  ./input/package.json
+  ./inventory/package.json
+  ./jobs/package.json
+  ./math/package.json
+  ./multiplayer/package.json
+  ./native/package.json
+  ./navigation/package.json
+  ./networking/package.json
+  ./obsiscript/package.json
+  ./package.json
+  ./particles/package.json
+  ./physics/package.json
+  ./platform/package.json
+  ./plugins/package.json
+  ./profiler/package.json
+  ./project/package.json
+  ./quest/package.json
+  ./registry/package.json
+  ./rendering/package.json
+  ./resources/package.json
+  ./runtime/package.json
+  ./save/package.json
+  ./scene/package.json
+  ./scripting/package.json
+  ./server/package.json
+  ./ui/package.json
+  ./vehicle/package.json
+  ./vfs/package.json
+  ./vfx/package.json
+  ./world/package.json
+--- Runtime vs dev-only ---
+  tooling (nested, does not ship): ./ai/package.json
+  tooling (nested, does not ship): ./animation/package.json
+  tooling (nested, does not ship): ./assets/package.json
+  tooling (nested, does not ship): ./audio/package.json
+  tooling (nested, does not ship): ./builder/package.json
+  tooling (nested, does not ship): ./character/package.json
+  tooling (nested, does not ship): ./cli/package.json
+  tooling (nested, does not ship): ./core/package.json
+  tooling (nested, does not ship): ./dialogue/package.json
+  tooling (nested, does not ship): ./ecs/package.json
+  tooling (nested, does not ship): ./editor/package.json
+  tooling (nested, does not ship): ./engine/package.json
+  tooling (nested, does not ship): ./extensions/package.json
+  tooling (nested, does not ship): ./graphics/package.json
+  tooling (nested, does not ship): ./input/package.json
+  tooling (nested, does not ship): ./inventory/package.json
+  tooling (nested, does not ship): ./jobs/package.json
+  tooling (nested, does not ship): ./math/package.json
+  tooling (nested, does not ship): ./multiplayer/package.json
+  tooling (nested, does not ship): ./native/package.json
+  tooling (nested, does not ship): ./navigation/package.json
+  tooling (nested, does not ship): ./networking/package.json
+  tooling (nested, does not ship): ./obsiscript/package.json
+  dev-only: ./package.json
+  tooling (nested, does not ship): ./particles/package.json
+  tooling (nested, does not ship): ./physics/package.json
+  tooling (nested, does not ship): ./platform/package.json
+  tooling (nested, does not ship): ./plugins/package.json
+  tooling (nested, does not ship): ./profiler/package.json
+  tooling (nested, does not ship): ./project/package.json
+  tooling (nested, does not ship): ./quest/package.json
+  tooling (nested, does not ship): ./registry/package.json
+  tooling (nested, does not ship): ./rendering/package.json
+  tooling (nested, does not ship): ./resources/package.json
+  tooling (nested, does not ship): ./runtime/package.json
+  tooling (nested, does not ship): ./save/package.json
+  tooling (nested, does not ship): ./scene/package.json
+  tooling (nested, does not ship): ./scripting/package.json
+  tooling (nested, does not ship): ./server/package.json
+  tooling (nested, does not ship): ./ui/package.json
+  tooling (nested, does not ship): ./vehicle/package.json
+  tooling (nested, does not ship): ./vfs/package.json
+  tooling (nested, does not ship): ./vfx/package.json
+  tooling (nested, does not ship): ./world/package.json
+--- npm audit ---
+{
+  "auditReportVersion": 2,
+  "vulnerabilities": {},
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "dependencies": {
+      "prod": 88,
+      "dev": 72,
+      "optional": 27,
+      "peer": 0,
+      "peerOptional": 0,
+      "total": 159
+    }
+  }
+}
+high=0 critical=0
+No HIGH/CRITICAL
+
+RESULT: PASS - No HIGH vulns detected

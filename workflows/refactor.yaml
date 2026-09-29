@@ -1,0 +1,8 @@
+name: refactor
+description: "Refactor without behavior change"
+type: workflow
+states_required: [INTAKE, BASELINE, CLASSIFICATION, PLANNING, EXECUTION, VALIDATION, REVIEW, VERIFICATION]
+gates: [G0_Build, G1_Tests, G2_Lens]
+agents_required: [architect, worker, reviewer, verifier]
+max_rework_cycles: 2
+artifacts_expected: [plan.md, architecture_note, no_behavior_change_proof, tests_pass]

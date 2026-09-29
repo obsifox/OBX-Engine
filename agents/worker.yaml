@@ -1,0 +1,64 @@
+name: worker
+role: implementation
+purpose: |
+  Implement tasks per plan, respecting existing conventions,
+  producing evidence for each change.
+
+inputs:
+  - plan.md
+  - task_definition
+  - file_partition
+  - existing_code
+
+outputs:
+  - implemented_files
+  - diff
+  - execution_result
+  - current_build.log
+  - current_test.log
+
+capabilities:
+  - code_generation
+  - file_editing
+  - build_execution
+  - test_execution
+
+permissions:
+  filesystem: write
+  shell: execute
+  network: limited
+  git: write
+  dependency.install: limited
+  database.read: deny
+  database.write: deny
+  deployment.execute: deny
+  secret.read: deny
+
+tools:
+  - write_file
+  - edit_file
+  - bash
+  - baseline.sh
+  - gate_check.sh
+  - lib_run.sh
+
+model_policy:
+  reasoning: medium
+  preferred_class: code_medium
+  fallback: low
+
+delegation:
+  allowed: false
+  max_children: 0
+
+termination:
+  required: implementation_and_build_pass
+
+failure_policy:
+  on_failure: retry_then_escalate
+  max_retries: 2
+
+evidence_required:
+  - changed_files
+  - current_build.log with EXIT_CODE
+  - diff

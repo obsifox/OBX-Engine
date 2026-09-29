@@ -2,7 +2,7 @@
   "name": "obx-engine",
   "version": "1.4.0",
   "private": true,
-  "description": "OBX Engine \u2014 a cross-platform TypeScript game & application engine",
+  "description": "OBX Engine — a cross-platform TypeScript game & application engine",
   "type": "module",
   "license": "MIT",
   "workspaces": [
@@ -68,7 +68,7 @@
   "devDependencies": {
     "@types/node": "^20.14.0",
     "typescript": "^5.5.4",
-    "vitest": "^2.1.9"
+    "vitest": "^4.1.11"
   },
   "engines": {
     "node": ">=20"

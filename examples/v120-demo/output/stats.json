@@ -1,0 +1,188 @@
+{
+  "version": "1.2.0",
+  "demo": "v120-demo",
+  "errors": 0,
+  "frames": 8,
+  "resolution": {
+    "width": 640,
+    "height": 360
+  },
+  "layout": {
+    "panel2D": [
+      0,
+      0,
+      320,
+      360
+    ],
+    "panel3D": [
+      320,
+      0,
+      320,
+      360
+    ]
+  },
+  "sprites": {
+    "backgroundQuads": 3,
+    "layerTiles": 2,
+    "characters": 3,
+    "animatedHero": {
+      "frames": 8,
+      "uvRects": [
+        [
+          0,
+          0,
+          0.25,
+          1
+        ],
+        [
+          0.25,
+          0,
+          0.25,
+          1
+        ],
+        [
+          0.5,
+          0,
+          0.25,
+          1
+        ],
+        [
+          0.75,
+          0,
+          0.25,
+          1
+        ],
+        [
+          0,
+          0,
+          0.25,
+          1
+        ],
+        [
+          0.25,
+          0,
+          0.25,
+          1
+        ],
+        [
+          0.5,
+          0,
+          0.25,
+          1
+        ],
+        [
+          0.75,
+          0,
+          0.25,
+          1
+        ]
+      ]
+    },
+    "textureAtlas": {
+      "width": 128,
+      "height": 32,
+      "cells": 4,
+      "regionsUsed": [
+        0,
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  "layers": {
+    "count": 3,
+    "names": [
+      "background",
+      "characters",
+      "particles"
+    ],
+    "characterSort": "y-ascending",
+    "characterDrawOrder": [
+      "hero-back",
+      "hero-mid",
+      "hero-front"
+    ]
+  },
+  "particles": {
+    "count": 20,
+    "instanceDrawCalls": 1,
+    "attributes": [
+      "aInstancePos",
+      "aInstanceSize",
+      "aInstanceUv",
+      "aInstanceColor"
+    ],
+    "animation": "deterministic-sine"
+  },
+  "mesh": {
+    "vertices": 24,
+    "indices": 36,
+    "depthTest": true,
+    "depthWrite": true,
+    "cullMode": "back",
+    "camera": {
+      "eye": [
+        2.3,
+        1.8,
+        2.7
+      ],
+      "target": [
+        0,
+        0,
+        0
+      ],
+      "fovYRadians": 1.0472
+    },
+    "light": {
+      "dir": [
+        0.42,
+        0.78,
+        0.46
+      ],
+      "model": "lambert-ambient-0.3"
+    }
+  },
+  "rendering": {
+    "drawCallsPerFrame": 9,
+    "totalDraws": 72,
+    "totalTriangles": 528,
+    "totalInstances": 224,
+    "submits": 8,
+    "depthTexture": "depth32"
+  },
+  "shaderCache": {
+    "compiledShaders": 6,
+    "uniqueVariants": 5,
+    "hitSample": true,
+    "stats": {
+      "hits": 1,
+      "misses": 5,
+      "size": 5,
+      "evictions": 0
+    }
+  },
+  "device": {
+    "adapter": "OBX Software Rasterizer",
+    "kind": "software",
+    "buffers": 67,
+    "textures": 3,
+    "pipelines": 2,
+    "shaders": 0,
+    "bufferWrites": 67,
+    "textureWrites": 1
+  },
+  "api": {
+    "backends": [
+      "software",
+      "webgpu",
+      "webgl2"
+    ],
+    "renderedWith": "software",
+    "shaderLanguages": [
+      "obx",
+      "wgsl",
+      "glsl"
+    ]
+  }
+}

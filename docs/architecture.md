@@ -24,7 +24,7 @@ added as their roadmap phases land.
 Dependency rules:
 
 - `core` and `math` depend on nothing.
-- `runtime`, `ecs`, `input`, `rendering` depend only on `core`/`math`.
+- `runtime`, `ecs`, `input`, `rendering`, `graphics` depend only on `core`/`math`.
 - `scene` depends on `ecs` + `math` + `rendering` (mesh renderer components).
 - `engine` composes everything and re-exports the public APIs.
 

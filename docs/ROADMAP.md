@@ -87,6 +87,15 @@ Execution status of the master development roadmap. ✅ = implemented & tested,
 - [x] Profiler (CPU spans, memory profiler, channel metrics, frame debugger, draw-call statistics)
 - [ ] Global illumination, soft body/cloth/hair, GPU profiler, network/physics/script deep profilers
 
+### ✅ v1.2 — GPU Rendering Foundation (2026-09-29)
+- [x] GraphicsDevice API (buffers, textures, samplers, shaders, pipelines, command lists, fences, stats) — backend-independent
+- [x] WebGPU backend (device seam, shadow buffers, render pipelines, encoder submission, fences)
+- [x] WebGL2 backend (shader compile/link, attribute setup, draw calls, framebuffer targets, sync fences)
+- [x] Software rasterizer (transforms, depth, culling, perspective-correct textures, instancing, lambert) — pixel-tested
+- [x] Shader system (obx/wgsl/glsl reflection, defines + variant keys, cache with hit/miss stats, compile errors with line numbers)
+- [x] GPU resource lifetime management (destroyed state, use-after-destroy guards, idempotent destroy)
+- [x] 30 tests (601 total) + demo
+
 ### ✅ v1.1 — Runtime & Platform Foundation (2026-09-28)
 - [x] Platform abstraction (window, surface, input, filesystem, timing, threads, events, clipboard, lifecycle, capabilities)
 - [x] Runtime host (bootstrap, loop, frame timing, startup/shutdown, error handling)

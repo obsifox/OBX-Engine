@@ -1,6 +1,6 @@
 {
   "name": "@obx/multiplayer",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "OBX Engine multiplayer",
   "type": "module",
   "main": "dist/index.js",

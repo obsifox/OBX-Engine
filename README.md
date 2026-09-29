@@ -14,7 +14,7 @@ one codebase targeting Windows, Linux, Android, Web and headless servers.
 |---|---|
 | **Engine** | OBX Engine |
 | **Editor** | ObsiFox Studio (in development) |
-| **Packages** | `@obx/core` `@obx/runtime` `@obx/ecs` `@obx/engine` `@obx/math` `@obx/input` `@obx/rendering` `@obx/scene` `@obx/physics` `@obx/audio` `@obx/animation` `@obx/character` `@obx/ui` `@obx/save` `@obx/vehicle` `@obx/particles` `@obx/vfx` `@obx/world` `@obx/navigation` `@obx/ai` `@obx/inventory` `@obx/dialogue` `@obx/quest` `@obx/obsiscript` `@obx/scripting` `@obx/native` `@obx/editor` `@obx/project` `@obx/extensions` `@obx/networking` `@obx/server` `@obx/cli` `@obx/build` `@obx/multiplayer` `@obx/profiler` `@obx/plugins` `@obx/registry` |
+| **Packages** | `@obx/core` `@obx/runtime` `@obx/ecs` `@obx/engine` `@obx/math` `@obx/input` `@obx/rendering` `@obx/graphics` `@obx/scene` `@obx/physics` `@obx/audio` `@obx/animation` `@obx/character` `@obx/ui` `@obx/save` `@obx/vehicle` `@obx/particles` `@obx/vfx` `@obx/world` `@obx/navigation` `@obx/ai` `@obx/inventory` `@obx/dialogue` `@obx/quest` `@obx/obsiscript` `@obx/scripting` `@obx/native` `@obx/editor` `@obx/project` `@obx/extensions` `@obx/networking` `@obx/server` `@obx/cli` `@obx/build` `@obx/multiplayer` `@obx/profiler` `@obx/plugins` `@obx/registry` |
 | **Logo / identity** | [`brand/`](brand/) — `logo.svg`, `wordmark.svg`, `brand.md` |
 
 ---
@@ -84,6 +84,7 @@ renderer.end();
 | `@obx/math` | `math/` | vectors, matrices, quaternions, bounds, colors, transforms (§6) |
 | `@obx/input` | `input/` | keyboard, mouse, touch, gamepad, actions, axes, profiles (§20) |
 | `@obx/rendering` | `rendering/` | 2D renderer, textures, sprite sheets, animation, camera, batching, backends, PNG (§7, §9) |
+| `@obx/graphics` | `graphics/` | GraphicsDevice API, WebGPU/WebGL2/software backends, shader compiler + cache (§9) |
 | `@obx/scene` | `scene/` | transform components, hierarchy propagation, interpolation (§5, §6) |
 | `@obx/engine` | `engine/` | `Engine` + `Application` facades re-exporting the full stack (§2, §51) |
 | `@obx/plugins` | `plugins/` | plugin manifests, lifecycle, dependency graph, permissions, sandboxing (§39) |

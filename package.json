@@ -1,6 +1,6 @@
 {
   "name": "obx-engine",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "description": "OBX Engine \u2014 a cross-platform TypeScript game & application engine",
   "type": "module",
@@ -17,6 +17,7 @@
     "math",
     "input",
     "rendering",
+    "graphics",
     "scene",
     "physics",
     "audio",

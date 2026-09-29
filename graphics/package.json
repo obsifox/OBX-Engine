@@ -1,0 +1,16 @@
+{
+  "name": "@obx/graphics",
+  "version": "1.2.0",
+  "description": "OBX Engine GPU rendering foundation — GraphicsDevice, shader system, WebGPU/WebGL2/Software backends",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "license": "MIT",
+  "dependencies": {}
+}

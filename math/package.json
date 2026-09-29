@@ -1,6 +1,6 @@
 {
   "name": "@obx/math",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "OBX Engine math \u2014 vectors, matrices, quaternions, bounds, transforms",
   "type": "module",
   "license": "MIT",

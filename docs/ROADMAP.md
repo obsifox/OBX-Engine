@@ -87,6 +87,15 @@ Execution status of the master development roadmap. ✅ = implemented & tested,
 - [x] Profiler (CPU spans, memory profiler, channel metrics, frame debugger, draw-call statistics)
 - [ ] Global illumination, soft body/cloth/hair, GPU profiler, network/physics/script deep profilers
 
+### ✅ v1.3 — Asset & Scene Pipeline (2026-09-29)
+- [x] Asset database (AssetGUID, records + metadata, importer registry, AssetCache, AssetWatcher)
+- [x] Import pipeline (source → importer → intermediate → processed → runtime) with 15 format importers
+- [x] Dependency tracking (graph, invalidation, cycle detection, GUID refs, import metadata, cache invalidation)
+- [x] Scene files (.scene/.prefab) with entity/component serialization, GUID references, validation, versioning + migration
+- [x] Prefab system (create, instantiate with id remapping, overrides, nested refs, serialization, validation)
+- [x] Hot reload (textures, materials, shaders, scenes, scripts, audio; typed hub + watcher detection)
+- [x] 36 tests (637 total) + demo
+
 ### ✅ v1.2 — GPU Rendering Foundation (2026-09-29)
 - [x] GraphicsDevice API (buffers, textures, samplers, shaders, pipelines, command lists, fences, stats) — backend-independent
 - [x] WebGPU backend (device seam, shadow buffers, render pipelines, encoder submission, fences)

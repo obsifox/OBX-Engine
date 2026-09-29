@@ -1,6 +1,6 @@
 {
   "name": "@obx/plugins",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "OBX Engine plugin system \u2014 manifests, loader, lifecycle, dependencies, permissions, sandboxing, versioning",
   "type": "module",
   "main": "dist/index.js",

@@ -1,0 +1,114 @@
+{
+  "version": "1.3.0",
+  "demo": "v130-demo",
+  "errors": 0,
+  "assets": {
+    "registered": 11,
+    "importers": {
+      "json": 1,
+      "png": 2,
+      "gltf": 1,
+      "deferred": 3,
+      "obj": 1,
+      "wav": 1,
+      "svg": 1
+    },
+    "firstPass": [
+      {
+        "path": "config/game.json",
+        "type": "json",
+        "cached": false,
+        "dependencies": 0
+      },
+      {
+        "path": "textures/hero.png",
+        "type": "image",
+        "cached": false,
+        "dependencies": 0
+      },
+      {
+        "path": "textures/tile.png",
+        "type": "image",
+        "cached": false,
+        "dependencies": 0
+      },
+      {
+        "path": "models/ship.gltf",
+        "type": "model",
+        "cached": false,
+        "dependencies": 2
+      },
+      {
+        "path": "models/crate.obj",
+        "type": "model",
+        "cached": false,
+        "dependencies": 1
+      },
+      {
+        "path": "audio/jump.wav",
+        "type": "audio",
+        "cached": false,
+        "dependencies": 0
+      },
+      {
+        "path": "ui/logo.svg",
+        "type": "image",
+        "cached": false,
+        "dependencies": 0
+      }
+    ]
+  },
+  "cache": {
+    "hits": 1,
+    "misses": 8,
+    "size": 5,
+    "invalidations": 2
+  },
+  "dependencies": {
+    "shipGuid": "28eec23d-4f73-4942-a3c1-a6280069ab35",
+    "shipDependents": 0,
+    "heroInvalidated": [
+      "28eec23d-4f73-4942-a3c1-a6280069ab35"
+    ],
+    "selfCycleRejected": true
+  },
+  "reimport": {
+    "cached": true,
+    "mutatedChanged": true
+  },
+  "scenes": {
+    "entities": 2,
+    "version": 2,
+    "guidReferences": [
+      "sky"
+    ],
+    "roundTrip": true
+  },
+  "prefabs": {
+    "instances": 3,
+    "entities": 6,
+    "overridesApplied": true
+  },
+  "hotReload": {
+    "events": 4,
+    "kinds": {
+      "texture": 1,
+      "shader": 1,
+      "scene": 1,
+      "other": 1
+    },
+    "watchDetected": true,
+    "kindMap": {
+      "hero.png": "texture",
+      "a.wgsl": "shader",
+      "m.ogg": "audio"
+    }
+  },
+  "pipelineStages": [
+    "SOURCE",
+    "IMPORTER",
+    "INTERMEDIATE",
+    "PROCESSED",
+    "RUNTIME"
+  ]
+}

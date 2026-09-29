@@ -1,6 +1,6 @@
 {
   "name": "@obx/server",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "OBX Engine server runtime \u2014 headless runtime, dedicated server, config, logging, monitoring, plugins and server scripts",
   "type": "module",
   "main": "dist/index.js",

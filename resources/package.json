@@ -1,6 +1,6 @@
 {
   "name": "@obx/resources",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "OBX Engine resource management \u2014 handles, loaders, cache, lifetimes, dependency tracking",
   "type": "module",
   "main": "dist/index.js",
@@ -13,6 +13,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@obx/vfs": "1.2.0"
+    "@obx/vfs": "1.3.0"
   }
 }

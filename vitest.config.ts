@@ -8,6 +8,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@obx/graphics": path.join(root, "graphics/src/index.ts"),
+      "@obx/assets": path.join(root, "assets/src/index.ts"),
       "@obx/platform": path.join(root, "platform/src/index.ts"),
       "@obx/jobs": path.join(root, "jobs/src/index.ts"),
       "@obx/vfs": path.join(root, "vfs/src/index.ts"),
@@ -53,6 +54,7 @@ export default defineConfig({
   },
   test: {
     include: [
+    "assets/tests/**/*.ts",
     "graphics/tests/**/*.ts",
       "platform/tests/**/*.test.ts",
       "jobs/tests/**/*.test.ts",

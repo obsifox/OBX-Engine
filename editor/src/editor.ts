@@ -15,7 +15,7 @@ export interface TransformData {
   scale: Vec3;
 }
 
-export type PropertyValue = number | string | boolean | Vec2 | Vec3;
+export type PropertyValue = number | string | boolean | Vec2 | Vec3 | PropertyValue[];
 
 export interface PropertyDescriptor {
   path: string;

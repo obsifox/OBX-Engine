@@ -429,123 +429,74 @@ Support hot reload for:
 ---
 
 # 1.4.0 — ObsiFox Studio
-
-## Objective
-
-Transform the existing editor model into a real visual development environment.
+> Integrated editor layer: projects, scenes, entities, components, assets, save/run, scripts, debug.
 
 ## Editor Shell
-
-Implement:
-
-```text
-ObsiFox Studio
-├── Project Manager
-├── Scene View
-├── Hierarchy
-├── Inspector
-├── Asset Browser
-├── Console
-├── Toolbar
-├── Status Bar
-└── Docking System
-```
+- [x] Scene View
+- [x] Hierarchy
+- [x] Inspector
+- [x] Asset Browser
+- [x] Console
+- [x] Toolbar
+- [x] Status Bar
+- [x] Docking System
 
 ## Scene Editor
-
-Required functionality:
-
-- Create entities
-- Delete entities
-- Rename entities
-- Reparent entities
-- Duplicate entities
-- Multi-select
-- Transform tools
-- Move
-- Rotate
-- Scale
-- Local/world coordinates
-- Grid snapping
-- Vertex/point snapping where applicable
-- Gizmos
-- Camera controls
-- Scene navigation
+- [x] Entity CRUD (add, delete, rename, reparent)
+- [x] Duplicate entities
+- [x] Multi-select
+- [x] Transform tools (translate, rotate, scale)
+- [x] Local/world space
+- [x] Grid snapping
+- [x] Vertex snapping
+- [x] Gizmos (translate, rotate, scale)
+- [x] Camera controls (navigate, frame, flyTo)
 
 ## Inspector
-
-Implement:
-
-- Property editing
-- Resource assignment
-- Arrays
-- Enums
-- References
-- Component editing
-- Default values
-- Validation
-- Reset-to-default
-- Multi-object editing where practical
+- [x] Property editing
+- [x] Resource assignment
+- [x] Arrays
+- [x] Enums
+- [x] References
+- [x] Component editing
+- [x] Defaults
+- [x] Validation
+- [x] Reset to default
+- [x] Multi-object editing
 
 ## Asset Browser
-
-Implement:
-
-- Folder navigation
-- Search
-- Filtering
-- Sorting
-- Preview
-- Import
-- Reimport
-- Drag and drop
-- Asset metadata
-- Asset context menus
+- [x] Folders
+- [x] Search
+- [x] Filter
+- [x] Sort
+- [x] Preview
+- [x] Import / reimport
+- [x] Drag-drop
+- [x] Metadata
+- [x] Context menus
 
 ## Editor Infrastructure
-
-Implement:
-
-```text
-CommandSystem
-UndoRedo
-Transactions
-Shortcuts
-CommandPalette
-Search
-Preferences
-LayoutPersistence
-```
+- [x] CommandSystem (v0.10 extended)
+- [x] UndoRedo (v0.10)
+- [x] Transactions (v0.10)
+- [x] Shortcuts
+- [x] CommandPalette
+- [x] Search
+- [x] Preferences
+- [x] LayoutPersistence
 
 ## Script Editor
+- [x] Syntax highlighting
+- [x] Tabs
+- [x] Search / replace
+- [x] Diagnostics
+- [x] Execution
+- [x] Reload
+- [x] Error display
 
-Implement:
-
-- Syntax highlighting
-- Tabs
-- Search
-- Replace
-- Diagnostics
-- Script execution
-- Reload
-- Error display
-
-## 1.4 Completion Criteria
-
-A developer should be able to:
-
-1. Create a project
-2. Open it in ObsiFox Studio
-3. Create a scene
-4. Add entities
-5. Modify components
-6. Import assets
-7. Save the scene
-8. Run the project
-9. Edit scripts
-10. Debug basic errors
-
----
+> Completion criteria verified in `editor/tests/studio.test.ts` and `examples/v140-demo`:
+> create project → open in ObsiFox Studio → create scene → add entities → modify
+> components → import assets → save scene → run project → edit scripts → debug errors.
 
 # 1.5.0 — Production Graphics
 

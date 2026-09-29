@@ -1,6 +1,6 @@
 {
   "name": "@obx/animation",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "OBX Engine animation \u2014 clips, tracks, state machines, blend trees, skeleton, IK",
   "type": "module",
   "main": "dist/index.js",
@@ -10,6 +10,6 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@obx/math": "1.3.0"
+    "@obx/math": "1.4.0"
   }
 }

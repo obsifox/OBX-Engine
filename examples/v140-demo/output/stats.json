@@ -1,0 +1,110 @@
+{
+  "version": "1.4.0",
+  "demo": "v140-demo",
+  "studio": "ObsiFox Studio",
+  "errors": 0,
+  "workflow": {
+    "projectCreated": "Neon Valley",
+    "sceneCreated": "obx-editor-scene",
+    "entities": 7,
+    "componentsModified": 6,
+    "assetsImported": 3,
+    "sceneSaved": 7,
+    "projectRun": true,
+    "scriptsEdited": 3,
+    "debugErrors": 6
+  },
+  "editor": {
+    "panels": [
+      "project-manager",
+      "scene-view",
+      "console",
+      "hierarchy",
+      "asset-browser"
+    ],
+    "toolbarTools": [
+      "rotate",
+      "grid"
+    ],
+    "commandPalette": 6,
+    "shortcuts": [
+      "ctrl+s",
+      "ctrl+z",
+      "ctrl+y",
+      "ctrl+d"
+    ],
+    "undoDepth": 6,
+    "duplicated": 1,
+    "gizmoHit": "translate-x",
+    "gizmoSpace": "local"
+  },
+  "browser": {
+    "entries": 6,
+    "importReports": [
+      {
+        "path": "/assets/hero.png",
+        "status": "reimported",
+        "message": "imported"
+      },
+      {
+        "path": "/assets/valley.png",
+        "status": "imported",
+        "message": "imported"
+      },
+      {
+        "path": "/assets/crate.obj",
+        "status": "imported",
+        "message": "imported"
+      }
+    ]
+  },
+  "scripts": {
+    "tokens": 12,
+    "brokenDiagnostics": [
+      "unclosed \"(\"",
+      "unclosed \"{\""
+    ],
+    "runLogs": [
+      "ai tick",
+      "ai tick",
+      "entities=6"
+    ],
+    "failedRunErrors": 8
+  },
+  "layouts": {
+    "saved": [
+      "default"
+    ],
+    "dirtyAfterSave": false,
+    "statusBar": [
+      {
+        "key": "scene",
+        "value": "scenes/level1.scene"
+      },
+      {
+        "key": "tool",
+        "value": "select"
+      },
+      {
+        "key": "project",
+        "value": "Neon Valley"
+      },
+      {
+        "key": "selection",
+        "value": "Crate"
+      },
+      {
+        "key": "dirty",
+        "value": "false"
+      },
+      {
+        "key": "assets",
+        "value": "6"
+      },
+      {
+        "key": "script",
+        "value": "scripts/broken.ts"
+      }
+    ]
+  }
+}

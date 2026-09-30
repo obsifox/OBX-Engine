@@ -1,0 +1,13 @@
+{
+  "run_id": "RUN-2026-000003",
+  "created_at": "2026-09-30T05:14:56Z",
+  "project": {
+    "type": "refactor",
+    "domain": "game-development",
+    "workflow": "refactor",
+    "tier": "T2"
+  },
+  "task": "orchestrated rewrite of v1.3 Asset and Scene Pipeline (assets: guid, importers, database, scenes, hotreload) under green baseline",
+  "state": "INTAKE",
+  "version": "1.2.1"
+}

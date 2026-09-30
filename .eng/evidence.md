@@ -49,3 +49,13 @@
 ## T11 - Known debt carried forward
 - Status: UNSOLVED
 - Evidence: structured findings F-006 F-007 F-107 F-108 status=OPEN severity=LOW in .eng/artifacts/architecture-review.md
+
+## T12 - Rewrite v1.3 assets package (RUN-2026-000003)
+- Status: SOLVED
+- Evidence: diff restructures assets/src importers/database/scenes into 15 modules (456/429/289 LOC monoliths), test sources untouched, assets suite 36/36 and full suite 701/701 pass (logs .eng/artifacts/current_test.log)
+- Artifact: assets/src/importers/, assets/src/database/, assets/src/scenes/
+
+## T13 - Gates G0-G5 (RUN-2026-000003)
+- Status: SOLVED
+- Evidence: command `bash scripts/gate_check.sh all` G0_Build PASS G1_Tests PASS G2_Lens PASS (review .eng/artifacts/architecture-review.md F-201..F-206) G3_Security PASS G4_Release PASS artifact docs/screenshots/v130-rewrite.svg sha256:1b45c455cb5b3781c93bd56b65ac8d2ab5153dec3cc14b71b246384a523583cb G5_Project PASS
+- Artifact: .eng/runs/RUN-2026-000003/receipt.json

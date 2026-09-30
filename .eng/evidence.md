@@ -98,3 +98,8 @@
 - Status: SOLVED
 - Evidence: docs/releases/v1.5.md report_lint PASS; G0/G1/G2/G4 verified; release card artifact hash recorded
 - Artifact: docs/releases/v1.5.md, .eng/artifacts/release-review.md
+
+## T22 - v1.5.0 visualization rework
+- Status: SOLVED
+- Evidence: replaced bar-mockup with real path-traced scene rendered through the v1.5 stack (PBR materials, 4-light rig, ray-traced shadows, IBL, 2 bounces, bloom+ACES+grade+fxaa+vignette); frame.png 1280x560 regenerated; card rebuilt around the real render
+- Artifact: examples/v150-demo/src/render.js, examples/v150-demo/output/frame.png, docs/screenshots/v150-update.svg

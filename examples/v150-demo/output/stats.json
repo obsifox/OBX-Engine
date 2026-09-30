@@ -2,6 +2,22 @@
   "version": "1.5.0",
   "demo": "v150-demo",
   "errors": 0,
+  "render": {
+    "width": 1280,
+    "height": 560,
+    "supersample": "2x2",
+    "renderMs": 34480,
+    "spheres": 6,
+    "lightsInScene": 4,
+    "bounceDepth": 2,
+    "postChain": [
+      "bloom",
+      "aces",
+      "grade",
+      "fxaa",
+      "vignette"
+    ]
+  },
   "lighting": {
     "lights": 5,
     "uniformStride": 12,
@@ -105,32 +121,32 @@
   "renderGraph": {
     "passes": 5,
     "resources": 4,
-    "totalMs": 0.13074999999997772,
+    "totalMs": 0.1359640000000013,
     "timings": [
       [
         "shadow-map",
-        0.01329499999999939
+        0.021224000000003684
       ],
       [
         "gbuffer",
-        0.019232999999985623
+        0.015223000000005982
       ],
       [
         "lighting",
-        0.0095929999999953
+        0.010180999999988671
       ],
       [
         "post-fx",
-        0.005000999999992928
+        0.008858000000003585
       ],
       [
         "particles",
-        0.008381999999983236
+        0.010137000000000285
       ]
     ],
     "bottlenecks": [
-      "gbuffer",
       "shadow-map",
+      "gbuffer",
       "lighting",
       "particles",
       "post-fx"

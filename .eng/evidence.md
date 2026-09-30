@@ -59,3 +59,17 @@
 - Status: SOLVED
 - Evidence: command `bash scripts/gate_check.sh all` G0_Build PASS G1_Tests PASS G2_Lens PASS (review .eng/artifacts/architecture-review.md F-201..F-206) G3_Security PASS G4_Release PASS artifact docs/screenshots/v130-rewrite.svg sha256:1b45c455cb5b3781c93bd56b65ac8d2ab5153dec3cc14b71b246384a523583cb G5_Project PASS
 - Artifact: .eng/runs/RUN-2026-000003/receipt.json
+
+## T14 - Rewrite v1.4 editor package (RUN-2026-000004)
+- Status: SOLVED
+- Evidence: diff restructures editor/src core/infra/scenetools/shell/scripteditor into 25 modules (707/202/220/263/410 LOC monoliths), test sources untouched, editor suite 79/79 and full suite 701/701 pass (logs .eng/artifacts/current_test.log)
+- Artifact: editor/src/core/, editor/src/infra/, editor/src/scenetools/, editor/src/shell/, editor/src/scripteditor/
+
+## T15 - Gates G0-G5 (RUN-2026-000004)
+- Status: SOLVED
+- Evidence: command `bash scripts/gate_check.sh all` G0_Build PASS G1_Tests PASS G2_Lens PASS (review .eng/artifacts/architecture-review.md F-301..F-306) G3_Security PASS G4_Release PASS artifact docs/screenshots/v140-rewrite.svg sha256:3f7219456055d065290105cf6c53b34bb16f1c295ef920ef156612b1e4a69aa6 G5_Project PASS
+- Artifact: .eng/runs/RUN-2026-000004/receipt.json
+
+## T16 - Rewrite series v1.1 to v1.4 complete
+- Status: SOLVED
+- Evidence: files .eng/runs/RUN-2026-00000(1, 2, 3, 4)/receipt.json all COMPLETED via legal transitions, reports docs/releases/v1.1-rewrite.md v1.2-rewrite.md v1.3-rewrite.md v1.4-rewrite.md each pass `bash scripts/report_lint.sh`

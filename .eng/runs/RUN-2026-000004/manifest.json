@@ -1,0 +1,13 @@
+{
+  "run_id": "RUN-2026-000004",
+  "created_at": "2026-09-30T06:57:15Z",
+  "project": {
+    "type": "refactor",
+    "domain": "game-development",
+    "workflow": "refactor",
+    "tier": "T2"
+  },
+  "task": "orchestrated rewrite of v1.4 ObsiFox Studio (editor: core monolith plus infra, scenetools, shell, scripteditor) under green baseline",
+  "state": "INTAKE",
+  "version": "1.2.1"
+}

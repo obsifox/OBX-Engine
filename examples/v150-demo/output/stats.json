@@ -1,0 +1,160 @@
+{
+  "version": "1.5.0",
+  "demo": "v150-demo",
+  "errors": 0,
+  "lighting": {
+    "lights": 5,
+    "uniformStride": 12,
+    "packedFloats": 60,
+    "rigEvaluation": {
+      "r": 2.6261988005356933,
+      "g": 2.0402141218246435,
+      "b": 1.5436930943538256
+    }
+  },
+  "pbr": {
+    "shaded": {
+      "r": 0.9653284967554754,
+      "g": 0.5578279498646299,
+      "b": 0.3461575008025245
+    },
+    "shadowedOnly": {
+      "r": 0.27,
+      "g": 0.156,
+      "b": 0.10300000000000001
+    },
+    "ggxPeak": 15.265665461811176,
+    "fresnelGrazing": 1
+  },
+  "shadows": {
+    "mapSize": [
+      64,
+      64
+    ],
+    "litSample": 1,
+    "occludedSample": 0,
+    "softEdge": 1,
+    "splits": [
+      10.169813189735155,
+      23.340838362577493,
+      49.75487857621091,
+      120
+    ],
+    "cascadeOfTarget": 2
+  },
+  "environment": {
+    "skyTop": {
+      "r": 0.15105149975250817,
+      "g": 0.35105149975250816,
+      "b": 0.8010514997525082
+    },
+    "skyHorizon": {
+      "r": 0.7,
+      "g": 0.8,
+      "b": 0.95
+    },
+    "reflection": {
+      "r": 0.24247759580612183,
+      "g": 0.44155868887901306,
+      "b": 0.8888019919395447
+    },
+    "irradiance": {
+      "r": 0.3969993560264508,
+      "g": 0.49051715006741387,
+      "b": 0.6826514868686596
+    },
+    "skyPixels": 1024
+  },
+  "post": {
+    "toneAnchors": [
+      0,
+      0.8037974683544302,
+      0.6666666666666666
+    ],
+    "hdrPixels": 576,
+    "settings": {
+      "toneMap": "aces",
+      "bloomThreshold": 0.6,
+      "fxaa": true
+    }
+  },
+  "particles": {
+    "alive": 300,
+    "stride": 8,
+    "uploadBytes": [
+      9600
+    ],
+    "trailSegments": 11,
+    "rngSamples": [
+      0.2604658124037087,
+      0.8048227655235678,
+      0.5408715349622071
+    ],
+    "time": 1.2500000000000004
+  },
+  "optimization": {
+    "frustumVisible": 3,
+    "frustumCulled": 1,
+    "sorted": [
+      "rock",
+      "floor",
+      "tower"
+    ],
+    "lodForTarget": 1
+  },
+  "renderGraph": {
+    "passes": 5,
+    "resources": 4,
+    "totalMs": 0.13074999999997772,
+    "timings": [
+      [
+        "shadow-map",
+        0.01329499999999939
+      ],
+      [
+        "gbuffer",
+        0.019232999999985623
+      ],
+      [
+        "lighting",
+        0.0095929999999953
+      ],
+      [
+        "post-fx",
+        0.005000999999992928
+      ],
+      [
+        "particles",
+        0.008381999999983236
+      ]
+    ],
+    "bottlenecks": [
+      "gbuffer",
+      "shadow-map",
+      "lighting",
+      "particles",
+      "post-fx"
+    ]
+  },
+  "quality": {
+    "levels": [
+      "low",
+      "medium",
+      "high",
+      "ultra"
+    ],
+    "lowShadow": 512,
+    "ultraShadow": 4096,
+    "scaledHigh": 1024,
+    "scaledLow": 1024
+  },
+  "vfx": {
+    "order": [
+      "emit",
+      "force",
+      "tint",
+      "out"
+    ],
+    "materialSample": 3
+  }
+}

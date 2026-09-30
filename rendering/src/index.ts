@@ -81,3 +81,13 @@ export {
 } from "./advanced.js";
 
 export const RENDERING_VERSION = "0.4.0";
+
+export * from "./lights.js";
+export * from "./pbr.js";
+export * from "./environment.js";
+export * from "./shadows.js";
+export * from "./post.js";
+export * from "./culling.js";
+export * from "./rendergraph.js";
+export * from "./quality.js";
+export * from "./gpuparticles.js";

@@ -1,4 +1,4 @@
-=== DEP AUDIT 2026-09-30T07:02:58Z ===
+=== DEP AUDIT 2026-09-30T07:54:54Z ===
 
 --- Manifests found ---
   ./ai/package.json
@@ -117,3 +117,4 @@ high=0 critical=0
 No HIGH/CRITICAL
 
 RESULT: PASS - No HIGH vulns detected
+dep_audit EXIT=0

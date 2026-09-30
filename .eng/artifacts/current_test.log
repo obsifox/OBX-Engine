@@ -1,77 +1,80 @@
 
 [1m[30m[46m RUN [49m[39m[22m [36mv4.1.11 [39m[90m/home/user/obx-engine[39m
 
- [32m✓[39m jobs/tests/jobs.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 174[2mms[22m[39m
- [32m✓[39m platform/tests/platform.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 164[2mms[22m[39m
- [32m✓[39m vehicle/tests/vehicle.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 96[2mms[22m[39m
- [32m✓[39m runtime/tests/host.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 86[2mms[22m[39m
- [32m✓[39m runtime/tests/runtime.test.ts [2m([22m[2m18 tests[22m[2m)[22m[32m 73[2mms[22m[39m
- [32m✓[39m world/tests/world.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 75[2mms[22m[39m
- [32m✓[39m rendering/tests/rendering3d.test.ts [2m([22m[2m34 tests[22m[2m)[22m[32m 70[2mms[22m[39m
- [32m✓[39m physics/tests/physics.test.ts [2m([22m[2m23 tests[22m[2m)[22m[32m 85[2mms[22m[39m
- [32m✓[39m engine/tests/stress.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 41[2mms[22m[39m
- [32m✓[39m core/tests/random.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 79[2mms[22m[39m
- [32m✓[39m navigation/tests/navigation.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 28[2mms[22m[39m
- [32m✓[39m core/tests/core.test.ts [2m([22m[2m29 tests[22m[2m)[22m[32m 36[2mms[22m[39m
- [32m✓[39m vfx/tests/vfx.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 35[2mms[22m[39m
- [32m✓[39m obsiscript/tests/obsiscript.test.ts [2m([22m[2m17 tests[22m[2m)[22m[32m 26[2mms[22m[39m
- [32m✓[39m editor/tests/studio.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 15[2mms[22m[39m
- [32m✓[39m rendering/tests/rendering.test.ts [2m([22m[2m21 tests[22m[2m)[22m[32m 34[2mms[22m[39m
- [32m✓[39m server/tests/server.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 31[2mms[22m[39m
- [32m✓[39m editor/tests/browser.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 31[2mms[22m[39m
- [32m✓[39m plugins/tests/plugins.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 11[2mms[22m[39m
- [32m✓[39m audio/tests/audio.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 16[2mms[22m[39m
- [32m✓[39m project/tests/project.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 15[2mms[22m[39m
- [32m✓[39m ecs/tests/ecs.test.ts [2m([22m[2m27 tests[22m[2m)[22m[32m 40[2mms[22m[39m
- [32m✓[39m graphics/tests/graphics.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 26[2mms[22m[39m
- [32m✓[39m scripting/tests/scripting.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 29[2mms[22m[39m
- [32m✓[39m tests/integration/mini-game.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 17[2mms[22m[39m
- [32m✓[39m assets/tests/importers.test.ts [2m([22m[2m12 tests[22m[2m)[22m[32m 20[2mms[22m[39m
- [32m✓[39m editor/tests/scripteditor.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 18[2mms[22m[39m
- [32m✓[39m assets/tests/scenes.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 34[2mms[22m[39m
- [32m✓[39m editor/tests/scenetools.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 11[2mms[22m[39m
- [32m✓[39m math/tests/math.test.ts [2m([22m[2m30 tests[22m[2m)[22m[32m 27[2mms[22m[39m
- [32m✓[39m engine/tests/engine.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 21[2mms[22m[39m
- [32m✓[39m graphics/tests/backends.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 29[2mms[22m[39m
- [32m✓[39m networking/tests/networking.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 42[2mms[22m[39m
- [32m✓[39m registry/tests/registry.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 17[2mms[22m[39m
- [32m✓[39m graphics/tests/shaders.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 20[2mms[22m[39m
- [32m✓[39m scene/tests/scene.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 11[2mms[22m[39m
- [32m✓[39m resources/tests/resources.test.ts [2m([22m[2m12 tests[22m[2m)[22m[32m 13[2mms[22m[39m
- [32m✓[39m save/tests/save.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 20[2mms[22m[39m
- [32m✓[39m extensions/tests/extensions.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 8[2mms[22m[39m
- [32m✓[39m native/tests/native.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 14[2mms[22m[39m
- [32m✓[39m cli/tests/cli.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 15[2mms[22m[39m
- [32m✓[39m assets/tests/database.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 14[2mms[22m[39m
- [32m✓[39m multiplayer/tests/multiplayer.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 9[2mms[22m[39m
- [32m✓[39m inventory/tests/inventory.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 21[2mms[22m[39m
- [32m✓[39m editor/tests/hierarchy.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 13[2mms[22m[39m
- [32m✓[39m editor/tests/shell.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 17[2mms[22m[39m
- [32m✓[39m editor/tests/editor.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 15[2mms[22m[39m
- [32m✓[39m input/tests/input.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 12[2mms[22m[39m
- [32m✓[39m builder/tests/build.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 15[2mms[22m[39m
- [32m✓[39m particles/tests/particles.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 13[2mms[22m[39m
- [32m✓[39m quest/tests/quest.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 9[2mms[22m[39m
- [32m✓[39m ai/tests/ai.test.ts [2m([22m[2m16 tests[22m[2m)[22m[32m 18[2mms[22m[39m
- [32m✓[39m ui/tests/ui.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 14[2mms[22m[39m
- [32m✓[39m profiler/tests/profiler.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 8[2mms[22m[39m
- [32m✓[39m animation/tests/animation.test.ts [2m([22m[2m12 tests[22m[2m)[22m[32m 14[2mms[22m[39m
- [32m✓[39m dialogue/tests/dialogue.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 12[2mms[22m[39m
- [32m✓[39m world/tests/advanced.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 11[2mms[22m[39m
- [32m✓[39m character/tests/character.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 12[2mms[22m[39m
- [32m✓[39m vfs/tests/vfs.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 10[2mms[22m[39m
- [32m✓[39m editor/tests/properties.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m platform/tests/platform.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 141[2mms[22m[39m
+ [32m✓[39m vehicle/tests/vehicle.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 84[2mms[22m[39m
+ [32m✓[39m jobs/tests/jobs.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 96[2mms[22m[39m
+ [32m✓[39m runtime/tests/host.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 76[2mms[22m[39m
+ [32m✓[39m runtime/tests/runtime.test.ts [2m([22m[2m18 tests[22m[2m)[22m[32m 65[2mms[22m[39m
+ [32m✓[39m rendering/tests/rendering3d.test.ts [2m([22m[2m34 tests[22m[2m)[22m[32m 54[2mms[22m[39m
+ [32m✓[39m physics/tests/physics.test.ts [2m([22m[2m23 tests[22m[2m)[22m[32m 47[2mms[22m[39m
+ [32m✓[39m core/tests/random.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 42[2mms[22m[39m
+ [32m✓[39m world/tests/world.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 52[2mms[22m[39m
+ [32m✓[39m engine/tests/stress.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m core/tests/core.test.ts [2m([22m[2m29 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+ [32m✓[39m graphics/tests/graphics.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m obsiscript/tests/obsiscript.test.ts [2m([22m[2m17 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m ecs/tests/ecs.test.ts [2m([22m[2m27 tests[22m[2m)[22m[32m 28[2mms[22m[39m
+ [32m✓[39m rendering/tests/rendering.test.ts [2m([22m[2m21 tests[22m[2m)[22m[32m 20[2mms[22m[39m
+ [32m✓[39m rendering/tests/graphics.test.ts [2m([22m[2m29 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m networking/tests/networking.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32m✓[39m vfx/tests/vfx.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m graphics/tests/backends.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m math/tests/math.test.ts [2m([22m[2m30 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m navigation/tests/navigation.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m audio/tests/audio.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m rendering/tests/renderopt.test.ts [2m([22m[2m20 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m editor/tests/browser.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m scripting/tests/scripting.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+ [32m✓[39m ai/tests/ai.test.ts [2m([22m[2m16 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m engine/tests/engine.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m builder/tests/build.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m editor/tests/editor.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m save/tests/save.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m assets/tests/database.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m editor/tests/studio.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m cli/tests/cli.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m assets/tests/importers.test.ts [2m([22m[2m12 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m particles/tests/particles.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m assets/tests/scenes.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m server/tests/server.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m editor/tests/scripteditor.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m graphics/tests/shaders.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m vfs/tests/vfs.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m registry/tests/registry.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tests/integration/mini-game.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m resources/tests/resources.test.ts [2m([22m[2m12 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m native/tests/native.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m character/tests/character.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m scene/tests/scene.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m ui/tests/ui.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m plugins/tests/plugins.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m animation/tests/animation.test.ts [2m([22m[2m12 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m editor/tests/shell.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m inventory/tests/inventory.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m editor/tests/scenetools.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m project/tests/project.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m editor/tests/hierarchy.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m input/tests/input.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m quest/tests/quest.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 10[2mms[22m[39m
  [32m✓[39m scene/tests/mesh-renderer3d.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 9[2mms[22m[39m
- [32m✓[39m editor/tests/infra.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 12[2mms[22m[39m
- [32m✓[39m assets/tests/hotreload.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m profiler/tests/profiler.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m multiplayer/tests/multiplayer.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m editor/tests/infra.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m world/tests/advanced.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m dialogue/tests/dialogue.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 7[2mms[22m[39m
  [32m✓[39m rendering/tests/advanced.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 7[2mms[22m[39m
- [32m✓[39m assets/tests/guid.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m extensions/tests/extensions.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m editor/tests/properties.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m vfx/tests/graph.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m assets/tests/hotreload.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m assets/tests/guid.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 6[2mms[22m[39m
  [32m✓[39m ai/tests/advanced.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 6[2mms[22m[39m
- [32m✓[39m editor/tests/project.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m editor/tests/project.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 6[2mms[22m[39m
 
-[2m Test Files [22m [1m[32m67 passed[39m[22m[90m (67)[39m
-[2m      Tests [22m [1m[32m701 passed[39m[22m[90m (701)[39m
-[2m   Start at [22m 07:03:10
-[2m   Duration [22m 20.57s[2m (transform 2.51s, setup 0ms, import 5.73s, tests 1.96s, environment 10ms)[22m
+[2m Test Files [22m [1m[32m70 passed[39m[22m[90m (70)[39m
+[2m      Tests [22m [1m[32m756 passed[39m[22m[90m (756)[39m
+[2m   Start at [22m 07:55:12
+[2m   Duration [22m 15.47s[2m (transform 1.72s, setup 0ms, import 4.18s, tests 1.49s, environment 7ms)[22m
 
 EXIT_CODE=0

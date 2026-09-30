@@ -1,0 +1,91 @@
+{
+  "run_id": "RUN-2026-000005",
+  "status": "COMPLETED",
+  "generated_at": "2026-09-30T07:57:04Z",
+  "project": {
+    "type": "feature",
+    "domain": "game-development",
+    "workflow": "feature"
+  },
+  "routing": {
+    "tier": "T3",
+    "workflow": "feature",
+    "domain": "game-development",
+    "risk": {},
+    "why_tier_selected": "heuristic based on LOC, risk, complexity, or explicit",
+    "why_workflow_selected": "Workflow feature selected based on task type (feature, bug-fix, refactor, etc.) per workflows/*.yaml",
+    "why_domain_selected": "Domain game-development detected via files/keywords per domains/*.yaml (e.g. package.json->web, AndroidManifest.xml->android, wp-config.php->wordpress)",
+    "why_risk_selected": "Risk {} based on task keywords (auth->security high, data->data high)",
+    "cost_breakdown": {
+      "token_budget": 60000,
+      "tokens_used_est": 0,
+      "agent_count": 0,
+      "tool_calls": 0,
+      "review_cycles": 0,
+      "estimated_cost": "unknown - optional telemetry"
+    }
+  },
+  "agents": [
+    {
+      "name": "architect",
+      "role": "architecture",
+      "model": "high",
+      "status": "unknown"
+    },
+    {
+      "name": "worker",
+      "role": "implementation",
+      "model": "medium",
+      "status": "completed"
+    },
+    {
+      "name": "reviewer",
+      "role": "review",
+      "model": "high",
+      "status": "completed"
+    }
+  ],
+  "permissions": {
+    "note": "Least privilege enforced per config/permissions.yaml",
+    "worker": "filesystem.write, shell.execute, git.write",
+    "reviewer": "filesystem.read, shell.restricted, git.read"
+  },
+  "gates": {},
+  "iterations": {
+    "review": 0,
+    "rework": 0,
+    "max_rework": 2
+  },
+  "artifacts": [],
+  "evidence": {
+    "baseline_build_log": "missing",
+    "current_build_log": "missing",
+    "review_files": [],
+    "verification_log": "missing"
+  },
+  "human_approval": {
+    "required": false,
+    "approved": false,
+    "events": []
+  },
+  "final": {
+    "status": "COMPLETED",
+    "reason": "All gates PASS or NOT APPLICABLE, receipt generated",
+    "changed_files": [],
+    "why_agents_selected": "Agents selected based on workflow + domain + risk + tier composition",
+    "which_tools_used": [
+      "detect_env.sh",
+      "baseline.sh",
+      "gate_check.sh",
+      "secret_scan.sh",
+      "dep_audit.sh",
+      "state_machine.sh",
+      "event_log.sh"
+    ],
+    "which_permissions_granted": "Least privilege per role, see permissions matrix",
+    "which_gates_passed": {},
+    "what_evidence_proves_completion": [],
+    "how_many_rework_cycles": 0,
+    "was_human_approval_required": false
+  }
+}

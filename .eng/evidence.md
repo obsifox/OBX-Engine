@@ -73,3 +73,28 @@
 ## T16 - Rewrite series v1.1 to v1.4 complete
 - Status: SOLVED
 - Evidence: files .eng/runs/RUN-2026-00000(1, 2, 3, 4)/receipt.json all COMPLETED via legal transitions, reports docs/releases/v1.1-rewrite.md v1.2-rewrite.md v1.3-rewrite.md v1.4-rewrite.md each pass `bash scripts/report_lint.sh`
+
+## T17 - v1.5.0 Production Graphics implementation
+- Status: SOLVED
+- Evidence: 10 new modules (rendering/src: lights, pbr, shadows, environment, post, culling, rendergraph, quality, gpuparticles; vfx/src: graph) compiled with tsc EXIT_CODE=0; 55 new tests green
+- Artifact: rendering/src/*.ts, vfx/src/graph.ts, rendering/tests/graphics.test.ts, rendering/tests/renderopt.test.ts, vfx/tests/graph.test.ts
+
+## T18 - v1.5.0 verification run
+- Status: SOLVED
+- Evidence: full suite 756/756 (baseline 701 preserved + 55 new), 70 test files, npm audit 0 vulnerabilities
+- Artifact: .eng/artifacts/current_test.log, .eng/artifacts/baseline_test.log
+
+## T19 - v1.5.0 demo and screenshot
+- Status: SOLVED
+- Evidence: examples/v150-demo ran green (lights=5 shaded=0.965 lit=1 culled=1 alive=300 passes=5); frame.png + stats.json written; card sha256:f67ac2f3b706389b1cd151274c12d49a2e56a153806967e0004101d93fcc8973
+- Artifact: examples/v150-demo/output/frame.png, examples/v150-demo/output/stats.json, docs/screenshots/v150-update.svg
+
+## T20 - v1.5.0 architecture review
+- Status: SOLVED
+- Evidence: findings F-307..F-312 recorded with Rule-2 classification (HLOD ARCHITECTURE_ONLY; TAA/DoF/motion-blur/SSAO simplified reference forms; material/vfx graph foundation without shader codegen); no open HIGH/CRITICAL
+- Artifact: .eng/artifacts/architecture-review.md
+
+## T21 - v1.5.0 release review
+- Status: SOLVED
+- Evidence: docs/releases/v1.5.md report_lint PASS; G0/G1/G2/G4 verified; release card artifact hash recorded
+- Artifact: docs/releases/v1.5.md, .eng/artifacts/release-review.md

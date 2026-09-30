@@ -1,0 +1,3 @@
+{"event_id": "evt-1790754609-6149-26143", "run_id": "RUN-2026-000005", "timestamp": "2026-09-30T07:50:09Z", "type": "BASELINE_STARTED", "actor": "orchestrator", "state": "INTAKE", "payload": {}}
+{"event_id": "evt-1790754609-6160-18512", "run_id": "RUN-2026-000005", "timestamp": "2026-09-30T07:50:09Z", "type": "BASELINE_COMPLETED", "actor": "orchestrator", "state": "INTAKE", "payload": {"build": "EXIT_CODE=0", "tests": "756/756", "suite": "vitest"}}
+{"event_id": "evt-1790755024-7510-13193", "run_id": "RUN-2026-000005", "timestamp": "2026-09-30T07:57:04Z", "type": "RUN_COMPLETED", "actor": "orchestrator", "state": "COMPLETED", "payload": {"tests": "756/756", "gates": "G0-G5 PASS", "tag": "v1.5.0"}}

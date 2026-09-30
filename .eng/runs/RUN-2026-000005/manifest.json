@@ -1,0 +1,13 @@
+{
+  "run_id": "RUN-2026-000005",
+  "created_at": "2026-09-30T07:14:03Z",
+  "project": {
+    "type": "feature",
+    "domain": "game-development",
+    "workflow": "feature",
+    "tier": "T3"
+  },
+  "task": "v1.5.0 Production Graphics: lighting, shadows, PBR, environment, post-processing, render graph, culling/LOD, quality levels, GPU particles and trails",
+  "state": "INTAKE",
+  "version": "1.2.1"
+}

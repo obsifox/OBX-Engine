@@ -1,6 +1,6 @@
 {
   "name": "@obx/scripting",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "OBX Engine scripting \u2014 sandboxed JS/ObsiScript hosts, lifecycle, hot reload, API type definitions",
   "type": "module",
   "main": "dist/index.js",

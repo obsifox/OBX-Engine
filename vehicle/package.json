@@ -1,6 +1,6 @@
 {
   "name": "@obx/vehicle",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "OBX Engine vehicles \u2014 suspension, steering, transmission, engine simulation, vehicle AI",
   "type": "module",
   "main": "dist/index.js",

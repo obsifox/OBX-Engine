@@ -1,7 +1,7 @@
 import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { Vec3, AABB, Mat4, Color, Colors, Vec2 } from "@obx/math";
+import { Vec3, AABB, Mat4, Color, Colors } from "@obx/math";
 import {
   LightRig,
   makeAmbient,
@@ -10,8 +10,6 @@ import {
   makeSpot,
   makeArea,
   packLights,
-  evaluateLighting,
-  LIGHT_UNIFORM_STRIDE,
   PbrMaterial,
   shadePbr,
   distributionGgx,
@@ -48,12 +46,11 @@ import {
   GpuEffectSystem,
   mulberry32,
   PARTICLE_INSTANCE_STRIDE,
-  SoftwareBackend,
-  Renderer2D,
-  Camera2D,
+  LIGHT_UNIFORM_STRIDE,
   encodePng,
 } from "@obx/rendering";
 import { VfxNodeGraph, MaterialGraph } from "@obx/vfx";
+import { renderScene } from "./render.js";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const outDir = join(root, "output");
@@ -181,102 +178,42 @@ materialGraph.add({ id: "uv", op: "uv", params: { scale: 2, offset: 1 } });
 materialGraph.add({ id: "mul", op: "mul", params: { value: 1.5 } });
 const materialSample = materialGraph.sample(0.5, 0.25);
 
-const W = 640, H = 360;
-const backend = new SoftwareBackend(W, H);
-const renderer = new Renderer2D(backend);
-const camera = new Camera2D({ viewportWidth: W, viewportHeight: H, position: new Vec2(W / 2, H / 2) });
+const WIDTH = 1280;
+const HEIGHT = 560;
+const startedAt = Date.now();
+const scene = renderScene(WIDTH, HEIGHT, 2);
+const renderMs = Date.now() - startedAt;
 
-const toColor = (value) => new Color(Math.min(1, Math.max(0, value.r)), Math.min(1, Math.max(0, value.g)), Math.min(1, Math.max(0, value.b)));
-const bar = (x, y, w, h, color) => renderer.drawRect({ x, y, width: w, height: h, color });
+const frameBuffer = createFrameBuffer(WIDTH, HEIGHT);
+frameBuffer.color.set(scene.color);
+const renderPost = defaultPostSettings();
+renderPost.bloom = { enabled: true, threshold: 0.9, intensity: 0.5, radius: 3 };
+renderPost.toneMap = "aces";
+renderPost.grade = { exposure: 1.0, contrast: 1.06, saturation: 1.12, lift: 0, gamma: 1, gain: 1 };
+renderPost.vignette = { strength: 0.22, radius: 0.9 };
+renderPost.fxaaEnabled = true;
+applyPostChain(frameBuffer, renderPost, null);
 
-renderer.begin(camera, Colors.obsidian);
-bar(0, 0, W, 22, Colors.surface);
-bar(8, 6, 70, 10, Colors.foxOrange);
-bar(88, 7, 40, 8, Colors.ember);
-bar(136, 7, 30, 8, Colors.slate);
-bar(W - 120, 6, 112, 10, Colors.signalCyan);
-
-for (let x = 0; x < W; x += 8) {
-  const t = x / W;
-  const band = skyRadiance(sky, new Vec3(0, 1 - t * 1.4, -0.4).normalize());
-  bar(x, 30, 8, 64, toColor(band));
+const ldr = new Uint8ClampedArray(WIDTH * HEIGHT * 4);
+for (let i = 0; i < ldr.length; i += 1) {
+  ldr[i] = Math.round(Math.min(1, Math.max(0, frameBuffer.color[i])) * 255);
 }
-bar(0, 30, W, 2, Colors.surface);
-bar(0, 92, W, 2, Colors.surface);
-
-bar(8, 102, 200, 128, Colors.surface);
-bar(16, 110, 80, 8, Colors.signalCyan);
-const shadowCells = 12;
-for (let i = 0; i < shadowCells * 4; i += 1) {
-  const sx = i % (shadowCells * 2);
-  const sy = Math.floor(i / (shadowCells * 2));
-  const value = shadowMap.depth[Math.min(shadowMap.depth.length - 1, (sy * 5 + 2) * shadowMap.width + sx * 5 + 2)];
-  bar(16 + sx * 8, 128 + sy * 8, 7, 7, value < -0.8 ? Colors.signalCyan : Colors.obsidian);
-}
-bar(16, 192, 60, 6, Colors.slate);
-bar(82, 192, 110, 6, litSample === 1 ? Colors.ember : Colors.slate);
-
-bar(216, 102, 200, 128, Colors.surface);
-bar(224, 110, 90, 8, Colors.foxOrange);
-const sphereShade = toColor(shaded);
-const sphereShadow = toColor(shadowedOnly);
-bar(228, 132, 72, 72, sphereShade);
-bar(316, 132, 72, 72, sphereShadow);
-bar(228, 212, 72, 6, Colors.ember);
-bar(316, 212, 72, 6, Colors.slate);
-
-bar(424, 102, 208, 128, Colors.surface);
-bar(432, 110, 100, 8, Colors.ember);
-const rand = mulberry32(7);
-for (let i = 0; i < 42; i += 1) {
-  const angle = rand() * Math.PI * 2;
-  const radius = rand();
-  const px = 528 + Math.cos(angle) * radius * 84;
-  const py = 172 + Math.sin(angle) * radius * 46;
-  const alpha = 1 - radius;
-  bar(px, py, 4, 4, new Color(1, 0.55 + alpha * 0.35, 0.2 + alpha * 0.5));
-}
-bar(432, 212, 96, 6, Colors.signalCyan);
-
-bar(8, 238, 200, 84, Colors.surface);
-bar(16, 246, 70, 8, Colors.foxOrange);
-const postSteps = ["ssao", "bloom", "aces", "grade", "fxaa", "dof", "blur", "taa", "vignette"];
-for (let i = 0; i < postSteps.length; i += 1) {
-  bar(16 + i * 20, 266, 14, 34, i < 5 ? Colors.foxOrange : Colors.slate);
-}
-bar(16, 306, 120, 6, Colors.light);
-
-bar(216, 238, 200, 84, Colors.surface);
-bar(224, 246, 90, 8, Colors.signalCyan);
-const levelScale = [0.35, 0.55, 0.78, 1];
-for (let i = 0; i < 4; i += 1) {
-  bar(228, 264 + i * 12, 120 * levelScale[i], 8, i === 2 ? Colors.foxOrange : Colors.slate);
-}
-bar(356, 264, 48, 8, Colors.ember);
-
-bar(424, 238, 208, 84, Colors.surface);
-bar(432, 246, 80, 8, Colors.ember);
-for (let i = 0; i < graphStats.passes; i += 1) {
-  const timing = graphStats.passTimings[i];
-  bar(432, 264 + i * 11, 40 + (i % 3) * 30, 8, i === 2 ? Colors.foxOrange : Colors.light);
-}
-bar(432, 320, 120, 2, Colors.surface);
-
-bar(8, 330, 624, 22, Colors.surface);
-bar(16, 336, 60, 8, Colors.slate);
-bar(90, 336, 160, 8, Colors.light);
-bar(270, 336, 90, 8, Colors.signalCyan);
-bar(380, 336, 130, 8, Colors.ember);
-bar(530, 336, 90, 8, Colors.slate);
-renderer.end();
-
-const frame = { width: W, height: H, data: backend.pixels };
-writeFileSync(join(outDir, "frame.png"), encodePng(frame));
+writeFileSync(join(outDir, "frame.png"), encodePng({ width: WIDTH, height: HEIGHT, data: ldr }));
 
 const stats = {
   version: "1.5.0",
   demo: "v150-demo",
   errors: 0,
+  render: {
+    width: WIDTH,
+    height: HEIGHT,
+    supersample: "2x2",
+    renderMs,
+    spheres: 6,
+    lightsInScene: scene.lights.length,
+    bounceDepth: 2,
+    postChain: ["bloom", "aces", "grade", "fxaa", "vignette"],
+  },
   lighting: {
     lights: rig.lights.length,
     uniformStride: LIGHT_UNIFORM_STRIDE,
@@ -344,4 +281,4 @@ const stats = {
 };
 
 writeFileSync(join(outDir, "stats.json"), JSON.stringify(stats, null, 2));
-console.log(`lights=${rig.lights.length} shaded=${shaded.r.toFixed(3)} lit=${litSample} culled=${cullResult.stats.culled} alive=${particles.aliveCount} passes=${graphStats.passes}`);
+console.log(`render ${WIDTH}x${HEIGHT} in ${renderMs}ms · spheres=6 lights=${scene.lights.length} · lit=${litSample} alive=${particles.aliveCount}`);

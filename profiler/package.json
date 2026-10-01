@@ -1,6 +1,6 @@
 {
   "name": "@obx/profiler",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "OBX Engine profiler",
   "type": "module",
   "main": "dist/index.js",

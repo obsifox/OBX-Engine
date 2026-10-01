@@ -1,6 +1,6 @@
 {
   "name": "@obx/vfs",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "OBX Engine virtual file system \u2014 virtual paths, memory/physical/package adapters, mounts",
   "type": "module",
   "main": "dist/index.js",

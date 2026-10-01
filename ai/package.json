@@ -1,6 +1,6 @@
 {
   "name": "@obx/ai",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "OBX Engine AI \u2014 perception, state machines, behavior trees, utility AI, goals, schedules, NPC brains",
   "type": "module",
   "main": "dist/index.js",

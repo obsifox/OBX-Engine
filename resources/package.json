@@ -1,6 +1,6 @@
 {
   "name": "@obx/resources",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "OBX Engine resource management \u2014 handles, loaders, cache, lifetimes, dependency tracking",
   "type": "module",
   "main": "dist/index.js",

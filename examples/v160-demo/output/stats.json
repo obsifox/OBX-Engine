@@ -1,0 +1,83 @@
+{
+  "version": "1.6.0",
+  "demo": "v160-demo",
+  "errors": 0,
+  "scenarios": {
+    "udpDedicated": {
+      "transport": "udp-loopback",
+      "boundPort": 26001,
+      "clients": 2,
+      "ticks": 45,
+      "entities": 45,
+      "tokensIssued": 2,
+      "validInputs": 2,
+      "rejectedInputs": 1,
+      "packetsIn": 185,
+      "bytesIn": 6435,
+      "budgetDropped": 0
+    },
+    "tcpLoopback": {
+      "transport": "tcp-loopback",
+      "port": 42647,
+      "echoFrames": 12,
+      "echoBytes": 96
+    },
+    "websocket": {
+      "transport": "websocket-loopback",
+      "port": 33033,
+      "handshake": "101-switching-protocols",
+      "acceptKeySample": "s3pPLMBiTxaQ9kYGzzhZRbK+xOo=",
+      "echoFrames": 2,
+      "echoBytes": 5
+    },
+    "reliableStream": {
+      "transport": "reliable-stream-over-tcp",
+      "framesSent": 8,
+      "framesDelivered": 8,
+      "retransmits": 0
+    },
+    "security": {
+      "roundTrip": true,
+      "tamperRejected": true,
+      "tokenVerified": true,
+      "tokenExpiryRejected": true,
+      "tokenForgeRejected": true,
+      "fingerprint": "90037e",
+      "rateLimitAllowed": 3,
+      "rateLimitRejected": 5,
+      "inputErrors": 1
+    },
+    "sync": {
+      "rttMs": 24,
+      "rttMs2": 26,
+      "clockOffsetMs": -1,
+      "interpolationX": 15,
+      "predictionPending": 20,
+      "predictionReplayFrames": 20,
+      "ownershipOwner": "alice",
+      "deltaAppliedX": 3
+    },
+    "budget": {
+      "limitBytesPerSecond": 1000,
+      "dropped": 1
+    },
+    "connection": {
+      "state": "connecting",
+      "invalidPackets": 0
+    }
+  },
+  "render": {
+    "width": 1280,
+    "height": 560,
+    "supersample": "2x2",
+    "samplesPerPixel": 4,
+    "renderMs": 24572,
+    "postChain": [
+      "bloom(0.9/0.5/3)",
+      "aces",
+      "grade(1.06/1.12)",
+      "fxaa",
+      "vignette(0.22/0.9)"
+    ]
+  }
+}

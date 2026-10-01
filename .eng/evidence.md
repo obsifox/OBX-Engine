@@ -98,3 +98,38 @@
 - Status: SOLVED
 - Evidence: docs/releases/v1.5.md report_lint PASS; G0/G1/G2/G4 verified; release card artifact hash recorded
 - Artifact: docs/releases/v1.5.md, .eng/artifacts/release-review.md
+
+## T22 - v1.5.0 visualization rework
+- Status: SOLVED
+- Evidence: replaced bar-mockup with real path-traced scene rendered through the v1.5 stack (PBR materials, 4-light rig, ray-traced shadows, IBL, 2 bounces, bloom+ACES+grade+fxaa+vignette); frame.png 1280x560 regenerated; card rebuilt around the real render
+- Artifact: examples/v150-demo/src/render.js, examples/v150-demo/output/frame.png, docs/screenshots/v150-update.svg
+
+## T23
+- Status: SOLVED
+- Evidence: command `npx vitest run networking/tests multiplayer/tests` exit 0, 61 tests passed in 6 files (4 new files: netcore, transports, security, replication); artifact examples/v160-demo/output/stats.json
+- Artifact: networking/src/{serializer,clock,channel,socket,connection,transports,crypto,security}.ts multiplayer/src/{replication,sync,dedicated}.ts
+
+## T24
+- Status: SOLVED
+- Evidence: command `node examples/v160-demo/src/main.js` exit 0 — real loopback sockets: UDP dedicated server (auth x2, 45 ticks, 45 entities, 185 packets, 6435 bytes, 1 invalid input rejected), TCP echo 12/12 frames, WebSocket RFC6455 handshake (accept s3pPLMBiTxaQ9kYGzzhZRbK+xOo=) + 2/2 echo frames, ReliableStream over TCP 8/8 delivered 0 retransmits; artifact examples/v160-demo/output/stats.json
+- Artifact: examples/v160-demo/output/stats.json
+
+## T25
+- Status: SOLVED
+- Evidence: command `node examples/v160-demo/src/main.js` security scenario — sealPacket/openPacket round-trip true, hmac tamper rejected true, forged token rejected true, token expiry rejected true, rate-limit 3/8 allowed, input validator 1 error on seq:-3; artifact examples/v160-demo/output/stats.json
+- Artifact: networking/src/security.ts
+
+## T26
+- Status: SOLVED
+- Evidence: command `node examples/v160-demo/src/main.js` sync scenario — NetworkClock rtt 24/26ms offset -1ms, InterpolationBuffer sample x=15 at delay 100ms, ReconciliationQueue 20-frame replay after ack(12), OwnershipTracker owner alice, snapshot delta applied x=3; artifact examples/v160-demo/output/stats.json
+- Artifact: networking/src/clock.ts multiplayer/src/sync.ts
+
+## T27
+- Status: SOLVED
+- Evidence: command `bash scripts/gate_check.sh all` G0_Build PASS G1_Tests PASS G2_Lens PASS (findings [F-601] severity=LOW status=VERIFIED) G3_Security PASS G4_Release PASS artifact docs/screenshots/v160-update.svg sha256:44539afa38713f079a3820814a82af53ff7ab0e07eda81a9ac1bc04d070c2b5e G5_Project PASS
+- Artifact: docs/screenshots/v160-update.svg
+
+## T28
+- Status: SOLVED
+- Evidence: command `npx vitest run` exit 0, 798 tests passed in 74 files (baseline 756 + 42 new networking/multiplayer tests); artifact .eng/artifacts/current_build.log
+- Artifact: docs/releases/v1.6.md

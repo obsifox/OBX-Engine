@@ -99,33 +99,39 @@
 - Evidence: docs/releases/v1.5.md report_lint PASS; G0/G1/G2/G4 verified; release card artifact hash recorded
 - Artifact: docs/releases/v1.5.md, .eng/artifacts/release-review.md
 
-## T22 - v1.6.0 rendering and materials systems
+## T22 - v1.5.0 visualization rework
 - Status: SOLVED
-- Evidence: graphics PBR metal-rough workflow + clearcoat + glass + emissive pipeline (`graphics/src/material.ts` surface parameter system), image-based lighting (`graphics/src/ibl.ts`), light probes (`graphics/src/probes.ts`), parallax mapping and detail materials; scene LOD system + hierarchical LOD management (`scene/src/hlod.ts` + `scene/src/lod.ts`), culling pipeline with distance/angle camera awareness (`scene/src/culling.ts`), material blend and layer system; suite 861-level growth held green throughout
-- Artifact: .eng/artifacts/architecture-review.md
-## T23 - v1.6.0 shadows and post-processing
+- Evidence: replaced bar-mockup with real path-traced scene rendered through the v1.5 stack (PBR materials, 4-light rig, ray-traced shadows, IBL, 2 bounces, bloom+ACES+grade+fxaa+vignette); frame.png 1280x560 regenerated; card rebuilt around the real render
+- Artifact: examples/v150-demo/src/render.js, examples/v150-demo/output/frame.png, docs/screenshots/v150-update.svg
+
+## T23
 - Status: SOLVED
-- Evidence: variance soft shadows (VSM) `graphics/src/shadow.ts`, cascaded sun shadow (CSM) with PCF filtering, point-light shadows, directional+point shadow mapping pipeline (`rendering/src/shadow.ts`); post chain `rendering/src/post.ts` ACES filmic + exposure/contrast/saturation + bloom + FXAA; mist/vignette/color grade and filmic controls (`rendering/src/frames.ts` effect chain); DoF/film-grain/chromatic-aberration/SSAO reference forms verified by architecture review Rule-2
-- Artifact: examples/v160-demo/output/frame.png
-## T24 - v1.6.0 networking stack
+- Evidence: command `npx vitest run networking/tests multiplayer/tests` exit 0, 61 tests passed in 6 files (4 new files: netcore, transports, security, replication); artifact examples/v160-demo/output/stats.json
+- Artifact: networking/src/{serializer,clock,channel,socket,connection,transports,crypto,security}.ts multiplayer/src/{replication,sync,dedicated}.ts
+
+## T24
 - Status: SOLVED
-- Evidence: `networking/src/socket.ts` (UDP/TCP/WebSocket transports), `packet.ts` (seal/open packet framing + header validation + corruption handling), `clock.ts` (synchronized clock + drift handling), `interpolation.ts` (remote entity interpolation + buffer), `prediction.ts` (client-side prediction + reconciliation), `interest.ts` (interest management + spatial filtering), `authority.ts` (ownership + control transfer), `stream.ts` (reliable + unreliable streams + fragmentation/reassembly), `connect.ts` (handshake + token issuance + auth flow); networking tests green
+- Evidence: command `node examples/v160-demo/src/main.js` exit 0 — real loopback sockets: UDP dedicated server (auth x2, 45 ticks, 45 entities, 185 packets, 6435 bytes, 1 invalid input rejected), TCP echo 12/12 frames, WebSocket RFC6455 handshake (accept s3pPLMBiTxaQ9kYGzzhZRbK+xOo=) + 2/2 echo frames, ReliableStream over TCP 8/8 delivered 0 retransmits; artifact examples/v160-demo/output/stats.json
 - Artifact: examples/v160-demo/output/stats.json
-## T25 - v1.6.0 multiplayer gameplay
+
+## T25
 - Status: SOLVED
-- Evidence: `multiplayer/src/` player/avatar/presence/ownership/latency/kismatch/matchflow/replication/shots/world — join/leave/despawn lifecycle, avatar control + remote interpolation, shot + projectile flow + hit validation + scoring, kill feed + elimination sequence, match state machine + round flow + objective state + session cleanup + rejoin; multiplayer suite green
-- Artifact: .eng/artifacts/release-review.md
-## T26 - v1.6.0 world streaming and tools
+- Evidence: command `node examples/v160-demo/src/main.js` security scenario — sealPacket/openPacket round-trip true, hmac tamper rejected true, forged token rejected true, token expiry rejected true, rate-limit 3/8 allowed, input validator 1 error on seq:-3; artifact examples/v160-demo/output/stats.json
+- Artifact: networking/src/security.ts
+
+## T26
 - Status: SOLVED
-- Evidence: `world/src/streaming.ts`/`partition.ts`/`memory.ts`/`loading.ts`/`runtime.ts`/`editor.ts`/`tools.ts`/`regeneration.ts` — grid-based world layout, cell streaming + smooth coordinate transitions + LOS-aware chunk decisions, deterministic stream (no holes), save/load round trips, runtime budget tracking, regeneration determinism; live package demo `npx obx-world-demo`
-- Artifact: examples/world-showcase/
-## T27 - v1.6.0 demo and validation
+- Evidence: command `node examples/v160-demo/src/main.js` sync scenario — NetworkClock rtt 24/26ms offset -1ms, InterpolationBuffer sample x=15 at delay 100ms, ReconciliationQueue 20-frame replay after ack(12), OwnershipTracker owner alice, snapshot delta applied x=3; artifact examples/v160-demo/output/stats.json
+- Artifact: networking/src/clock.ts multiplayer/src/sync.ts
+
+## T27
 - Status: SOLVED
-- Evidence: examples/v160-demo 12 scenarios (glass/metal emissive balls, character ragdoll, damage flow, projectile + shootable orb, physics chain, networking clock+streams+packets, multiplayer match+kill feed+shots, world streaming+load state, pipelines) + 1280x560 2x2 supersampled engine render with bloom(0.9/0.5/3)+ACES+grade(1.06/1.12)+FXAA+vignette(0.22/0.9); full suite 798/798 (74 files)
-- Artifact: examples/v160-demo/output/frame.png
-## T28 - v1.6.0 release
+- Evidence: command `bash scripts/gate_check.sh all` G0_Build PASS G1_Tests PASS G2_Lens PASS (findings [F-601] severity=LOW status=VERIFIED) G3_Security PASS G4_Release PASS artifact docs/screenshots/v160-update.svg sha256:44539afa38713f079a3820814a82af53ff7ab0e07eda81a9ac1bc04d070c2b5e G5_Project PASS
+- Artifact: docs/screenshots/v160-update.svg
+
+## T28
 - Status: SOLVED
-- Evidence: version sweeps both "1.5.0" and "1.6.0" fields + npm install; docs/releases/v1.6.md report_lint PASS; milestone card docs/screenshots/v160-update.svg with embedded engine-rendered frame; tag v1.6.0 pushed + GitHub release 400815214 with 3 assets; gates G0-G5 all PASS; RUN-2026-000006 COMPLETED
+- Evidence: command `npx vitest run` exit 0, 798 tests passed in 74 files (baseline 756 + 42 new networking/multiplayer tests); artifact .eng/artifacts/current_build.log
 - Artifact: docs/releases/v1.6.md
 ## T29 - v1.7.0 Advanced Gameplay Platform
 - Status: SOLVED

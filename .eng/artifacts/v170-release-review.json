@@ -1,0 +1,127 @@
+{
+  "version": "1.7.0",
+  "date": "2026-10-01",
+  "artifact": "v170-release-review",
+  "sha256": "7006e1fee3496735",
+  "render": {
+    "width": 1280,
+    "height": 560,
+    "supersample": "2x2",
+    "samplesPerPixel": 4,
+    "renderMs": 27043,
+    "postChain": [
+      "bloom(0.9/0.5/3)",
+      "aces",
+      "grade(1.06/1.12)",
+      "fxaa",
+      "vignette(0.22/0.9)"
+    ]
+  },
+  "scenarios": {
+    "animation": {
+      "authoredClips": 1,
+      "skeletonBones": 3,
+      "eventsFired": 1,
+      "rootMotionZ": 0.6,
+      "blendTreeX": 1.2,
+      "ikEndX": 0.5949128249260823,
+      "ikEndY": 0.7946854981135201,
+      "ccdEndY": 0.7948590977459337,
+      "validationErrors": 0
+    },
+    "physics": {
+      "ragdollBones": 11,
+      "ragdollTorsoY": 1.5649689567638772,
+      "ragdollEnergy": 206.67668887891975,
+      "clothLowestY": -0.89161735891794,
+      "softCenterY": 0.7874192317842175,
+      "hullVolume": 8,
+      "hullRayDistance": 2,
+      "sweepToi": 0.25,
+      "ccdStopped": true,
+      "meshHitY": 0,
+      "fractureCells": 3,
+      "debrisBodies": 2
+    },
+    "navigation": {
+      "polygons": 10,
+      "pathWaypoints": 3,
+      "viaLink": true,
+      "dynamicBlocked": 1,
+      "agentState": "arrived",
+      "agentDistance": 0
+    },
+    "ai": {
+      "treeStatus": "success",
+      "debuggerFrames": 2,
+      "utilityChoice": "attack",
+      "sensedAwareness": 0.7,
+      "planSteps": [
+        "chop-tree",
+        "make-fire"
+      ],
+      "planCost": 2
+    },
+    "ui": {
+      "glyphsRasterized": true,
+      "rtlVisual": "\u05dd\u05dc\u05d5\u05e2 \u05dd\u05d5\u05dc\u05e9",
+      "rtlDirection": "rtl",
+      "arabicForms": [
+        "initial",
+        "final",
+        "isolated"
+      ],
+      "localized": "\u0633\u0644\u0627\u0645 ObsiFox",
+      "appleLine": "3 apples",
+      "localeDirection": "rtl",
+      "contrastRatio": 16.29174238669142,
+      "contrastAAA": true,
+      "focusTarget": "cta",
+      "announcements": 2,
+      "auditIssues": 2,
+      "scaledFont": 21,
+      "documentNodes": 3
+    }
+  },
+  "suite": {
+    "tests": 861,
+    "files": 80,
+    "status": "all green"
+  },
+  "gate_command": "bash scripts/gate_check.sh all --state .eng/runs/RUN-2026-000007/state.json --evidence .eng/evidence.md",
+  "blobs": {
+    "animation/src/events.ts": "909cf51d0e694c1c",
+    "animation/src/blends.ts": "62e066bfa0997896",
+    "animation/src/retarget.ts": "45ad18cbb2d2a27c",
+    "animation/src/ik.ts": "f9985c54ed076744",
+    "animation/src/editor.ts": "29eb7b23c115c844",
+    "physics/src/hull.ts": "c48108c8d777607b",
+    "physics/src/ccd.ts": "564cac6764faf225",
+    "physics/src/meshcollider.ts": "96ee248518567f83",
+    "physics/src/joints2.ts": "5c93d1a8e58a16be",
+    "physics/src/ragdoll.ts": "583c68e1f84352a3",
+    "physics/src/softbody.ts": "db20e9c84fa38a0e",
+    "physics/src/cloth.ts": "3832c3afb7860122",
+    "physics/src/destruction.ts": "a2850859f48c273a",
+    "navigation/src/navmesh.ts": "6af5c92bfb3c8d79",
+    "navigation/src/agent.ts": "c85f3fa690b122fd",
+    "navigation/src/dynamic.ts": "2397c411bc48c3dc",
+    "ai/src/behaviortree.ts": "e96313161b07de97",
+    "ai/src/utility.ts": "f22b46a15f7a5d3a",
+    "ai/src/perception.ts": "78f4fcfb0ad41571",
+    "ai/src/goap.ts": "ac18a1571a5215f7",
+    "ai/src/debugger.ts": "1e8549b72b96036b",
+    "ai/src/advanced.ts": "dbbfccf2faf67f14",
+    "ui/src/font.ts": "ea7be6c15a518a9c",
+    "ui/src/unicode.ts": "11cc9ebc950ed76e",
+    "ui/src/bidi.ts": "64748e436d5fa96c",
+    "ui/src/l18n.ts": "f2a00117e31ed2b5",
+    "ui/src/a11y.ts": "896f6b3d1a230f76",
+    "ui/src/uieditor.ts": "e5f6096d91f872e0",
+    "ui/src/uianim.ts": "44d96e2c7b92e6fd",
+    "editor/src/animationeditor.ts": "78f871edcbffdf1b",
+    "editor/src/aipanel.ts": "7c3177c7b5660869",
+    "examples/v170-demo/src/main.js": "9585d3b0913e45d5",
+    "examples/v170-demo/src/render.js": "b80bf4e437b2d865"
+  }
+}

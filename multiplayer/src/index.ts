@@ -13,3 +13,7 @@ export {
   type Room,
   type RoomOptions,
 } from "./multiplayer.js";
+
+export * from "./replication.js";
+export * from "./sync.js";
+export * from "./dedicated.js";

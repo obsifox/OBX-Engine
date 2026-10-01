@@ -30,4 +30,12 @@ export {
   type UiTheme,
 } from "./ui.js";
 
+export * from "./font.js";
+export * from "./unicode.js";
+export * from "./bidi.js";
+export * from "./l18n.js";
+export * from "./a11y.js";
+export * from "./uieditor.js";
+export * from "./uianim.js";
+
 export const UI_VERSION = "0.5.0";

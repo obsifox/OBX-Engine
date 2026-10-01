@@ -2,9 +2,9 @@ name: obx-engine
 kind: node-app
 
 commands:
-  build: npx tsc -b core math ecs input rendering audio scene animation physics ui scripting project runtime editor platform jobs vfs resources graphics assets --force
+  build: npx tsc -b core math ecs input rendering audio scene animation physics ui scripting project runtime editor platform jobs vfs resources graphics assets navigation ai --force
   test: npx vitest run
-  lint: npx tsc -b core math ecs input rendering audio scene animation physics ui scripting project runtime editor platform jobs vfs resources graphics assets --force
+  lint: npx tsc -b core math ecs input rendering audio scene animation physics ui scripting project runtime editor platform jobs vfs resources graphics assets navigation ai --force
 
 gates:
   extras:

@@ -602,6 +602,8 @@ VFX
 
 # 1.6.0 — Real Networking & Multiplayer
 
+> Status: shipped as `v1.6.0` (2026-10-01, RUN-2026-000006) — see `docs/releases/v1.6.md`.
+
 ## Objective
 
 Upgrade the current networking simulation/framework into real networking infrastructure.

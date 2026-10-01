@@ -6,5 +6,16 @@
   },
   "include": [
     "src"
+  ],
+  "references": [
+    {
+      "path": "../animation"
+    },
+    {
+      "path": "../ai"
+    },
+    {
+      "path": "../math"
+    }
   ]
 }

@@ -13,3 +13,8 @@ export {
   type SpanRecord,
   type SpanReport,
 } from "./profiler.js";
+
+export * from "./counters.js";
+export * from "./systems.js";
+export * from "./frames.js";
+export * from "./stream.js";

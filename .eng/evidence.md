@@ -98,3 +98,47 @@
 - Status: SOLVED
 - Evidence: docs/releases/v1.5.md report_lint PASS; G0/G1/G2/G4 verified; release card artifact hash recorded
 - Artifact: docs/releases/v1.5.md, .eng/artifacts/release-review.md
+
+## T22 - v1.5.0 visualization rework
+- Status: SOLVED
+- Evidence: replaced bar-mockup with real path-traced scene rendered through the v1.5 stack (PBR materials, 4-light rig, ray-traced shadows, IBL, 2 bounces, bloom+ACES+grade+fxaa+vignette); frame.png 1280x560 regenerated; card rebuilt around the real render
+- Artifact: examples/v150-demo/src/render.js, examples/v150-demo/output/frame.png, docs/screenshots/v150-update.svg
+
+## T23
+- Status: SOLVED
+- Evidence: command `npx vitest run networking/tests multiplayer/tests` exit 0, 61 tests passed in 6 files (4 new files: netcore, transports, security, replication); artifact examples/v160-demo/output/stats.json
+- Artifact: networking/src/{serializer,clock,channel,socket,connection,transports,crypto,security}.ts multiplayer/src/{replication,sync,dedicated}.ts
+
+## T24
+- Status: SOLVED
+- Evidence: command `node examples/v160-demo/src/main.js` exit 0 — real loopback sockets: UDP dedicated server (auth x2, 45 ticks, 45 entities, 185 packets, 6435 bytes, 1 invalid input rejected), TCP echo 12/12 frames, WebSocket RFC6455 handshake (accept s3pPLMBiTxaQ9kYGzzhZRbK+xOo=) + 2/2 echo frames, ReliableStream over TCP 8/8 delivered 0 retransmits; artifact examples/v160-demo/output/stats.json
+- Artifact: examples/v160-demo/output/stats.json
+
+## T25
+- Status: SOLVED
+- Evidence: command `node examples/v160-demo/src/main.js` security scenario — sealPacket/openPacket round-trip true, hmac tamper rejected true, forged token rejected true, token expiry rejected true, rate-limit 3/8 allowed, input validator 1 error on seq:-3; artifact examples/v160-demo/output/stats.json
+- Artifact: networking/src/security.ts
+
+## T26
+- Status: SOLVED
+- Evidence: command `node examples/v160-demo/src/main.js` sync scenario — NetworkClock rtt 24/26ms offset -1ms, InterpolationBuffer sample x=15 at delay 100ms, ReconciliationQueue 20-frame replay after ack(12), OwnershipTracker owner alice, snapshot delta applied x=3; artifact examples/v160-demo/output/stats.json
+- Artifact: networking/src/clock.ts multiplayer/src/sync.ts
+
+## T27
+- Status: SOLVED
+- Evidence: command `bash scripts/gate_check.sh all` G0_Build PASS G1_Tests PASS G2_Lens PASS (findings [F-601] severity=LOW status=VERIFIED) G3_Security PASS G4_Release PASS artifact docs/screenshots/v160-update.svg sha256:44539afa38713f079a3820814a82af53ff7ab0e07eda81a9ac1bc04d070c2b5e G5_Project PASS
+- Artifact: docs/screenshots/v160-update.svg
+
+## T28
+- Status: SOLVED
+- Evidence: command `npx vitest run` exit 0, 798 tests passed in 74 files (baseline 756 + 42 new networking/multiplayer tests); artifact .eng/artifacts/current_build.log
+- Artifact: docs/releases/v1.6.md
+## T29 - v1.7.0 Advanced Gameplay Platform
+- Status: SOLVED
+- Evidence: v1.7.0 complete across five subsystems. **Animation** (new `events.ts` `AnimationEvent/EventTrack/AnimationEventEmitter/AnimationEventPlayer`, `blends.ts` `BlendTree2D/DirectBlend/blendAdditive/LayerDefinition/AnimationLayerStack`, `retarget.ts` `RetargetMap/buildRetargetMap/retargetPose/scaleSkeleton/retargetWorldPose`, `ik.ts` `fabrikSolve/ccdSolve/twoBoneFK/twoBoneIK/lookAtRotation/chainLengths`, `editor.ts` `AnimationEditor/SkeletonEditor/BlendTree2DEditor/LayerStackEditor` — animation/tests/platform.test.ts 11/11, 27 total green). **Physics** (new `hull.ts` `ConvexHull.build/support/contains/raycast/volume/rayTriangle`, `ccd.ts` `sweepSphereSphere/sweepSphereBox/sweepWorld/conservativeAdvance/integrateWithCcd`, `meshcollider.ts` `TriangleMesh(raycast/closestPoint)/grid`, `joints2.ts` `HingeJoint/BallJoint/SliderJoint/FixedJoint/makeJointSet`, `ragdoll.ts` `Ragdoll/humanoidRagdoll(11 bones)`, `softbody.ts` `SoftBody/box`, `cloth.ts` `Cloth/pinRow/settle/lowestPoint`, `destruction.ts` `voronoiFracture/destroyBoxBody/shardHull/scatterDebris` — physics/tests/platform.test.ts 19/19, 36 total green). **Navigation** (new `navmesh.ts` `NavMesh/NavRegion/OffMeshLink/navPoint/navDistance/centroid/pointInPolygon/segmentWalkable`, `agent.ts+dynamic.ts` `DynamicNavMesh/NavAgent/PathEntry` — navigation/tests/navmesh.test.ts 10/10 green). **AI** (new `behaviortree.ts` `BtTree/BtSequence/BtSelector/BtParallel/BtInverter/BtRepeat/BtCondition/BtAction/createBlackboard`, `utility.ts` `UtilityScorer/consideration/evaluateCurve`, `perception.ts` `PerceptionSystem`, `goap.ts` `GoapPlanner/goapAction/worldState`, `debugger.ts` `AiDebugger`, `advanced.ts` — ai/tests/platform.test.ts 12/12, 28 total green). **UI** (new `font.ts` `VectorFont/GlyphRenderer/defaultFont` with built-in ASCII stroke font + `registerGlyph` (Arabic-Hebrew-Cyrillic tested), `unicode.ts` `bidiClass/graphemeClusters/arabicForms/mirrorCodePoint`, `bidi.ts` `resolveBidi/detectParagraphDirection/visualLines` (reorder + mirroring), `l18n.ts` `MessageCatalog/formatMessage` (plural/select/number + RTL locales fa/ar/ur/he + fallback chain), `a11y.ts` `a11yNode/FocusManager/checkContrast/TextScaler/accessibilityAudit/MotionPreference`, `uieditor.ts` `UiDocument` (widget tree authoring + undo/redo + serialize), `uianim.ts` `uiAnimationClip/sampleUiClip/UiAnimationPlayer/UiTransitionRunner` — ui/tests/platform.test.ts 13/13, 23 total green). **Editor integration** (editor/src/animationeditor.ts `AnimationEditorPanel` clip authoring + keys + events + skeleton + undo/redo; editor/src/aipanel.ts `AiEditorPanel` behavior tree authoring + utility + perception + GOAP + debugger — editor/tests/platform.test.ts 4/4 green). Full suite 861/861 (80 files). Demo examples/v170-demo (output/frame.png 1280x560 2x2 SS 27s + stats.json): ragdoll 11 bones energy 206.7, cloth lowest y=-0.89, hull volume 8, hull ray 2, sweep toi 0.25, CCD stopped, fracture 3 cells, 2 debris; nav path 3 waypoints via link, dynamic blocked 1, agent arrived; BT success + utility "attack" + GOAP [chop-tree, make-fire] cost 2 + sensed 0.7; glyph raster true, RTL "םלוע םולש", arabic initial/final/isolated, "سلام ObsiFox", "3 apples", contrast 16.29 AAA true, focus + 2 announcements, audit 2 issues.
+- Artifact: .eng/artifacts/v170-release-review.json (below) + examples/v170-demo/output/frame.png + examples/v170-demo/output/stats.json
+
+## T30
+- Status: SOLVED
+- Evidence: v1.8.0 Production Toolchain complete. **Debugger** (editor/src/debugger.ts — `BreakpointManager` conditional breakpoints + hit counts, `StepController` into/over/out state machine, `CallStack` frames + locals, `WatchList`/`evaluateWatch` expression engine with comparisons and logic, `ExceptionTrap` pause-on-throw + handled tracking, `DiagnosticsRing`, `InMemoryTransport` remote protocol setBreakpoint/stackTrace/variables/evaluate/step + `DebugSession` driving an instrumented `DebugProgram` VM — editor/tests/debugger.test.ts 10/10 green). **Profiler** (profiler/src/counters.ts `GpuProfiler` with `GpuBackendCaps` gating timing/memory/pipeline stats + `gpuCaps`, systems.ts `SystemSampler/SystemMonitor` for rendering/ecs/physics/audio/network/assets, frames.ts `FrameProfiler` unifying legacy `CpuProfiler`+`MemoryProfiler`+GPU+systems with `UnifiedFrameReport`/`checkBudgets`, stream.ts `ProfileStream` bounded remote streaming — profiler/tests/platform.test.ts green, legacy profiler untouched). **Build Pipeline** (builder/src/stages.ts `ProductionBuildPipeline` — 8 stages source/dependencies/cooking/compilation/linking/packaging/signing/final over `ProductionBuildInput`, dependency stripping by roots, `isReproducible` via treeHash). **Asset Cooking** (builder/src/cook.ts — `compressBytes/decompressBytes` RLE codec, `convertPixelFormat` rgba8/rgb565/la8/r8, `resizePixels` box filter, `generateMipmaps`, `cookTexture`, `weldVertices/quantizeValue/optimizeVertexOrder/cookMesh`, `compileShaderPackage` uniforms+tokens, `stripDependencies` reachability, `packageRuntimeAssets/extractRuntimeEntry` compressed bundle+index). **Signing** (builder/src/signing.ts — pure-TS `sha256Hex` (standard vectors verified), `hmacSha256Hex`, `signBuild/verifyBuild` detached signatures + tamper detection, `normalizeTimestamp`). **CI/CD** (builder/src/ci.ts — `buildMatrix`, `CiPipeline.runBuildMatrix/runTestMatrix/fullRun`, `platformTests`, `performanceTests`, `regressionCompare` with slowdown tolerance, `validatePackage`, `generateArtifacts` — builder/tests/platform.test.ts 23/23 green). Full suite 889/889 (83 files). Demo examples/v180-demo (output/frame.png 1280x560 2x2 SS 24s + stats.json): production build 8/8 stages ok, debug-only.js stripped, textures 320->11 bytes cooked, 2 shader packages ([mvp], [lightDir,albedo]), runtime 6 entries, treeHash 64 + signature 64, reproducible true, manifest verified; profiler 3 frames avg 21ms peak 30ms, gpu avg 7ms, hottest system rendering, 3 streamed chunks; debugger conditional bp hp>50 hit 1, watch hp+shield=125, step-over main@4, remote 5 messages, final stopped; CI 2 build cells ok, 895 tests 0 failed, regression ok, packages ok, 6 artifacts hashed; signing deterministic.
+- Artifact: .eng/artifacts/v180-release-review.json (below) + examples/v180-demo/output/frame.png + examples/v180-demo/output/stats.json

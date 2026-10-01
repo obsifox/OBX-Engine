@@ -43,4 +43,13 @@ export {
   type LocomotionState,
 } from "./character.js";
 
+export * from "./ccd.js";
+export * from "./hull.js";
+export * from "./meshcollider.js";
+export * from "./joints2.js";
+export * from "./ragdoll.js";
+export * from "./softbody.js";
+export * from "./cloth.js";
+export * from "./destruction.js";
+
 export const PHYSICS_VERSION = "0.5.0";

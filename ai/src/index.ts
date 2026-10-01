@@ -39,4 +39,10 @@ export {
   type WildlifePerception,
 } from "./advanced.js";
 
+export * from "./behaviortree.js";
+export * from "./utility.js";
+export * from "./perception.js";
+export * from "./goap.js";
+export * from "./debugger.js";
+
 export const AI_VERSION = "0.7.0";

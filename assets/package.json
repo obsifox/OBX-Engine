@@ -1,6 +1,6 @@
 {
   "name": "@obx/assets",
-  "version": "1.5.0",
+  "version": "1.8.0",
   "description": "OBX Engine asset pipeline \u2014 GUID database, importers, dependency graph, cache, watcher, scenes, prefabs, hot reload",
   "type": "module",
   "main": "dist/index.js",
@@ -13,7 +13,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@obx/core": "1.5.0",
-    "@obx/ecs": "1.5.0"
+    "@obx/core": "1.8.0",
+    "@obx/ecs": "1.8.0"
   }
 }

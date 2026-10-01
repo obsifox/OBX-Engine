@@ -1,0 +1,134 @@
+{
+  "version": "1.8.0",
+  "date": "2026-10-01",
+  "artifact": "v180-release-review",
+  "sha256": "48567f82980b847c",
+  "render": {
+    "width": 1280,
+    "height": 560,
+    "supersample": "2x2",
+    "samplesPerPixel": 4,
+    "renderMs": 26820,
+    "postChain": [
+      "bloom(0.9/0.5/3)",
+      "aces",
+      "grade(1.06/1.12)",
+      "fxaa",
+      "vignette(0.22/0.9)"
+    ]
+  },
+  "scenarios": {
+    "build": {
+      "ok": true,
+      "stages": [
+        "source",
+        "dependencies",
+        "cooking",
+        "compilation",
+        "linking",
+        "packaging",
+        "signing",
+        "final"
+      ],
+      "allStagesOk": true,
+      "stripped": [
+        "debug-only.js"
+      ],
+      "textureCount": 2,
+      "textureCookedBytes": 11,
+      "textureOriginalBytes": 320,
+      "meshVertices": 4,
+      "shaderPackages": 2,
+      "shaderUniforms": [
+        [
+          "mvp"
+        ],
+        [
+          "lightDir",
+          "albedo"
+        ]
+      ],
+      "runtimeEntries": 6,
+      "runtimeCookedBytes": 1095,
+      "treeHash": "21f35e5e6aaed7c2084cd47bdf95b8738387a9f992b1be44011183cf62738b0f",
+      "signatureLength": 64,
+      "reproducible": true,
+      "manifestVerified": true
+    },
+    "profiler": {
+      "frames": 3,
+      "averageFrameMs": 21,
+      "peakFrameMs": 30,
+      "averageMemoryBytes": 48000,
+      "gpuSummary": {
+        "frames": 3,
+        "averageGpuTimeMs": 7,
+        "peakTextureMemoryBytes": 24000,
+        "totalDrawCalls": 3
+      },
+      "hottestSystem": "rendering",
+      "budgetViolations": 2,
+      "streamedChunks": 3,
+      "cpuProfiled": [
+        "render",
+        "update"
+      ]
+    },
+    "debugger": {
+      "pausedAt": 3,
+      "hitCount": 1,
+      "conditionGuarded": "hp > 50",
+      "watchValue": 125,
+      "stackAfterStepOver": [
+        "main@4"
+      ],
+      "remoteMessages": 5,
+      "remoteStack": "main@4",
+      "remoteHasHp": true,
+      "finalState": "stopped",
+      "diagnostics": 2,
+      "watchId": "watch-1"
+    },
+    "ci": {
+      "ok": true,
+      "buildCells": 2,
+      "cellsOk": true,
+      "testsPassed": 895,
+      "testsFailed": 0,
+      "regressionOk": true,
+      "packagesOk": true,
+      "artifacts": [
+        "v180-0-package.bin",
+        "v180-0-manifest.json",
+        "v180-0-report.json",
+        "v180-1-package.bin",
+        "v180-1-manifest.json",
+        "v180-1-report.json"
+      ],
+      "artifactHashesValid": true
+    },
+    "signing": {
+      "treeHashLength": 64,
+      "deterministic": true
+    }
+  },
+  "suite": {
+    "tests": 889,
+    "files": 83,
+    "status": "all green"
+  },
+  "gate_command": "bash scripts/gate_check.sh all --state .eng/runs/RUN-2026-000008/state.json --evidence .eng/evidence.md",
+  "blobs": {
+    "editor/src/debugger.ts": "adbf06717fae636c",
+    "profiler/src/counters.ts": "840d417357179c55",
+    "profiler/src/systems.ts": "8cf81bd699f6fab7",
+    "profiler/src/frames.ts": "d66689924b29334d",
+    "profiler/src/stream.ts": "0da2413f268e4516",
+    "builder/src/cook.ts": "dfe2074184e033b2",
+    "builder/src/signing.ts": "875281ac76829a25",
+    "builder/src/stages.ts": "fb81650ab7f6d32e",
+    "builder/src/ci.ts": "3c962a4ef280989d",
+    "examples/v180-demo/src/main.js": "00656b952a67640a",
+    "examples/v180-demo/src/render.js": "b80bf4e437b2d865"
+  }
+}

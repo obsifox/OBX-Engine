@@ -1,0 +1,114 @@
+{
+  "version": "1.8.0",
+  "demo": "v180-demo",
+  "errors": 0,
+  "scenarios": {
+    "build": {
+      "ok": true,
+      "stages": [
+        "source",
+        "dependencies",
+        "cooking",
+        "compilation",
+        "linking",
+        "packaging",
+        "signing",
+        "final"
+      ],
+      "allStagesOk": true,
+      "stripped": [
+        "debug-only.js"
+      ],
+      "textureCount": 2,
+      "textureCookedBytes": 11,
+      "textureOriginalBytes": 320,
+      "meshVertices": 4,
+      "shaderPackages": 2,
+      "shaderUniforms": [
+        [
+          "mvp"
+        ],
+        [
+          "lightDir",
+          "albedo"
+        ]
+      ],
+      "runtimeEntries": 6,
+      "runtimeCookedBytes": 1095,
+      "treeHash": "21f35e5e6aaed7c2084cd47bdf95b8738387a9f992b1be44011183cf62738b0f",
+      "signatureLength": 64,
+      "reproducible": true,
+      "manifestVerified": true
+    },
+    "profiler": {
+      "frames": 3,
+      "averageFrameMs": 21,
+      "peakFrameMs": 30,
+      "averageMemoryBytes": 48000,
+      "gpuSummary": {
+        "frames": 3,
+        "averageGpuTimeMs": 7,
+        "peakTextureMemoryBytes": 24000,
+        "totalDrawCalls": 3
+      },
+      "hottestSystem": "rendering",
+      "budgetViolations": 2,
+      "streamedChunks": 3,
+      "cpuProfiled": [
+        "render",
+        "update"
+      ]
+    },
+    "debugger": {
+      "pausedAt": 3,
+      "hitCount": 1,
+      "conditionGuarded": "hp > 50",
+      "watchValue": 125,
+      "stackAfterStepOver": [
+        "main@4"
+      ],
+      "remoteMessages": 5,
+      "remoteStack": "main@4",
+      "remoteHasHp": true,
+      "finalState": "stopped",
+      "diagnostics": 2,
+      "watchId": "watch-1"
+    },
+    "ci": {
+      "ok": true,
+      "buildCells": 2,
+      "cellsOk": true,
+      "testsPassed": 895,
+      "testsFailed": 0,
+      "regressionOk": true,
+      "packagesOk": true,
+      "artifacts": [
+        "v180-0-package.bin",
+        "v180-0-manifest.json",
+        "v180-0-report.json",
+        "v180-1-package.bin",
+        "v180-1-manifest.json",
+        "v180-1-report.json"
+      ],
+      "artifactHashesValid": true
+    },
+    "signing": {
+      "treeHashLength": 64,
+      "deterministic": true
+    }
+  },
+  "render": {
+    "width": 1280,
+    "height": 560,
+    "supersample": "2x2",
+    "samplesPerPixel": 4,
+    "renderMs": 26820,
+    "postChain": [
+      "bloom(0.9/0.5/3)",
+      "aces",
+      "grade(1.06/1.12)",
+      "fxaa",
+      "vignette(0.22/0.9)"
+    ]
+  }
+}

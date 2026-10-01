@@ -1,6 +1,6 @@
 {
   "name": "@obx/engine",
-  "version": "1.5.0",
+  "version": "1.8.0",
   "description": "OBX Engine \u2014 Engine and Application facades wiring core, runtime, ecs and subsystems",
   "type": "module",
   "license": "MIT",
@@ -19,18 +19,18 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@obx/core": "1.5.0",
-    "@obx/runtime": "1.5.0",
-    "@obx/ecs": "1.5.0",
-    "@obx/math": "1.5.0",
-    "@obx/input": "1.5.0",
-    "@obx/rendering": "1.5.0",
-    "@obx/scene": "1.5.0",
-    "@obx/physics": "1.5.0",
-    "@obx/audio": "1.5.0",
-    "@obx/animation": "1.5.0",
-    "@obx/character": "1.5.0",
-    "@obx/ui": "1.5.0",
-    "@obx/save": "1.5.0"
+    "@obx/core": "1.8.0",
+    "@obx/runtime": "1.8.0",
+    "@obx/ecs": "1.8.0",
+    "@obx/math": "1.8.0",
+    "@obx/input": "1.8.0",
+    "@obx/rendering": "1.8.0",
+    "@obx/scene": "1.8.0",
+    "@obx/physics": "1.8.0",
+    "@obx/audio": "1.8.0",
+    "@obx/animation": "1.8.0",
+    "@obx/character": "1.8.0",
+    "@obx/ui": "1.8.0",
+    "@obx/save": "1.8.0"
   }
 }

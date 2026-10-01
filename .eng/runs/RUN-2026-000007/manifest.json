@@ -1,0 +1,13 @@
+{
+  "run_id": "RUN-2026-000007",
+  "created_at": "2026-10-01T12:33:07Z",
+  "project": {
+    "type": "feature",
+    "domain": "gameplay",
+    "workflow": "default",
+    "tier": "T3"
+  },
+  "task": "v1.7.0 Advanced Gameplay Platform: animation events/blend trees/IK/retargeting/editors, physics CCD/hulls/mesh/joints/ragdoll/soft/cloth/destruction, navigation NavMesh/regions/links/dynamic/agents, AI BT/utility/perception/GOAP/debugger, UI glyphs/Unicode/RTL/l10n/a11y/editors",
+  "state": "INTAKE",
+  "version": "1.2.1"
+}

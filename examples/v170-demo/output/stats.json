@@ -1,0 +1,85 @@
+{
+  "version": "1.7.0",
+  "demo": "v170-demo",
+  "errors": 0,
+  "scenarios": {
+    "animation": {
+      "authoredClips": 1,
+      "skeletonBones": 3,
+      "eventsFired": 1,
+      "rootMotionZ": 0.6,
+      "blendTreeX": 1.2,
+      "ikEndX": 0.5949128249260823,
+      "ikEndY": 0.7946854981135201,
+      "ccdEndY": 0.7948590977459337,
+      "validationErrors": 0
+    },
+    "physics": {
+      "ragdollBones": 11,
+      "ragdollTorsoY": 1.5649689567638772,
+      "ragdollEnergy": 206.67668887891975,
+      "clothLowestY": -0.89161735891794,
+      "softCenterY": 0.7874192317842175,
+      "hullVolume": 8,
+      "hullRayDistance": 2,
+      "sweepToi": 0.25,
+      "ccdStopped": true,
+      "meshHitY": 0,
+      "fractureCells": 3,
+      "debrisBodies": 2
+    },
+    "navigation": {
+      "polygons": 10,
+      "pathWaypoints": 3,
+      "viaLink": true,
+      "dynamicBlocked": 1,
+      "agentState": "arrived",
+      "agentDistance": 0
+    },
+    "ai": {
+      "treeStatus": "success",
+      "debuggerFrames": 2,
+      "utilityChoice": "attack",
+      "sensedAwareness": 0.7,
+      "planSteps": [
+        "chop-tree",
+        "make-fire"
+      ],
+      "planCost": 2
+    },
+    "ui": {
+      "glyphsRasterized": true,
+      "rtlVisual": "םלוע םולש",
+      "rtlDirection": "rtl",
+      "arabicForms": [
+        "initial",
+        "final",
+        "isolated"
+      ],
+      "localized": "سلام ObsiFox",
+      "appleLine": "3 apples",
+      "localeDirection": "rtl",
+      "contrastRatio": 16.29174238669142,
+      "contrastAAA": true,
+      "focusTarget": "cta",
+      "announcements": 2,
+      "auditIssues": 2,
+      "scaledFont": 21,
+      "documentNodes": 3
+    }
+  },
+  "render": {
+    "width": 1280,
+    "height": 560,
+    "supersample": "2x2",
+    "samplesPerPixel": 4,
+    "renderMs": 27043,
+    "postChain": [
+      "bloom(0.9/0.5/3)",
+      "aces",
+      "grade(1.06/1.12)",
+      "fxaa",
+      "vignette(0.22/0.9)"
+    ]
+  }
+}

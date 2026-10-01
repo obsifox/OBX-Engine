@@ -119,5 +119,9 @@ export {
   type SceneFilePayload,
   type StudioOptions,
 } from "./studio.js";
+export * from "./animationeditor.js";
+export * from "./aipanel.js";
+export * from "./debugger.js";
+
 export const EDITOR_VERSION = "0.11.0";
 export const STUDIO_NAME = "ObsiFox Studio";
